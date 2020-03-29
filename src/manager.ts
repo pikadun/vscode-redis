@@ -33,25 +33,25 @@ class RedisManager implements TreeDataProvider<AbstractNode> {
         } else {
             const config = this.getConfig() || {};
             return Object.keys(config).map(id => {
-                return new RedisItem(
-                    id,
-                    config[id].name,
-                    TreeItemCollapsibleState.Collapsed
-                )
+                return new RedisItem(id, config[id].host, parseInt(config[id].port), config[id].name, TreeItemCollapsibleState.Collapsed)
             })
         }
 
     }
 
     async addConnection() {
-        const host = await this.getHost();
+        let host = await this.getHost();
         if (host === undefined) {
             return;
+        } else if (host === '') {
+            host = '127.0.0.1';
         }
 
-        const port = await this.getPort();
+        let port = await this.getPort();
         if (port === undefined) {
             return;
+        } else if (port === '') {
+            port = '6379';
         }
 
         let name = await this.getName();
@@ -62,9 +62,7 @@ class RedisManager implements TreeDataProvider<AbstractNode> {
         }
 
         const auth = await this.getAuth();
-        if (auth === undefined) {
-            return;
-        }
+        if (auth === undefined) return;
 
         const id = Date.now().toString();
         const config = this.getConfig()
@@ -113,11 +111,11 @@ class RedisManager implements TreeDataProvider<AbstractNode> {
     }
 
     private getConfig() {
-        return this.context.globalState.get<{ [key: string]: RedisConfig }>(Constant.GlobalStateRedisConfigKey) || {};
+        return this.context.globalState.get<{ [key: string]: RedisConfig }>(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY) || {};
     }
 
     private updateConfig(config: { [key: string]: RedisConfig }) {
-        this.context.globalState.update(Constant.GlobalStateRedisConfigKey, config);
+        this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, config);
     }
 }
 
