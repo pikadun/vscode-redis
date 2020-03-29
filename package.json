@@ -1,0 +1,98 @@
+{
+    "name": "redis",
+    "version": "0.0.3",
+    "publisher": "Dunn",
+    "engines": {
+        "vscode": "^1.22.0"
+    },
+    "license": "MIT",
+    "main": "./lib/index.js",
+    "displayName": "Redis",
+    "description": "Redis For VS Code",
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "redis",
+        "tools",
+        "manager"
+    ],
+    "galleryBanner": {},
+    "preview": true,
+    "contributors": [
+        {
+            "name": "Dunn",
+            "email": "wg0121@outlook.com"
+        }
+    ],
+    "badges": [],
+    "icon": "resources/logo.png",
+    "homepage": "https://github.com/pikadun/vscode-redis/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/pikadun/vscode-redis/issues",
+        "email": "wg0121@outlook.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pikadun/vscode-redis"
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "compile": "tsc --build tsconfig.json",
+        "vscode:prepublish": "npm run compile"
+    },
+    "activationEvents": [
+        "onView:RedisManager"
+    ],
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "RedisManager",
+                    "title": "Redis Explorer",
+                    "icon": "resources/icon.png"
+                }
+            ]
+        },
+        "views": {
+            "RedisManager": [
+                {
+                    "id": "RedisManager",
+                    "name": "redis"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "RedisManager.AddConnection",
+                "title": "Add Connection",
+                "icon": "resources/add.png"
+            },
+            {
+                "command": "RedisManager.Delete",
+                "title": "Delete Connection",
+                "icon": "resources/delete.png"
+            }
+        ],
+        "menus": {
+            "view/title": [
+                {
+                    "command": "RedisManager.AddConnection",
+                    "group": "navigation"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "RedisManager.Delete",
+                    "group": "inline"
+                }
+            ]
+        }
+    },
+    "devDependencies": {
+        "@types/node": "^13.9.5",
+        "typescript": "^3.8.3",
+        "vscode": "^1.1.36"
+    },
+    "dependencies": {}
+}
