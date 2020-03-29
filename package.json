@@ -37,7 +37,6 @@
         "url": "https://github.com/pikadun/vscode-redis"
     },
     "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install",
         "compile": "tsc --build tsconfig.json",
         "vscode:prepublish": "npm run compile"
     },
