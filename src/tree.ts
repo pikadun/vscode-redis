@@ -1,6 +1,8 @@
 import { TreeItem, TreeItemCollapsibleState } from "vscode";
-import { TreeItemContextValue } from "./constant";
 import path from "path";
+
+import Command from './command'
+import { TreeItemContextValue, RedisCommand } from "./constant";
 
 export abstract class AbstractNode extends TreeItem {
     abstract getChildren(): Promise<AbstractNode[]>;
@@ -11,6 +13,8 @@ export class RedisItem extends AbstractNode {
     iconPath = path.join(__dirname, '..', 'resources', `${this.contextValue}.png`);
     constructor(
         readonly id: string,
+        private readonly host: string,
+        private readonly port: number,
         readonly label: string,
         readonly collapsibleState: TreeItemCollapsibleState
     ) {
@@ -18,6 +22,9 @@ export class RedisItem extends AbstractNode {
     }
 
     getChildren(): Promise<AbstractNode[]> {
+        const config = { host: this.host, port: this.port }
+        const db = Command.run(RedisCommand.CONFIG_GET_DATABASES, config);
+        console.log(db);
         return Promise.resolve([])
     }
 }
