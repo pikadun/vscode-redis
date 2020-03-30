@@ -21,9 +21,9 @@ export class RedisItem extends AbstractNode {
         super(label, collapsibleState);
     }
 
-    getChildren(): Promise<AbstractNode[]> {
+    async getChildren() {
         const config = { host: this.host, port: this.port }
-        const db = Command.run(RedisCommand.CONFIG_GET_DATABASES, config);
+        const db = await Command.run(RedisCommand.CONFIG_GET_DATABASES, config);
         console.log(db);
         return Promise.resolve([])
     }
