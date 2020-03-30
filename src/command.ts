@@ -1,6 +1,7 @@
 import { connect, Socket } from 'net'
 import { RedisCommand } from './constant';
 
+
 interface Config {
     host: string;
     port: number
@@ -8,24 +9,31 @@ interface Config {
 
 
 class Command {
-    run(cmd: RedisCommand, config: Config) {
+    async run(cmd: RedisCommand, config: Config) {
+        const str = this.convert(cmd.split(' '));
         const socket = this.open(config.host, config.port);
-        const c = this.convert(cmd.split(' '));
-        const result = socket.write(c);
+
+        const result = new Promise((resolve) => {
+            socket.on('data', (buffer) => {
+                resolve(this.dataHandle(buffer))
+            })
+        })
+
+        socket.write(str);
         socket.end();
-        // TODO: 处理返回结果
-        console.log(result);
+        return result;
     }
 
     private open(host: string, port: number): Socket {
         const socket = connect(port, host);
+        socket.setKeepAlive(true);
         socket.setTimeout(10000);
         socket.setNoDelay(true);
         return socket;
     }
 
     private convert(args: string[]) {
-        let result = `*${args.length + 1}\r\n`;
+        let result = `*${args.length}\r\n`;
 
         for (let i = 0; i < args.length; i++) {
             const arg = args[i];
@@ -35,6 +43,11 @@ class Command {
         return result;
     }
 
+    private dataHandle(buffer: Buffer) {
+        const reply = buffer.toString();
+        return reply
+    }
+
 }
 
-export default new Command()
+export default new Command();
