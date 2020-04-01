@@ -17,6 +17,7 @@ class RESP {
 
     /**
      * Handle redis reply
+     * @todo missing '#' before Keyspace with command 'INFO KEYSPACE'
      * @param buffer 
      */
     decode(obj: decodeObj): any {
@@ -31,6 +32,9 @@ class RESP {
 
     }
 
+    /**
+     * For Arrays the first byte of the reply is "*"
+     */
     private decodeArray(obj: decodeObj) {
         const result = []
         const count = this.length(obj);
@@ -40,6 +44,10 @@ class RESP {
         }
         return result;
     }
+
+    /**
+     * For Bulk Strings the first byte of the reply is "$"
+     */
     private decodeBulkString(obj: decodeObj) {
         const count = this.length(obj);
         const u8a = new Uint8Array(count);
@@ -51,6 +59,9 @@ class RESP {
         return Buffer.from(u8a).toString()
     }
 
+    /**
+     * Get prefixed-length
+     */
     private length(obj: decodeObj) {
         let len = 0;
         let c = 0;

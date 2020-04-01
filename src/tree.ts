@@ -24,7 +24,9 @@ export class RedisItem extends AbstractNode {
     async getChildren() {
         const config = { host: this.host, port: this.port }
         const db = await Command.run(RedisCommand.CONFIG_GET_DATABASES, config);
+        const keyspace = await Command.run(RedisCommand.INFO_KEYSPACE, config);
         console.log(db);
+        console.log(keyspace);
         return Promise.resolve([])
     }
 }
