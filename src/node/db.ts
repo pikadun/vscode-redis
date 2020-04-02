@@ -5,7 +5,7 @@ import { TreeItemCollapsibleState } from "vscode";
 
 export class DBItem extends AbstractNode {
     contextValue = TreeItemContextValue.DB;
-    iconPath = path.join(__dirname, '..', 'resources', `${this.contextValue}.png`);
+    iconPath = path.join(__dirname, '..', '..', 'resources', `${this.contextValue}.png`);
     constructor(
         readonly id: string,
         readonly label: string,

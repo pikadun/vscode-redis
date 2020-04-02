@@ -83,6 +83,7 @@
             "view/item/context": [
                 {
                     "command": "RedisManager.Delete",
+                    "when": "viewItem == redis",
                     "group": "inline"
                 }
             ]
@@ -93,5 +94,7 @@
         "@types/vscode": "^1.43.0",
         "typescript": "^3.8.3"
     },
-    "dependencies": {}
+    "dependencies": {
+        "redis-parser": "^3.0.0"
+    }
 }
