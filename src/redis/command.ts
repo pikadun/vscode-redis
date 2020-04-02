@@ -1,17 +1,12 @@
 import { connect, Socket } from 'net'
-import { RedisCommand } from './constant';
-
+import { RedisCommand } from '../abstraction/constant';
+import { RedisConfig } from '../abstraction/interface';
 import RESP from './resp';
 
 
-interface Config {
-    host: string;
-    port: number
-}
-
 
 class Command {
-    async run(cmd: RedisCommand, config: Config) {
+    async run(cmd: RedisCommand, config: RedisConfig): Promise<any> {
         const socket = this.open(config.host, config.port);
         const str = RESP.encode(cmd);
 

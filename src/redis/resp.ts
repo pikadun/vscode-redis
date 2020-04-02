@@ -38,7 +38,6 @@ class RESP {
     private decodeArray(obj: decodeObj) {
         const result = []
         const count = this.length(obj);
-        obj.offset += count.toString().length;
         for (let i = 0; i < count; i++) {
             result.push(this.decode(obj))
         }
@@ -51,10 +50,7 @@ class RESP {
     private decodeBulkString(obj: decodeObj) {
         const count = this.length(obj);
         const u8a = new Uint8Array(count);
-
-        obj.offset += count.toString().length;
         obj.buffer.copy(u8a, 0, obj.offset, obj.offset + count);
-
         obj.offset += count + 2;
         return Buffer.from(u8a).toString()
     }
@@ -68,6 +64,7 @@ class RESP {
         while ((c = obj.buffer[obj.offset++]) !== 13) {
             len = (len * 10) + (c - 48);
         }
+        obj.offset++;
         return len;
     }
 }

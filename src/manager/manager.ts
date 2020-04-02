@@ -1,20 +1,9 @@
-import {
-    ExtensionContext,
-    TreeDataProvider,
-    TreeItemCollapsibleState,
-    window,
-    EventEmitter,
-    Event
-} from 'vscode';
-import { Constant, TreeItemContextValue } from './constant';
-import { RedisItem, AbstractNode } from './tree';
+import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window, Event } from "vscode";
+import AbstractNode from "../node/abstraction";
+import RedisItem from "../node/redis";
+import { TreeItemContextValue, Constant } from "../abstraction/constant";
+import { RedisItemConfig } from "../abstraction/interface";
 
-interface RedisConfig {
-    name: string;
-    host: string;
-    port: string;
-    auth?: string;
-}
 
 
 class RedisManager implements TreeDataProvider<AbstractNode> {
@@ -33,7 +22,7 @@ class RedisManager implements TreeDataProvider<AbstractNode> {
         } else {
             const config = this.getConfig() || {};
             return Object.keys(config).map(id => {
-                return new RedisItem(id, config[id].host, parseInt(config[id].port), config[id].name, TreeItemCollapsibleState.Collapsed)
+                return new RedisItem(id, config[id], TreeItemCollapsibleState.Collapsed)
             })
         }
 
@@ -67,7 +56,7 @@ class RedisManager implements TreeDataProvider<AbstractNode> {
         const id = Date.now().toString();
         const config = this.getConfig()
 
-        config[id] = { host, port, auth, name };
+        config[id] = { host, port: parseInt(port), auth, name };
 
         this.updateConfig(config);
         this.refresh();
@@ -111,10 +100,10 @@ class RedisManager implements TreeDataProvider<AbstractNode> {
     }
 
     private getConfig() {
-        return this.context.globalState.get<{ [key: string]: RedisConfig }>(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY) || {};
+        return this.context.globalState.get<{ [key: string]: RedisItemConfig }>(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY) || {};
     }
 
-    private updateConfig(config: { [key: string]: RedisConfig }) {
+    private updateConfig(config: { [key: string]: RedisItemConfig }) {
         this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, config);
     }
 }

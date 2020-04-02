@@ -16,7 +16,7 @@
                 "${workspaceFolder}/lib/**/*.js"
             ],
             "args": [
-                "--disable-extensions",
+                // "--disable-extensions",
                 "--extensionDevelopmentPath=${workspaceFolder}"
             ]
         }
