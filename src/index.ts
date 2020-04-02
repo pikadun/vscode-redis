@@ -1,6 +1,6 @@
 import { window, commands, ExtensionContext } from 'vscode';
-import RedisManager from './manager';
-import { AbstractNode } from './tree';
+import RedisManager from './manager/manager';
+import AbstractNode from './node/abstraction';
 
 export function activate(context: ExtensionContext) {
     const manager = new RedisManager(context);
