@@ -3,7 +3,7 @@
     "version": "0.0.3",
     "publisher": "Dunn",
     "engines": {
-        "vscode": "^1.22.0"
+        "vscode": "^1.43.0"
     },
     "license": "MIT",
     "main": "./lib/index.js",
