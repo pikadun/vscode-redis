@@ -10,6 +10,7 @@ export interface RedisInfo {
     Keyspace: InfoKeyspace
 }
 
+
 export interface InfoServer {
     redis_version: string,
     redis_git_sha1: string,

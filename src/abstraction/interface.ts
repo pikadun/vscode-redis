@@ -8,3 +8,8 @@ export interface RedisItemConfig extends RedisConfig {
     name: string,
 }
 
+export interface RESPObject {
+    offset: number,
+    buffer: Buffer
+}
+
