@@ -2,28 +2,28 @@ import path from "path";
 import AbstractNode from "./abstraction";
 import { TreeItemContextValue, RedisCommand } from "../abstraction/constant";
 import { RedisInfo } from "../abstraction/redisinfo";
-import { RedisItemConfig } from "../abstraction/interface";
+// import { RedisItemConfig } from "../abstraction/interface";
 import { TreeItemCollapsibleState } from "vscode";
 import command from '../redis/command';
-import utils from "./utils";
+// import utils from "./utils";
 import { DBItem } from "./db";
+import { Socket } from "net";
 
 class RedisItem extends AbstractNode {
     contextValue = TreeItemContextValue.REDIS;
     iconPath = path.join(__dirname, '..', '..', 'resources', `${this.contextValue}.png`);
-    private info!: RedisInfo;
     constructor(
         readonly id: string,
-        private readonly config: RedisItemConfig,
+        readonly name: string,
+        private readonly info: RedisInfo,
         readonly collapsibleState: TreeItemCollapsibleState
     ) {
-        super(config.name, collapsibleState);
+        super(name, collapsibleState);
     }
 
 
-    async getChildren() {
-        const dbInfo = await command.run(RedisCommand.CONFIG_GET_DATABASES, this.config);
-        await this.getInfo();
+    async getChildren(socket: Socket) {
+        const dbInfo = await command.run(socket, RedisCommand.CONFIG_GET_DATABASES);
         let count = parseInt(dbInfo[1]);
         const result: DBItem[] = [];
         for (let i = 0; i < count; i++) {
@@ -38,10 +38,7 @@ class RedisItem extends AbstractNode {
         return result
     }
 
-    private async getInfo() {
-        const infostr = await command.run(RedisCommand.INFO, this.config);
-        this.info = utils.parseInfo(infostr);
-    }
+
 
 }
 
