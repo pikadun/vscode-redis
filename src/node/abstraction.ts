@@ -1,7 +1,8 @@
 import { TreeItem } from "vscode";
+import { Socket } from "net";
 
 abstract class AbstractNode extends TreeItem {
-    abstract getChildren(): Promise<AbstractNode[]>;
+    abstract getChildren(socket: Socket): Promise<AbstractNode[]>;
 }
 
 export default AbstractNode
