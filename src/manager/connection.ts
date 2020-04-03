@@ -3,7 +3,6 @@ import { Socket, connect } from "net";
 
 import { Constant, RedisCommand } from "../abstraction/constant";
 import { RedisItemConfig } from "../abstraction/interface";
-// import { RedisInfo } from "../abstraction/redisinfo";
 
 
 import AbstractNode from "../node/abstraction";
@@ -19,21 +18,28 @@ class Connection implements TreeDataProvider<AbstractNode> {
 
     private sockets = new Collection();
     private infos = new Collection();
+    private config = new Config(this.context);
 
     constructor(private context: ExtensionContext) { }
     getTreeItem(element: AbstractNode) {
         return element;
     }
 
-    getChildren(element?: AbstractNode) {
-        if (element) {
-            return element.getChildren(this.sockets.get((element as RedisItem).id))
-        }
+    async getChildren(element?: AbstractNode) {
+        if (element && element instanceof RedisItem) {
+            const id = (element as RedisItem).id;
+            if (!this.sockets.has(id)) {
+                await this.init(id, this.config.get(id).host, this.config.get(id).port);
+                element.info = this.infos.get(id);
+            }
 
-        const config = this.getConfig() || {};
-        return Object.keys(config).map(id => {
-            return new RedisItem(id, config[id].name, this.infos.get(id), TreeItemCollapsibleState.Collapsed)
-        })
+            return element.getChildren(this.sockets.get(id))
+        } else {
+            const config = this.config.all();
+            return Object.keys(config).map(id => {
+                return new RedisItem(id, config[id].name, this.infos.get(id), TreeItemCollapsibleState.Collapsed)
+            })
+        }
     }
 
     async add() {
@@ -61,24 +67,15 @@ class Connection implements TreeDataProvider<AbstractNode> {
         const auth = await this.getAuth();
         if (auth === undefined) return;
 
-        const socket = this.open(parseInt(port), host);
         const id = Date.now().toString();
-        this.sockets.set(id, socket);
 
-        const info = await this.getInfo(socket);
-        this.infos.set(id, info);
-
-        const config = this.getConfig();
-        config[id] = { host, port: parseInt(port), auth, name };
-
-        this.updateConfig(config);
+        await this.init(id, host, parseInt(port));
+        this.config.set(id, { host, port: parseInt(port), auth, name })
         this.refresh();
     }
 
     delete(element: AbstractNode) {
-        const config = this.getConfig();
-        delete config[(element as RedisItem).id];
-        this.updateConfig(config);
+        this.config.delete((element as RedisItem).id)
         this.refresh();
     }
 
@@ -106,15 +103,12 @@ class Connection implements TreeDataProvider<AbstractNode> {
         return auth;
     }
 
-    private getConfig() {
-        return this.context.globalState.get<{ [key: string]: RedisItemConfig }>(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY) || {};
+    private async init(id: string, host: string, port: number) {
+        this.open(id, host, port);
+        await this.info(id, this.sockets.get(id));
     }
 
-    private updateConfig(config: { [key: string]: RedisItemConfig }) {
-        this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, config);
-    }
-
-    private open(port: number, host: string): Socket {
+    private open(id: string, host: string, port: number) {
         const socket = connect(port, host);
         socket.setKeepAlive(true);
         socket.setTimeout(10000);
@@ -124,12 +118,37 @@ class Connection implements TreeDataProvider<AbstractNode> {
             RESP.decode(buffer);
         })
 
-        return socket;
+        this.sockets.set(id, socket);
     }
 
-    private async getInfo(socket: Socket) {
+    private async info(id: string, socket: Socket) {
         const infostr = await Command.run(socket, RedisCommand.INFO);
-        return utils.parseInfo(infostr)
+        const info = utils.parseInfo(infostr);
+        this.infos.set(id, info);
+    }
+}
+
+class Config {
+    constructor(private context: ExtensionContext) { }
+    all() {
+        return this.context.globalState.get<{ [key: string]: RedisItemConfig }>(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY) || {};
+    }
+
+    get(id: string) {
+        const configs = this.all();
+        return configs[id];
+    }
+
+    set(id: string, config: RedisItemConfig) {
+        const configs = this.all();
+        configs[id] = config;
+        this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, configs);
+    }
+
+    delete(id: string) {
+        const configs = this.all();
+        delete configs[id];
+        this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, configs);
     }
 }
 

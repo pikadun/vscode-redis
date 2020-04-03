@@ -12,13 +12,15 @@ import { Socket } from "net";
 class RedisItem extends AbstractNode {
     contextValue = TreeItemContextValue.REDIS;
     iconPath = path.join(__dirname, '..', '..', 'resources', `${this.contextValue}.png`);
+    info!: RedisInfo
     constructor(
         readonly id: string,
         readonly name: string,
-        private readonly info: RedisInfo,
+        info: RedisInfo,
         readonly collapsibleState: TreeItemCollapsibleState
     ) {
         super(name, collapsibleState);
+        this.info = info;
     }
 
 

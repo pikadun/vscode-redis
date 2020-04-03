@@ -30,7 +30,7 @@ class Utils {
             const info = line.split(':');
             result[keyword][info[0]] = info[1]
         }
-        return result as RedisInfo
+        return result as RedisInfo;
     }
 
     private parseKeyspace(line: string, result: RedisInfo) {
