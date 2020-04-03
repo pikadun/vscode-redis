@@ -41,34 +41,34 @@
         "vscode:prepublish": "npm run compile"
     },
     "activationEvents": [
-        "onView:RedisManager"
+        "onView:Connection"
     ],
     "contributes": {
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "RedisManager",
+                    "id": "Connection",
                     "title": "Redis Explorer",
                     "icon": "resources/icon.png"
                 }
             ]
         },
         "views": {
-            "RedisManager": [
+            "Connection": [
                 {
-                    "id": "RedisManager",
+                    "id": "Connection",
                     "name": "redis"
                 }
             ]
         },
         "commands": [
             {
-                "command": "RedisManager.AddConnection",
+                "command": "Connection.Add",
                 "title": "Add Connection",
                 "icon": "resources/add.png"
             },
             {
-                "command": "RedisManager.Delete",
+                "command": "Connection.Delete",
                 "title": "Delete Connection",
                 "icon": "resources/delete.png"
             }
@@ -76,13 +76,13 @@
         "menus": {
             "view/title": [
                 {
-                    "command": "RedisManager.AddConnection",
+                    "command": "Connection.Add",
                     "group": "navigation"
                 }
             ],
             "view/item/context": [
                 {
-                    "command": "RedisManager.Delete",
+                    "command": "Connection.Delete",
                     "when": "viewItem == redis",
                     "group": "inline"
                 }
