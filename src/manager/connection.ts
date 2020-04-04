@@ -11,6 +11,7 @@ import RESP from '../redis/resp'
 import Command from "../redis/command";
 import utils from "../node/utils";
 import Collection from "./collection";
+import DBItem from "../node/db";
 
 class Connection implements TreeDataProvider<AbstractNode> {
     _onDidChangeTreeData: EventEmitter<AbstractNode> = new EventEmitter<AbstractNode>();
@@ -32,7 +33,9 @@ class Connection implements TreeDataProvider<AbstractNode> {
                 await this.init(id, this.config.get(id).host, this.config.get(id).port);
                 element.info = this.infos.get(id);
             }
-
+            return element.getChildren(this.sockets.get(id))
+        } else if (element && element instanceof DBItem) {
+            const id = element.parent.id;
             return element.getChildren(this.sockets.get(id))
         } else {
             const config = this.config.all();

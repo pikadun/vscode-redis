@@ -5,7 +5,7 @@ import RESP from './resp';
 class Command {
     public setReply!: Function;
 
-    async run(socket: Socket, cmd: RedisCommand): Promise<any> {
+    async run(socket: Socket, cmd: RedisCommand | string): Promise<any> {
 
         const str = RESP.encode(cmd);
 
