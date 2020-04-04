@@ -11,5 +11,6 @@ export enum TreeItemContextValue {
 export enum RedisCommand {
     CONFIG_GET_DATABASES = 'CONFIG GET DATABASES',
     INFO = 'INFO',
-    KEYS = 'KEYS *'
+    KEYS = 'KEYS *',
+    SELECT = 'SELECT '
 }

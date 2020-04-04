@@ -6,7 +6,7 @@ import { RedisInfo } from "../abstraction/redisinfo";
 import { TreeItemCollapsibleState } from "vscode";
 import command from '../redis/command';
 // import utils from "./utils";
-import { DBItem } from "./db";
+import DBItem from "./db";
 import { Socket } from "net";
 
 class RedisItem extends AbstractNode {
@@ -31,7 +31,8 @@ class RedisItem extends AbstractNode {
         for (let i = 0; i < count; i++) {
             const dbName = `db${i}`;
             const db = new DBItem(
-                `${this.id}.${i}`,
+                i.toString(),
+                this,
                 `${dbName}(${this.info.Keyspace[dbName]?.keys || 0})`,
                 TreeItemCollapsibleState.Collapsed
             )
@@ -39,9 +40,6 @@ class RedisItem extends AbstractNode {
         }
         return result
     }
-
-
-
 }
 
 export default RedisItem
