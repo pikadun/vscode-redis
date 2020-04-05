@@ -26,7 +26,7 @@
         }
     ],
     "badges": [],
-    "icon": "resources/logo.png",
+    "icon": "resources/image/logo.png",
     "homepage": "https://github.com/pikadun/vscode-redis/blob/master/README.md",
     "bugs": {
         "url": "https://github.com/pikadun/vscode-redis/issues",
@@ -49,7 +49,7 @@
                 {
                     "id": "Connection",
                     "title": "Redis Explorer",
-                    "icon": "resources/icon.png"
+                    "icon": "resources/image/icon.png"
                 }
             ]
         },
@@ -65,12 +65,16 @@
             {
                 "command": "Connection.Add",
                 "title": "Add Connection",
-                "icon": "resources/add.png"
+                "icon": "resources/image/add.png"
             },
             {
                 "command": "Connection.Delete",
                 "title": "Delete Connection",
-                "icon": "resources/delete.png"
+                "icon": "resources/image/delete.png"
+            },
+            {
+                "command": "Connection.KeyInfo",
+                "title": "View Key Detail"
             }
         ],
         "menus": {

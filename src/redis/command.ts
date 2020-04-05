@@ -3,7 +3,7 @@ import { RedisCommand } from '../abstraction/constant';
 import RESP from './resp';
 
 class Command {
-    public setReply!: Function;
+    setReply!: Function;
 
     async run(socket: Socket, cmd: RedisCommand | string): Promise<any> {
 
