@@ -6,11 +6,11 @@ import { RedisItemConfig } from "../abstraction/interface";
 
 
 import AbstractNode from "../node/abstraction";
-import RedisItem from "../node/redis";
 import RESP from '../redis/resp'
 import Command from "../redis/command";
 import utils from "../node/utils";
 import Collection from "./collection";
+import RedisItem from "../node/redis";
 import DBItem from "../node/db";
 
 class Connection implements TreeDataProvider<AbstractNode> {
@@ -32,19 +32,19 @@ class Connection implements TreeDataProvider<AbstractNode> {
             if (!this.sockets.has(id)) {
                 await this.init(id, this.config.get(id).host, this.config.get(id).port);
                 element.info = this.infos.get(id);
+                element.socket = this.sockets.get(id);
             }
-            return element.getChildren(this.sockets.get(id))
+            return element.getChildren()
         } else if (element && element instanceof DBItem) {
-            const id = element.parent.id;
-            return element.getChildren(this.sockets.get(id))
+            return element.getChildren()
         } else {
             const config = this.config.all();
             return Object.keys(config).map(id => {
-                return new RedisItem(id, config[id].name, this.infos.get(id), TreeItemCollapsibleState.Collapsed)
+                return new RedisItem(id, config[id].name, TreeItemCollapsibleState.Collapsed)
             })
         }
     }
-
+    
     async add() {
         let host = await this.getHost();
         if (host === undefined) {

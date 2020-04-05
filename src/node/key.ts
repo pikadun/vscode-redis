@@ -1,16 +1,27 @@
 import AbstractNode from "./abstraction";
-import { TreeItemCollapsibleState } from "vscode";
-import { TreeItemContextValue } from "../abstraction/constant";
+import { TreeItemCollapsibleState, Command as VScodeCommand } from "vscode";
+import { TreeItemContextValue, RedisCommand } from "../abstraction/constant";
 import path from "path";
+import RedisItem from "./redis";
+import DBItem from "./db";
+import Command from '../redis/command'
 
-export class KeyItem extends AbstractNode {
-    contextValue = TreeItemContextValue.KEY;
-    iconPath = path.join(__dirname, '..', '..', 'resources', `${this.contextValue}.png`);
+class KeyItem extends AbstractNode {
+    readonly command: VScodeCommand = {
+        title: 'View Key Detail',
+        command: 'Connection.KeyInfo',
+        arguments: []
+    }
+    readonly contextValue = TreeItemContextValue.KEY;
+    readonly iconPath = path.join(__dirname, '..', '..', 'resources', 'image', `${this.contextValue}.png`);
     constructor(
+        readonly root: RedisItem,
+        readonly db: DBItem,
         readonly label: string,
         readonly collapsibleState: TreeItemCollapsibleState
     ) {
         super(label, collapsibleState);
+        this.command.arguments?.push(this)
     }
 
     /**
@@ -19,4 +30,12 @@ export class KeyItem extends AbstractNode {
     getChildren(): Promise<AbstractNode[]> {
         throw new Error("Method not implemented.");
     }
+
+    public async detail() {
+        await Command.run(this.root.socket, RedisCommand.SELECT + this.db.id);
+        const detail = await Command.run(this.root.socket, RedisCommand.GET + this.label);
+        return detail;
+    }
 }
+
+export default KeyItem

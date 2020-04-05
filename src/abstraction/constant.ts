@@ -12,5 +12,6 @@ export enum RedisCommand {
     CONFIG_GET_DATABASES = 'CONFIG GET DATABASES',
     INFO = 'INFO',
     KEYS = 'KEYS *',
-    SELECT = 'SELECT '
+    SELECT = 'SELECT ',
+    GET = 'GET '
 }
