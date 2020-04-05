@@ -10,7 +10,7 @@ class Manager {
     constructor(context: ExtensionContext) {
         this.Connection = new Connection(context)
         this.Terminal = new Terminal(context);
-        this.Panel = new Panel(context);
+        this.Panel = new Panel();
     }
 }
 
