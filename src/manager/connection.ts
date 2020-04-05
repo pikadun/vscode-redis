@@ -40,7 +40,10 @@ class Connection implements TreeDataProvider<AbstractNode> {
         } else {
             const config = this.config.all();
             return Object.keys(config).map(id => {
-                return new RedisItem(id, config[id].name, TreeItemCollapsibleState.Collapsed)
+                const item = new RedisItem(id, config[id].name, TreeItemCollapsibleState.Collapsed);
+                item.info = this.infos.get(id);
+                item.socket = this.sockets.get(id);
+                return item;
             })
         }
     }
@@ -73,7 +76,7 @@ class Connection implements TreeDataProvider<AbstractNode> {
         const id = Date.now().toString();
 
         await this.init(id, host, parseInt(port));
-        this.config.set(id, { host, port: parseInt(port), auth, name })
+        this.config.set(id, { host, port: parseInt(port), auth, name });
         this.refresh();
     }
 
