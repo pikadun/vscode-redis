@@ -1,6 +1,6 @@
 .vscode/
-node_modules/
 src/
+resources/readme/
 
 .gitignore
 package-lock.json
