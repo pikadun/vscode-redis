@@ -28,8 +28,7 @@ class RedisItem extends AbstractNode {
         for (let i = 0; i < count; i++) {
             const dbName = `db${i}`;
             const db = new DBItem(
-                i.toString(),
-                this,
+                `${this.id}.${i}`, i, this,
                 `${dbName}(${this.info.Keyspace[dbName]?.keys || 0})`,
                 TreeItemCollapsibleState.Collapsed
             )

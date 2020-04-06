@@ -12,6 +12,7 @@ class DBItem extends AbstractNode {
     iconPath = path.join(__dirname, '..', '..', 'resources', 'image', `${this.contextValue}.png`);
     constructor(
         readonly id: string,
+        readonly index: number,
         readonly root: RedisItem,
         readonly label: string,
         readonly collapsibleState: TreeItemCollapsibleState
@@ -20,9 +21,11 @@ class DBItem extends AbstractNode {
     }
 
     async getChildren(): Promise<AbstractNode[]> {
-        await Command.run(this.root.socket, RedisCommand.SELECT + this.id);
+        await Command.run(this.root.socket, RedisCommand.SELECT + this.index);
         const keys: string[] = await Command.run(this.root.socket, RedisCommand.KEYS);
-        const result = keys.sort().map((key: string) => { return new KeyItem(this.root, this, key, TreeItemCollapsibleState.None) })
+        const result = keys.sort().map((key: string) => {
+            return new KeyItem(`${this.id}.${key}`, this.root, this, key, TreeItemCollapsibleState.None)
+        })
         return result;
     }
 }
