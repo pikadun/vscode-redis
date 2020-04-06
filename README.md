@@ -1,7 +1,11 @@
 # Redis Manager
 
-Redis management tool for vscode
+[![Build Status](https://dev.azure.com/pikadun/vscode-redis/_apis/build/status/redis-vscode-build?branchName=master)](https://marketplace.visualstudio.com/items?itemName=Dunn.redis)
+[![installs](https://vsmarketplacebadge.apphb.com/installs-short/Dunn.redis.svg)](https://marketplace.visualstudio.com/items?itemName=Dunn.redis)
+[![rating](https://vsmarketplacebadge.apphb.com/rating-star/Dunn.redis.svg)](https://marketplace.visualstudio.com/items?itemName=Dunn.redis)
 
-## Install
+Welcome to the redis extension for Visual Studio Code!
 
 ## Usage
+
+![guide](https://raw.githubusercontent.com/pikadun/vscode-redis/master/resources/readme/guide.gif)
