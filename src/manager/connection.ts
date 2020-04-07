@@ -47,7 +47,7 @@ class Connection implements TreeDataProvider<AbstractNode> {
             })
         }
     }
-    
+
     async add() {
         let host = await this.getHost();
         if (host === undefined) {
@@ -110,21 +110,28 @@ class Connection implements TreeDataProvider<AbstractNode> {
     }
 
     private async init(id: string, host: string, port: number) {
-        this.open(id, host, port);
+        await this.open(id, host, port);
         await this.info(id, this.sockets.get(id));
     }
 
-    private open(id: string, host: string, port: number) {
-        const socket = connect(port, host);
+    private async open(id: string, host: string, port: number) {
+        const socket: Socket = await new Promise((resolve, reject) => {
+            const socket = connect(port, host);
+            socket.once('connect', () => { resolve(socket); })
+            socket.once('error', err => { reject(err); })
+        })
+
         socket.setKeepAlive(true);
         socket.setTimeout(10000);
         socket.setNoDelay(true);
 
-        socket.on('data', (buffer) => {
+        socket.on('data', buffer => {
             RESP.decode(buffer);
         })
 
-        this.sockets.set(id, socket);
+        socket.once('connect', () => {
+            this.sockets.set(id, socket);
+        })
     }
 
     private async info(id: string, socket: Socket) {
@@ -157,9 +164,5 @@ class Config {
         this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, configs);
     }
 }
-
-// class SocketCollection {
-//     private sockets = {}
-// }
 
 export default Connection
