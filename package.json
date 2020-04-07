@@ -73,8 +73,12 @@
                 "icon": "resources/image/delete.png"
             },
             {
-                "command": "Connection.KeyInfo",
+                "command": "Key.Detail",
                 "title": "View Key Detail"
+            },
+            {
+                "command": "DB.AddKey",
+                "title": "Add Key"
             }
         ],
         "menus": {

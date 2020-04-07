@@ -13,6 +13,10 @@ class Collection {
     set<T>(id: string, entry: T) {
         this.entries[id] = entry;
     }
+
+    del(id: string) {
+        delete this.entries[id]
+    }
 }
 
 export default Collection;

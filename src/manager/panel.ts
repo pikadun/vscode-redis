@@ -9,6 +9,10 @@ class Panel {
     private readonly templatePath = path.join(__dirname, '..', '..', 'resources', 'template', `index.html`);
     constructor() { }
 
+    /**
+     * Create a panel to show some value
+     * @param value Value to show
+     */
     create(value: string) {
         const panel = window.createWebviewPanel(
             this.viewType,
@@ -23,6 +27,10 @@ class Panel {
         return template.replace('editorplaceholder', value);
     }
 
+    /**
+     * Create a panel to show the value of key
+     * @param element The keyitem
+     */
     async show(element: KeyItem) {
         const detail = await element.detail()
         this.create(detail)

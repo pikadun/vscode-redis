@@ -20,7 +20,6 @@ class RedisItem extends AbstractNode {
         super(name, collapsibleState);
     }
 
-
     async getChildren() {
         const dbInfo = await command.run(this.socket, RedisCommand.CONFIG_GET_DATABASES);
         let count = parseInt(dbInfo[1]);

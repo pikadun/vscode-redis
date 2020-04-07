@@ -9,7 +9,7 @@ import Command from '../redis/command'
 class KeyItem extends AbstractNode {
     readonly command: VScodeCommand = {
         title: 'View Key Detail',
-        command: 'Connection.KeyInfo',
+        command: 'Key.Detail',
         arguments: []
     }
     readonly contextValue = TreeItemContextValue.KEY;
