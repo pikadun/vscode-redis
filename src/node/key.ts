@@ -33,7 +33,7 @@ class KeyItem extends AbstractNode {
     }
 
     public async detail() {
-        await Command.run(this.root.socket, RedisCommand.SELECT + this.db.id);
+        await Command.run(this.root.socket, RedisCommand.SELECT + this.db.index);
         const detail = await Command.run(this.root.socket, RedisCommand.GET + this.label);
         return detail;
     }

@@ -129,9 +129,7 @@ class Connection implements TreeDataProvider<AbstractNode> {
             RESP.decode(buffer);
         })
 
-        socket.once('connect', () => {
-            this.sockets.set(id, socket);
-        })
+        this.sockets.set(id, socket);
     }
 
     private async info(id: string, socket: Socket) {
