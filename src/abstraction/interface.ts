@@ -1,3 +1,6 @@
+import { ExtensionContext } from "vscode";
+import Manager from "../manager/manager";
+
 export interface RedisConfig {
     host: string;
     port: number;
@@ -13,3 +16,6 @@ export interface RESPObject {
     buffer: Buffer
 }
 
+export interface Context extends ExtensionContext {
+    manager: Manager
+}

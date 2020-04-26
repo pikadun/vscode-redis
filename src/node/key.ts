@@ -5,6 +5,7 @@ import path from "path";
 import RedisItem from "./redis";
 import DBItem from "./db";
 import Command from '../redis/command'
+import Panel from "../manager/panel";
 
 class KeyItem extends AbstractNode {
     readonly command: VScodeCommand = {
@@ -32,7 +33,7 @@ class KeyItem extends AbstractNode {
         throw new Error("Method not implemented.");
     }
 
-    public async detail() {
+    public async detail(panel: Panel) {
         await Command.run(this.root.socket, RedisCommand.SELECT + this.db.index);
         const detail = await Command.run(this.root.socket, RedisCommand.GET + this.label);
         return detail;

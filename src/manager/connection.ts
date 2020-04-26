@@ -12,13 +12,14 @@ import utils from "../node/utils";
 import Collection from "./collection";
 import RedisItem from "../node/redis";
 import DBItem from "../node/db";
+import { RedisInfo } from "../abstraction/redisinfo";
 
 class Connection implements TreeDataProvider<AbstractNode> {
     _onDidChangeTreeData: EventEmitter<AbstractNode> = new EventEmitter<AbstractNode>();
     readonly onDidChangeTreeData: Event<AbstractNode> = this._onDidChangeTreeData.event;
 
-    private sockets = new Collection();
-    private infos = new Collection();
+    private sockets = new Collection<Socket>();
+    private infos = new Collection<RedisInfo>();
     private config = new Config(this.context);
 
     constructor(private context: ExtensionContext) { }

@@ -1,39 +1,37 @@
-import { window, ViewColumn } from "vscode";
-import fs from 'fs';
-import path from "path";
-import KeyItem from "../node/key";
+import { window, ViewColumn, WebviewPanel } from "vscode";
+import Collection from "./collection";
 
 class Panel {
     private readonly viewType = 'RedisView';
     private readonly title = 'Redis';
-    private readonly templatePath = path.join(__dirname, '..', '..', 'resources', 'template', `index.html`);
+    private panels = new Collection<WebviewPanel>()
+
     constructor() { }
 
     /**
      * Create a panel to show some value
-     * @param value Value to show
      */
-    create(value: string) {
+    private create() {
         const panel = window.createWebviewPanel(
             this.viewType,
             this.title,
             ViewColumn.One,
             {}
         );
-        panel.webview.html = this.generate(value)
-    }
-    private generate(value: string) {
-        const template = fs.readFileSync(this.templatePath).toString();
-        return template.replace('editorplaceholder', value);
+
+        return panel
     }
 
     /**
-     * Create a panel to show the value of key
-     * @param element The keyitem
+     * Show a panel
+     * @param name 
      */
-    async show(element: KeyItem) {
-        const detail = await element.detail()
-        this.create(detail)
+    show(name: string, html: string) {
+        if (!this.panels.has(name)) {
+            this.panels.set(name, this.create())
+        }
+        const panel = this.panels.get(name)
+        panel.webview.html = html
     }
 }
 

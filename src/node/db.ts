@@ -28,13 +28,6 @@ class DBItem extends AbstractNode {
         })
         return result;
     }
-
-    /**
-     * Open the panel to create Redis data
-     */
-    async addKey() {
-        
-    }
 }
 
 export default DBItem

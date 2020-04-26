@@ -1,8 +1,8 @@
-class Collection {
+class Collection<T> {
 
     private readonly entries: { [key: string]: any } = {};
 
-    get<T>(id: string): T {
+    get(id: string): T {
         return this.entries[id] as T;
     }
 
@@ -10,7 +10,7 @@ class Collection {
         return this.entries[id] !== undefined;
     }
 
-    set<T>(id: string, entry: T) {
+    set(id: string, entry: T) {
         this.entries[id] = entry;
     }
 
