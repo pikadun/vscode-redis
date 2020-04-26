@@ -9,6 +9,15 @@
     "main": "./lib/index.js",
     "displayName": "Redis",
     "description": "Redis For VS Code",
+    "scripts": {
+        "lint": "eslint '**/*.ts'",
+        "lint:fix": "eslint --fix '**/*.ts'",
+        "build": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/vue/vue.config.js vue-cli-service build",
+        "serve": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/vue/vue.config.js vue-cli-service serve",
+        "compile": "tsc --build tsconfig.json",
+        "prepublish": "rm -rf ./lib && npm run build && tsc --build tsconfig.json",
+        "vscode:prepublish": "npm run prepublish"
+    },
     "categories": [
         "Other"
     ],
@@ -35,10 +44,6 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/pikadun/vscode-redis"
-    },
-    "scripts": {
-        "compile": "tsc --build tsconfig.json",
-        "vscode:prepublish": "npm run compile"
     },
     "activationEvents": [
         "onView:Connection"
@@ -98,9 +103,19 @@
         }
     },
     "devDependencies": {
-        "@types/node": "^13.9.5",
-        "@types/vscode": "^1.43.0",
-        "typescript": "^3.8.3"
+        "@types/node": "^13.13.6",
+        "@types/vscode": "^1.45.1",
+        "@typescript-eslint/eslint-plugin": "^2.34.0",
+        "@typescript-eslint/parser": "^2.34.0",
+        "@vue/cli-plugin-typescript": "^4.3.1",
+        "@vue/cli-service": "^4.3.1",
+        "eslint": "^6.8.0",
+        "html-webpack-plugin": "^4.3.0",
+        "inline-chunk-html-plugin": "^1.0.3",
+        "normalize.css": "^8.0.1",
+        "typescript": "^3.9.2",
+        "vue": "^2.6.11",
+        "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
         "redis-parser": "^3.0.0"

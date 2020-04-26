@@ -15,3 +15,16 @@ export enum RedisCommand {
     SELECT = 'SELECT ',
     GET = 'GET '
 }
+
+export enum RedisPanel {
+    SERVER_INFO = 'SERVER_INFO',
+    KEY_INFO = 'KEY_INFO'
+}
+
+export enum RedisDataType {
+    STRING = 'string',
+    LIST = 'list',
+    HASH = 'hash',
+    SET = 'set',
+    ZSET = 'zset'
+}

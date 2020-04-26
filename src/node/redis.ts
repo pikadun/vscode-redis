@@ -1,11 +1,11 @@
-import path from "path";
-import AbstractNode from "./abstraction";
-import { TreeItemContextValue, RedisCommand } from "../abstraction/constant";
-import { RedisInfo } from "../abstraction/redisinfo";
-import { TreeItemCollapsibleState } from "vscode";
+import path from 'path';
+import AbstractNode from './abstraction';
+import { TreeItemContextValue, RedisCommand } from '../abstraction/enum';
+import { RedisInfo } from '../abstraction/redisinfo';
+import { TreeItemCollapsibleState } from 'vscode';
 import command from '../redis/command';
-import DBItem from "./db";
-import { Socket } from "net";
+import DBItem from './db';
+import { Socket } from 'net';
 
 class RedisItem extends AbstractNode {
     contextValue = TreeItemContextValue.REDIS;
@@ -20,9 +20,9 @@ class RedisItem extends AbstractNode {
         super(name, collapsibleState);
     }
 
-    async getChildren() {
-        const dbInfo = await command.run(this.socket, RedisCommand.CONFIG_GET_DATABASES);
-        let count = parseInt(dbInfo[1]);
+    async getChildren(): Promise<DBItem[]> {
+        const dbInfo = await command.run<string>(this.socket, RedisCommand.CONFIG_GET_DATABASES);
+        const count = parseInt(dbInfo[1]);
         const result: DBItem[] = [];
         for (let i = 0; i < count; i++) {
             const dbName = `db${i}`;
@@ -30,11 +30,11 @@ class RedisItem extends AbstractNode {
                 `${this.id}.${i}`, i, this,
                 `${dbName}(${this.info.Keyspace[dbName]?.keys || 0})`,
                 TreeItemCollapsibleState.Collapsed
-            )
+            );
             result.push(db);
         }
-        return result
+        return result;
     }
 }
 
-export default RedisItem
+export default RedisItem;

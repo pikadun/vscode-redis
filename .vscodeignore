@@ -1,6 +1,8 @@
 .vscode/
 src/
+lib/tsconfig.tsbuildinfo
 resources/readme/
+vue/
 
 .gitignore
 package-lock.json
