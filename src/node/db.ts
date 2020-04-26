@@ -1,10 +1,10 @@
-import path from "path";
-import AbstractNode from "./abstraction";
-import { TreeItemContextValue, RedisCommand } from "../abstraction/constant";
-import { TreeItemCollapsibleState } from "vscode";
-import Command from "../redis/command";
-import RedisItem from "./redis";
-import KeyItem from "./key";
+import path from 'path';
+import AbstractNode from './abstraction';
+import { TreeItemContextValue, RedisCommand } from '../abstraction/enum';
+import { TreeItemCollapsibleState } from 'vscode';
+import Command from '../redis/command';
+import RedisItem from './redis';
+import KeyItem from './key';
 
 class DBItem extends AbstractNode {
 
@@ -22,19 +22,12 @@ class DBItem extends AbstractNode {
 
     async getChildren(): Promise<AbstractNode[]> {
         await Command.run(this.root.socket, RedisCommand.SELECT + this.index);
-        const keys: string[] = await Command.run(this.root.socket, RedisCommand.KEYS);
+        const keys = await Command.run<string[]>(this.root.socket, RedisCommand.KEYS);
         const result = keys.sort().map((key: string) => {
-            return new KeyItem(`${this.id}.${key}`, this.root, this, key, TreeItemCollapsibleState.None)
-        })
+            return new KeyItem(`${this.id}.${key}`, this.root, this, key, TreeItemCollapsibleState.None);
+        });
         return result;
-    }
-
-    /**
-     * Open the panel to create Redis data
-     */
-    async addKey() {
-        
     }
 }
 
-export default DBItem
+export default DBItem;
