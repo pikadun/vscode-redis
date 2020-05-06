@@ -1,21 +1,22 @@
 import Command from "./command";
+import RedisParser from "redis-parser"
 
-const RedisParser = require('redis-parser');
+// const RedisParser = require('redis-parser');
 const parser = new RedisParser({
-    returnReply(reply: any) {
+    returnReply(reply: string): void {
         Command.setReply(reply)
     },
-    returnError(err: any) {
+    returnError(err: string): void {
         console.log(JSON.stringify(err))
     },
-    returnFatalError(err: any) {
+    returnFatalError(err: string): void {
         console.log(JSON.stringify(err))
     }
 });
 
 class RESP {
-    encode(cmd: string) {
-        const args = cmd.split(' ');
+    encode(cmd: string): string {
+        const args = cmd.split(" ");
         let result = `*${args.length}\r\n`;
 
         for (let i = 0; i < args.length; i++) {
@@ -25,7 +26,7 @@ class RESP {
         return result;
     }
 
-    decode(buffer: Buffer) {
+    decode(buffer: Buffer): void {
         parser.execute(buffer)
     }
 }

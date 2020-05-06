@@ -1,16 +1,16 @@
-import { Socket } from 'net'
-import { RedisCommand } from '../abstraction/constant';
-import RESP from './resp';
+import { Socket } from "net"
+import { RedisCommand } from "../abstraction/constant";
+import RESP from "./resp";
 
 class Command {
     setReply!: Function;
 
-    async run(socket: Socket, cmd: RedisCommand | string): Promise<any> {
+    async run<T>(socket: Socket, cmd: RedisCommand | string): Promise<T> {
 
         const str = RESP.encode(cmd);
 
-        const result = new Promise((resolve) => {
-            this.setReply = (reply: any) => {
+        const result = new Promise<T>((resolve) => {
+            this.setReply = (reply: T): void => {
                 resolve(reply);
             }
         })

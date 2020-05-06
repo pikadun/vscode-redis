@@ -8,14 +8,14 @@ export interface RedisConfig {
 }
 
 export interface RedisItemConfig extends RedisConfig {
-    name: string,
+    name: string;
 }
 
 export interface RESPObject {
-    offset: number,
-    buffer: Buffer
+    offset: number;
+    buffer: Buffer;
 }
 
 export interface Context extends ExtensionContext {
-    manager: Manager
+    manager: Manager;
 }

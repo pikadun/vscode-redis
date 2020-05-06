@@ -9,7 +9,7 @@ import KeyItem from "./key";
 class DBItem extends AbstractNode {
 
     contextValue = TreeItemContextValue.DB;
-    iconPath = path.join(__dirname, '..', '..', 'resources', 'image', `${this.contextValue}.png`);
+    iconPath = path.join(__dirname, "..", "..", "resources", "image", `${this.contextValue}.png`);
     constructor(
         readonly id: string,
         readonly index: number,
@@ -22,7 +22,7 @@ class DBItem extends AbstractNode {
 
     async getChildren(): Promise<AbstractNode[]> {
         await Command.run(this.root.socket, RedisCommand.SELECT + this.index);
-        const keys: string[] = await Command.run(this.root.socket, RedisCommand.KEYS);
+        const keys = await Command.run<string[]>(this.root.socket, RedisCommand.KEYS);
         const result = keys.sort().map((key: string) => {
             return new KeyItem(`${this.id}.${key}`, this.root, this, key, TreeItemCollapsibleState.None)
         })

@@ -2,6 +2,7 @@
     "compilerOptions": {
         "target": "es6",
         "module": "commonjs",
+        "baseUrl": "./",
         "outDir": "./lib",
         "strict": true,
         "noImplicitAny": true,
@@ -13,6 +14,11 @@
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "moduleResolution": "node",
+        "paths": {
+            "redis-parser": [
+                "src/@types/redis-parser.d.ts"
+            ]
+        },
         "typeRoots": [
             "node_modules/@types"
         ],

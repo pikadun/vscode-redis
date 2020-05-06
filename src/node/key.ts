@@ -4,17 +4,17 @@ import { TreeItemContextValue, RedisCommand } from "../abstraction/constant";
 import path from "path";
 import RedisItem from "./redis";
 import DBItem from "./db";
-import Command from '../redis/command'
+import Command from "../redis/command"
 import Panel from "../manager/panel";
 
 class KeyItem extends AbstractNode {
     readonly command: VScodeCommand = {
-        title: 'View Key Detail',
-        command: 'Key.Detail',
+        title: "View Key Detail",
+        command: "Key.Detail",
         arguments: []
     }
     readonly contextValue = TreeItemContextValue.KEY;
-    readonly iconPath = path.join(__dirname, '..', '..', 'resources', 'image', `${this.contextValue}.png`);
+    readonly iconPath = path.join(__dirname, "..", "..", "resources", "image", `${this.contextValue}.png`);
     constructor(
         readonly id: string,
         readonly root: RedisItem,
@@ -33,9 +33,10 @@ class KeyItem extends AbstractNode {
         throw new Error("Method not implemented.");
     }
 
-    public async detail(panel: Panel) {
+    public async detail(panel: Panel): Promise<string> {
         await Command.run(this.root.socket, RedisCommand.SELECT + this.db.index);
-        const detail = await Command.run(this.root.socket, RedisCommand.GET + this.label);
+        const detail = await Command.run<string>(this.root.socket, RedisCommand.GET + this.label);
+        console.log(panel)
         return detail;
     }
 }

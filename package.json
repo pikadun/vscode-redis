@@ -37,6 +37,8 @@
         "url": "https://github.com/pikadun/vscode-redis"
     },
     "scripts": {
+        "lint": "eslint '**/*.ts'",
+        "lint:fix": "eslint --fix '**/*.ts'",
         "compile": "tsc --build tsconfig.json",
         "vscode:prepublish": "npm run compile"
     },
@@ -100,6 +102,9 @@
     "devDependencies": {
         "@types/node": "^13.9.5",
         "@types/vscode": "^1.43.0",
+        "@typescript-eslint/eslint-plugin": "^2.31.0",
+        "@typescript-eslint/parser": "^2.31.0",
+        "eslint": "^6.8.0",
         "typescript": "^3.8.3"
     },
     "dependencies": {

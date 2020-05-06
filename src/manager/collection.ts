@@ -1,20 +1,20 @@
 class Collection<T> {
 
-    private readonly entries: { [key: string]: any } = {};
+    private readonly entries: { [key: string]: T } = {};
 
     get(id: string): T {
         return this.entries[id] as T;
     }
 
-    has(id: string) {
+    has(id: string): boolean {
         return this.entries[id] !== undefined;
     }
 
-    set(id: string, entry: T) {
+    set(id: string, entry: T): void {
         this.entries[id] = entry;
     }
 
-    del(id: string) {
+    del(id: string): void {
         delete this.entries[id]
     }
 }
