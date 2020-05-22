@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.1 (2020-05-22)
+
++ Fix the type does not display.
+
 ## v0.2.0 (2020-05-22)
 
 + Use `vue` to provide webview content.
