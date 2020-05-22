@@ -1,4 +1,4 @@
-import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, Event, window } from 'vscode';
+import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window } from 'vscode';
 import { Socket, connect } from 'net';
 
 import { Constant, RedisCommand } from '../../abstraction/enum';
@@ -39,8 +39,8 @@ class Config {
 }
 
 class Connection implements TreeDataProvider<AbstractNode> {
-    _onDidChangeTreeData: EventEmitter<AbstractNode> = new EventEmitter<AbstractNode>();
-    readonly onDidChangeTreeData: Event<AbstractNode> = this._onDidChangeTreeData.event;
+    _onDidChangeTreeData = new EventEmitter<AbstractNode | void>();
+    readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
     private sockets = new Dictionary<Socket>();
     private infos = new Dictionary<RedisInfo>();
@@ -61,7 +61,7 @@ class Connection implements TreeDataProvider<AbstractNode> {
             }
             return element.getChildren();
         } else if (element && element instanceof DBItem) {
-            return element.getChildren();
+            return element.getChildren('*');
         } else {
             const config = this.config.all();
             return Object.keys(config).map(id => {
@@ -110,8 +110,8 @@ class Connection implements TreeDataProvider<AbstractNode> {
         this.refresh();
     }
 
-    refresh(): void {
-        this._onDidChangeTreeData.fire(this);
+    refresh(element?: AbstractNode): void {
+        this._onDidChangeTreeData.fire(element);
     }
 
     private async getHost(): Promise<string | undefined> {
