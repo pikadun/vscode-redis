@@ -2,13 +2,13 @@
   <div id="Key">
     <div>
       <r-input type="text" id="key" v-model="key" :readonly="!editing">
-        <template slot="prepend" v-text="type"></template>
+        <template v-slot:prepend>{{type.toUpperCase()+':'}}</template>
       </r-input>
       <r-input type="text" id="ttl" v-model="ttl" :readonly="!editing">
-        <template slot="prepend">TTL:</template>
+        <template v-slot:prepend>TTL:</template>
       </r-input>
     </div>
-    <div class='editor'>{{value}}</div>
+    <div class="editor">{{value}}</div>
   </div>
 </template>
 
@@ -47,6 +47,11 @@ export default Vue.extend({
   mounted() {
     window.addEventListener("message", (event: any) => {
       const data = event.data;
+      // ignore other message
+      if (!data.fromVscode) {
+        return;
+      }
+
       this.key = data.key;
       this.type = data.type;
       this.value = data.value;
