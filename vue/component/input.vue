@@ -8,9 +8,6 @@
 </template>
 
 <style scoped>
-input {
-  /* background-color: transparent; */
-}
 .r-input {
   display: inline-block;
 }
@@ -20,7 +17,6 @@ input {
 import Vue from "vue";
 export default Vue.extend({
   name: "RInput",
-  props: {
-  }
+  props: {}
 });
 </script>

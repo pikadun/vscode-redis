@@ -46,7 +46,7 @@ class Panel {
         }
 
         this.panel.webview.html = html;
-        this.panel.webview.postMessage(options.redisData);
+        this.panel.webview.postMessage(Object.assign(options.redisData, { fromVscode: true }));
     }
 
     getWebViewContent(templateName: string): string {
