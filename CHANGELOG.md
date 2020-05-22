@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.0 (2020-05-22)
+
++ Use `vue` to provide webview content.
+
 ## v0.1.4 (2020-04-09)
 
 + Fix the problem that the detail page cannot be displayed.
