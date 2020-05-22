@@ -15,7 +15,7 @@
         "build": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/vue/vue.config.js vue-cli-service build",
         "serve": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/vue/vue.config.js vue-cli-service serve",
         "compile": "tsc --build tsconfig.json",
-        "prepublish": "rm -rf ./lib && npm run build && tsc --build tsconfig.json",
+        "pre": "rm -rf ./lib && npm run build && tsc --build tsconfig.json",
         "vscode:prepublish": "npm run prepublish"
     },
     "categories": [
@@ -95,7 +95,8 @@
             "view/title": [
                 {
                     "command": "Connection.Add",
-                    "group": "navigation"
+                    "group": "navigation",
+                    "when": "view == Connection"
                 }
             ],
             "view/item/context": [
