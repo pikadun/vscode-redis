@@ -3,7 +3,7 @@
     "version": "0.2.0",
     "publisher": "Dunn",
     "engines": {
-        "vscode": "^1.43.0"
+        "vscode": "^1.22.0"
     },
     "license": "MIT",
     "main": "./lib/index.js",
@@ -103,8 +103,8 @@
         }
     },
     "devDependencies": {
-        "@types/node": "^13.13.6",
-        "@types/vscode": "^1.45.1",
+        "@types/node": "^13.13.9",
+        "@types/vscode": "^1.22.0",
         "@typescript-eslint/eslint-plugin": "^2.34.0",
         "@typescript-eslint/parser": "^2.34.0",
         "@vue/cli-plugin-typescript": "^4.3.1",
@@ -113,7 +113,7 @@
         "html-webpack-plugin": "^4.3.0",
         "inline-chunk-html-plugin": "^1.0.3",
         "normalize.css": "^8.0.1",
-        "typescript": "^3.9.2",
+        "typescript": "^3.9.3",
         "vue": "^2.6.11",
         "vue-template-compiler": "^2.6.11"
     },
