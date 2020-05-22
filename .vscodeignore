@@ -4,6 +4,7 @@ lib/tsconfig.tsbuildinfo
 resources/readme/
 vue/
 
+.eslintrc.json
 .gitignore
 package-lock.json
 tsconfig.json
