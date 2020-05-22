@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3.0 (2020-05-22)
+
++ Fix the icon appears in an incorrect position.
++ Get 1000 keys every db by default.
++ Reload keys features.
+
 ## v0.2.1 (2020-05-22)
 
 + Fix the type does not display.
