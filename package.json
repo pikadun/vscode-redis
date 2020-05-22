@@ -82,6 +82,11 @@
                 "title": "View Key Detail"
             },
             {
+                "command": "DB.Reload",
+                "title": "Reload Keys",
+                "icon": "resources/image/refresh.png"
+            },
+            {
                 "command": "DB.AddKey",
                 "title": "Add Key"
             }
@@ -97,6 +102,11 @@
                 {
                     "command": "Connection.Delete",
                     "when": "viewItem == redis",
+                    "group": "inline"
+                },
+                {
+                    "command": "DB.Reload",
+                    "when": "viewItem == db",
                     "group": "inline"
                 }
             ]
