@@ -7,7 +7,8 @@ import path from 'path';
 class Panel {
     private readonly viewType = 'RedisView';
     private readonly title = 'Redis';
-    private readonly basePath = path.join(this.context.extensionPath, 'lib/view');
+    private readonly basePath = this.context.extensionPath;
+    private readonly viewPath = path.join(this.basePath, 'lib/view');
     private panel!: WebviewPanel;
     private panelDisPosed = true;
     constructor(private context: ExtensionContext) { }
@@ -23,6 +24,7 @@ class Panel {
             }
         );
 
+        panel.iconPath = Uri.file(path.resolve(this.basePath, 'resources', 'image', 'redis.png'));
         panel.onDidDispose(() => {
             this.panelDisPosed = true;
         });
@@ -50,10 +52,10 @@ class Panel {
     }
 
     getWebViewContent(templateName: string): string {
-        const resourcePath = path.join(this.basePath, templateName);
+        const resourcePath = path.join(this.viewPath, templateName);
         let html = fs.readFileSync(resourcePath).toString();
         html = html.replace(/(href=\.|src=\.)/g, (m) => {
-            return m.substring(0, m.length - 1) + Uri.file(this.basePath).with({ scheme: 'vscode-resource' });
+            return m.substring(0, m.length - 1) + Uri.file(this.viewPath).with({ scheme: 'vscode-resource' });
         });
 
         return html;
