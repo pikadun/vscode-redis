@@ -11,6 +11,7 @@
 .r-input {
   display: inline-block;
 }
+
 </style>
 
 <script lang="ts">

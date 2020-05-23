@@ -14,6 +14,7 @@
 
 <style scoped>
 .editor {
+  padding: 1vw;
   width: 100%;
   box-sizing: border-box;
   border: 1px solid;
@@ -35,7 +36,7 @@ export default Vue.extend({
       editing: false,
       type: "string",
       key: "",
-      value: "",
+      value: "222",
       ttl: -1
     };
   },
