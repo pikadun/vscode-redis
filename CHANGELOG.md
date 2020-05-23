@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.1 (2020-05-23)
+
++ Adjust some styles.
+
 ## v0.3.0 (2020-05-22)
 
 + Fix the icon appears in an incorrect position.
