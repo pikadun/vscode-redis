@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.0
+
++ Add redis icon on view tab.
++ Add HASH data support.
+
 ## v0.3.1 (2020-05-23)
 
 + Adjust some styles.
