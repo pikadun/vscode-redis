@@ -21,14 +21,16 @@ export interface Context extends ExtensionContext {
     manager: Manager;
 }
 
+export type TypeRedisData = string | HASH;
+
 export interface RedisData {
-    key: string;
     type: RedisDataType;
-    value: string;
+    key: string;
+    value: TypeRedisData;
 }
 
-export interface PanelOptions {
-    redisData?: RedisData;
+export interface HASH {
+    [x: string]: string;
 }
 
 export interface InputAttributes {
@@ -36,5 +38,4 @@ export interface InputAttributes {
     value: string | number;
     disabled: boolean;
     readonly: boolean;
-    
 }

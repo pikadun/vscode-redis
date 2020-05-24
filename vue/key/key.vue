@@ -1,48 +1,93 @@
 <template>
-  <div id="Key">
-    <div>
-      <r-input type="text" id="key" v-model="key" :readonly="!editing">
-        <template v-slot:prepend>{{type.toUpperCase()+':'}}</template>
+  <div v-cloak>
+    <div class="header">
+      <r-input type="text" id="key" v-model="redisData.key" :readonly="!editing">
+        <template v-slot:prepend>{{redisData.type.toUpperCase()+':'}}</template>
       </r-input>
-      <r-input type="text" id="ttl" v-model="ttl" :readonly="!editing">
+      <r-input type="text" id="ttl" v-model="redisData.ttl" :readonly="!editing">
         <template v-slot:prepend>TTL:</template>
       </r-input>
+      <r-button v-if="hashSelected&&redisData.type==='hash'" @click="hashDialog=true">View</r-button>
     </div>
-    <div class="editor">{{value}}</div>
+
+    <div name="placeholder" style="height:6vh"></div>
+
+    <div class="hash" v-if="redisData.type==='hash'">
+      <r-table :datas="redisData.value" @selectRow="selectRow"></r-table>
+    </div>
+
+    <div class="string" v-else-if="redisData.type==='string'" v-text="value"></div>
+
+    <r-dialog :visible.sync="hashDialog" class="hashDialog">
+      <div style="border-bottom:1px" v-text="hashSelected"></div>
+      <div v-text="redisData.value[hashSelected]"></div>
+    </r-dialog>
   </div>
 </template>
 
 <style scoped>
-.editor {
+.header {
+  position: fixed;
+  background-color: var(--vscode-editor-background);
+  width: 100%;
+  padding-bottom: 1vh;
+}
+.string {
   padding: 1vw;
   width: 100%;
   box-sizing: border-box;
   border: 1px solid;
   min-height: 80vh;
-  margin-top: 2vh;
+}
+.hashDialog div {
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  word-break: break-all;
+  border: 1px solid;
+  overflow-y: scroll;
 }
 </style>
 
 <script lang="ts">
 import Vue from "vue";
 import RInput from "../component/input.vue";
+import RTable from "../component/table.vue";
+import RButton from "../component/button.vue";
+import RDialog from "../component/dialog.vue";
 
 export default Vue.extend({
   components: {
-    RInput
+    RInput,
+    RTable,
+    RButton,
+    RDialog
   },
   data() {
     return {
+      redisData: {
+        type: "hash",
+        key: "",
+        value: "",
+        ttl: -1
+      },
       editing: false,
-      type: "string",
-      key: "",
-      value: "222",
-      ttl: -1
+      hashSelected: "",
+      hashDialog: false
     };
   },
   methods: {
+    init() {
+      this.editing = false;
+      this.hashSelected = "";
+      this.hashDialog = false;
+    },
     edit() {
       this.editing = true;
+    },
+    selectRow(k: string) {
+      this.hashSelected = k;
     }
   },
   mounted() {
@@ -52,10 +97,8 @@ export default Vue.extend({
       if (!data.fromVscode) {
         return;
       }
-
-      this.key = data.key;
-      this.type = data.type;
-      this.value = data.value;
+      this.init();
+      this.redisData = data;
     });
   }
 });

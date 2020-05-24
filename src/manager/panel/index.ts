@@ -1,6 +1,6 @@
 import { window, ViewColumn, WebviewPanel, Uri, ExtensionContext } from 'vscode';
 import { RedisPanel } from '../../abstraction/enum';
-import { PanelOptions } from 'src/abstraction/interface';
+import { RedisData } from 'src/abstraction/interface';
 import fs from 'fs';
 import path from 'path';
 
@@ -35,7 +35,7 @@ class Panel {
      * Show a redis panel
      * @param name 
      */
-    show(name: RedisPanel, options: PanelOptions): void {
+    show(name: RedisPanel, redisData: RedisData): void {
         if (this.panelDisPosed) {
             this.create();
         }
@@ -48,7 +48,7 @@ class Panel {
         }
 
         this.panel.webview.html = html;
-        this.panel.webview.postMessage(Object.assign(options.redisData, { fromVscode: true }));
+        this.panel.webview.postMessage(Object.assign(redisData, { fromVscode: true }));
     }
 
     getWebViewContent(templateName: string): string {

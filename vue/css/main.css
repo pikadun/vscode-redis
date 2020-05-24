@@ -4,9 +4,16 @@
     font-size: var(--vscode-editor-font-size);
 }
 
+body{
+    padding: 1vh;
+}
 
-input {
+input button {
     background-color: var(--vscode-editor-background);
     color: var(--vscode-editor-foreground);
     border: 1px solid var(--vscode-editor-foreground);
+}
+
+[v-cloak] {
+    display: none !important;
 }

@@ -1,11 +1,12 @@
 import AbstractNode from './abstraction';
 import { TreeItemCollapsibleState, Command as VScodeCommand } from 'vscode';
-import { TreeItemContextValue, RedisCommand, RedisPanel, RedisDataType } from '../abstraction/enum';
+import { TreeItemContextValue, RedisPanel, RedisDataType } from '../abstraction/enum';
 import path from 'path';
 import RedisItem from './redis';
 import DBItem from './db';
 import Command from '../redis/command';
 import Panel from '../manager/panel';
+import { TypeRedisData, HASH } from 'src/abstraction/interface';
 
 class KeyItem extends AbstractNode {
     readonly command: VScodeCommand = {
@@ -34,15 +35,41 @@ class KeyItem extends AbstractNode {
     }
 
     public async detail(panel: Panel): Promise<void> {
-        await Command.run(this.root.socket, RedisCommand.SELECT + this.db.index);
-        const detail = await Command.run<string>(this.root.socket, RedisCommand.GET + this.label);
+        await Command.run(this.root.socket, `SELECT ${this.db.index}`);
+
+        const type = await Command.run<string>(this.root.socket, `TYPE ${this.label}`);
+        let data: TypeRedisData;
+
+        switch (type) {
+            case RedisDataType.STRING:
+                data = await this.string();
+                break;
+            case RedisDataType.HASH:
+                data = await this.hash();
+                break;
+            default:
+                data = 'Method not implemented.';
+        }
+
         panel.show(RedisPanel.KEY_INFO, {
-            redisData: {
-                key: this.label,
-                type: RedisDataType.STRING,
-                value: detail
-            }
+            type: type as RedisDataType, key: this.label, value: data
         });
+    }
+
+    private async string(): Promise<TypeRedisData> {
+        const data = await Command.run<string>(this.root.socket, `GET ${this.label}`);
+        return data;
+    }
+
+    private async hash(): Promise<TypeRedisData> {
+        const data = await Command.run<string[]>(this.root.socket, `HGETALL ${this.label}`);
+        const result: HASH = Object.create(null);
+
+        for (let i = 0; i < data.length; i++) {
+            result[data[i]] = data[++i];
+        }
+
+        return result;
     }
 }
 
