@@ -8,4 +8,4 @@ Welcome to the redis extension for Visual Studio Code!
 
 ## Usage
 
-![guide](https://media.githubusercontent.com/media/pikadun/lfs/master/vscode-redis/guide.gif)
+![guide](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/lfs/items?path=%2Fvscode-redis%2Fguide.gif)
