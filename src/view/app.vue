@@ -1,17 +1,28 @@
 <template>
   <div id="app">
-    <key></key>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
-import Key from './page/key/key.vue'
 
 export default Vue.extend({
   name: "app",
-  components: {
-    Key
+  methods: {},
+  mounted() {
+    window.addEventListener("message", event => {
+      const data = event.data;
+      // ignore other message
+      if (!data.fromVscode) {
+        return;
+      }
+      switch (data.name) {
+        case "KEY_INFO":
+          this.$router.replace({ name: "key", params: data });
+          break;
+      }
+    });
   }
 });
 </script>

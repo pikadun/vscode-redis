@@ -10,7 +10,7 @@
     "displayName": "Redis",
     "description": "Redis For VS Code",
     "scripts": {
-        "dev":"webpack-dev-server --config './config/webpack.ts' --config-name 'view'",
+        "dev": "webpack-dev-server --config './config/webpack.ts' --config-name 'view'",
         "lint": "eslint '**/*.ts'",
         "lint:fix": "eslint --fix '**/*.ts'",
         "watch": "webpack --config './config/webpack.ts' --watch",
@@ -136,6 +136,7 @@
         "typescript": "^3.9.3",
         "vue": "^2.6.11",
         "vue-loader": "^15.9.2",
+        "vue-router": "^3.2.0",
         "vue-style-loader": "^4.1.2",
         "vue-template-compiler": "^2.6.11",
         "webpack": "^4.43.0",

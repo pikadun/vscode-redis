@@ -80,15 +80,10 @@ export default Vue.extend({
     }
   },
   mounted() {
-    window.addEventListener("message", (event: any) => {
-      const data = event.data;
-      // ignore other message
-      if (!data.fromVscode) {
-        return;
-      }
-      this.init();
-      this.redisData = data;
-    });
+    this.redisData.type = this.$route.params.type;
+    this.redisData.key = this.$route.params.key;
+    this.redisData.value = this.$route.params.value;
+    this.redisData.ttl = parseInt(this.$route.params.ttl);
   }
 });
 </script>
