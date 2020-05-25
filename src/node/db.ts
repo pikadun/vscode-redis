@@ -8,7 +8,7 @@ import KeyItem from './key';
 
 class DBItem extends AbstractNode {
     contextValue = TreeItemContextValue.DB;
-    iconPath = path.join(__dirname, '..', '..', 'resources', 'image', `${this.contextValue}.png`);
+    iconPath = path.join(__dirname, '..', 'resources', 'image', `${this.contextValue}.png`);
     cursor = '0';
     constructor(
         readonly id: string,

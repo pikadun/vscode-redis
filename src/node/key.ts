@@ -15,7 +15,7 @@ class KeyItem extends AbstractNode {
         arguments: []
     };
     readonly contextValue = TreeItemContextValue.KEY;
-    readonly iconPath = path.join(__dirname, '..', '..', 'resources', 'image', `${this.contextValue}.png`);
+    readonly iconPath = path.join(__dirname, '..', 'resources', 'image', `${this.contextValue}.png`);
     constructor(
         readonly id: string,
         readonly root: RedisItem,
