@@ -40,15 +40,10 @@ class Panel {
             this.create();
         }
 
-        let html = '';
-        switch (name) {
-            case RedisPanel.KEY_INFO:
-                html = this.getWebViewContent('key.html');
-                break;
-        }
+        const html = this.getWebViewContent('index.html');
 
         this.panel.webview.html = html;
-        this.panel.webview.postMessage(Object.assign(redisData, { fromVscode: true }));
+        this.panel.webview.postMessage(Object.assign(redisData, { fromVscode: true, name }));
     }
 
     getWebViewContent(templateName: string): string {

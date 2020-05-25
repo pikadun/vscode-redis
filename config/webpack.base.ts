@@ -7,16 +7,9 @@ const config: Configuration = {
     mode: env === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname, '..', 'src'),
     stats: 'minimal',
+    devtool: env === 'production' ? undefined : 'inline-source-map',
     resolve: {
-        extensions: ['.ts', 'js']
-    },
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                use: 'ts-loader'
-            }
-        ]
+        extensions: ['.ts', '.js']
     }
 };
 
