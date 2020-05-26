@@ -40,8 +40,8 @@ class Panel {
             this.create();
         }
 
+        this.panel.reveal(ViewColumn.One);
         const html = this.getWebViewContent('index.html');
-
         this.panel.webview.html = html;
         this.panel.webview.postMessage(Object.assign(redisData, { fromVscode: true, name }));
     }
