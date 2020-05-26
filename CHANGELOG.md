@@ -1,6 +1,10 @@
 # Changelog
 
-## v0.4.0
+## v0.4.1 (2020-05-26)
+
++ Fix ttl does not show.
+
+## v0.4.0 (2020-05-24)
 
 + Add redis icon on view tab.
 + Add HASH data support.
