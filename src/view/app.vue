@@ -19,8 +19,7 @@ export default Vue.extend({
       }
       switch (data.name) {
         case "KEY_INFO":
-          this.$router.replace({ name: "key", params: data });
-          break;
+          this.$router.push({ name: "key", params: data });
       }
     });
   }

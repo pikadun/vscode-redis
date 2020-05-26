@@ -18,7 +18,7 @@
         "build:view": "webpack --config './config/webpack.ts' --config-name 'view'",
         "build": "webpack --config './config/webpack.ts'",
         "compile": "rm -rf ./lib/* && NODE_ENV='production' webpack --config './config/webpack.ts'",
-        "pre": "rm -rf ./lib",
+        "pre": "rm -rf ./lib && npm run compile",
         "vscode:prepublish": "npm run pre"
     },
     "categories": [
@@ -136,7 +136,7 @@
         "typescript": "^3.9.3",
         "vue": "^2.6.11",
         "vue-loader": "^15.9.2",
-        "vue-router": "^3.2.0",
+        "vue-router": "^3.0.7",
         "vue-style-loader": "^4.1.2",
         "vue-template-compiler": "^2.6.11",
         "webpack": "^4.43.0",

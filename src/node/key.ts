@@ -38,6 +38,7 @@ class KeyItem extends AbstractNode {
         await Command.run(this.root.socket, `SELECT ${this.db.index}`);
 
         const type = await Command.run<string>(this.root.socket, `TYPE ${this.label}`);
+        const ttl = await Command.run<number>(this.root.socket, `TTL ${this.label}`);
         let data: TypeRedisData;
 
         switch (type) {
@@ -52,7 +53,7 @@ class KeyItem extends AbstractNode {
         }
 
         panel.show(RedisPanel.KEY_INFO, {
-            type: type as RedisDataType, key: this.label, value: data
+            type: type as RedisDataType, key: this.label, value: data, ttl
         });
     }
 

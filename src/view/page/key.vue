@@ -71,6 +71,11 @@ export default Vue.extend({
       this.editing = false;
       this.hashSelected = "";
       this.hashDialog = false;
+
+      this.redisData.type = this.$route.params.type;
+      this.redisData.key = this.$route.params.key;
+      this.redisData.value = this.$route.params.value;
+      this.redisData.ttl = parseInt(this.$route.params.ttl);
     },
     edit() {
       this.editing = true;
@@ -80,10 +85,14 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.redisData.type = this.$route.params.type;
-    this.redisData.key = this.$route.params.key;
-    this.redisData.value = this.$route.params.value;
-    this.redisData.ttl = parseInt(this.$route.params.ttl);
+    this.init();
+  },
+  watch: {
+    $route(to, from) {
+      if (to.name === from.name) {
+        this.init();
+      }
+    }
   }
 });
 </script>
