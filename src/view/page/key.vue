@@ -1,5 +1,5 @@
 <template>
-  <div v-cloak>
+  <div>
     <div class="header">
       <r-input type="text" id="key" v-model="redisData.key" :readonly="!editing">
         <template v-slot:prepend>{{redisData.type.toUpperCase()+':'}}</template>
@@ -16,7 +16,7 @@
       <r-table :datas="redisData.value" @selectRow="selectRow"></r-table>
     </div>
 
-    <div class="string" v-else-if="redisData.type==='string'" v-text="value"></div>
+    <div class="string" v-else-if="redisData.type==='string'" v-text="redisData.value"></div>
 
     <r-dialog :visible.sync="hashDialog" class="hashDialog">
       <div style="border-bottom:1px" v-text="hashSelected"></div>
@@ -52,22 +52,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import RInput from "../component/input.vue";
-import RTable from "../component/table.vue";
-import RButton from "../component/button.vue";
-import RDialog from "../component/dialog.vue";
-
 export default Vue.extend({
-  components: {
-    RInput,
-    RTable,
-    RButton,
-    RDialog
-  },
   data() {
     return {
       redisData: {
-        type: "hash",
+        type: "string",
         key: "",
         value: "",
         ttl: -1
@@ -82,6 +71,11 @@ export default Vue.extend({
       this.editing = false;
       this.hashSelected = "";
       this.hashDialog = false;
+
+      this.redisData.type = this.$route.params.type;
+      this.redisData.key = this.$route.params.key;
+      this.redisData.value = this.$route.params.value;
+      this.redisData.ttl = parseInt(this.$route.params.ttl);
     },
     edit() {
       this.editing = true;
@@ -91,15 +85,14 @@ export default Vue.extend({
     }
   },
   mounted() {
-    window.addEventListener("message", (event: any) => {
-      const data = event.data;
-      // ignore other message
-      if (!data.fromVscode) {
-        return;
+    this.init();
+  },
+  watch: {
+    $route(to, from) {
+      if (to.name === from.name) {
+        this.init();
       }
-      this.init();
-      this.redisData = data;
-    });
+    }
   }
 });
 </script>

@@ -8,7 +8,6 @@
 
 <style scoped>
 .r-button {
-    
 }
 </style>
 

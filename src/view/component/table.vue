@@ -25,7 +25,6 @@
   word-break: break-all;
   table-layout: fixed;
 }
-
 .r-table table td {
   white-space: nowrap;
   overflow: hidden;

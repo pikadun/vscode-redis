@@ -16,7 +16,6 @@
   width: 100vw;
   height: 100vh;
 }
-
 .r-dialog {
   margin: auto;
   position: absolute;

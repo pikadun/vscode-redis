@@ -27,6 +27,7 @@ export interface RedisData {
     type: RedisDataType;
     key: string;
     value: TypeRedisData;
+    ttl: number;
 }
 
 export interface HASH {
