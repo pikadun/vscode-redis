@@ -53,7 +53,7 @@ class KeyItem extends AbstractNode {
         }
 
         panel.show(RedisPanel.KEY_INFO, {
-            type: type as RedisDataType, key: this.label, value: data, ttl
+            redisData: { type: type as RedisDataType, key: this.label, value: data, ttl }
         });
     }
 

@@ -30,6 +30,10 @@ export interface RedisData {
     ttl: number;
 }
 
+export interface PanelOptions {
+    redisData?: RedisData;
+}
+
 export interface HASH {
     [x: string]: string;
 }

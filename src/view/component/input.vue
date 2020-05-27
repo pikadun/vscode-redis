@@ -10,6 +10,7 @@
 <style scoped>
 .r-input {
   display: inline-block;
+  margin: 10px 0;
 }
 </style>
 

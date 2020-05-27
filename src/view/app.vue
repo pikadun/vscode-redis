@@ -6,6 +6,7 @@
 
 <script>
 import Vue from "vue";
+import { RedisPanel } from "../abstraction/enum";
 
 export default Vue.extend({
   name: "app",
@@ -18,8 +19,11 @@ export default Vue.extend({
         return;
       }
       switch (data.name) {
-        case "KEY_INFO":
-          this.$router.push({ name: "key", params: data });
+        case RedisPanel.KEY_INFO:
+          this.$router.push({ name: data.name, params: data });
+          break;
+        case RedisPanel.ADD_CONNECTION:
+          this.$router.push({ name: data.name });
       }
     });
   }
