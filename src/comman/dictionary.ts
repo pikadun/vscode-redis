@@ -7,7 +7,7 @@ class Dictionary<T> {
     }
 
     has(id: string): boolean {
-        return this.entries[id] !== undefined;
+        return id in this.entries;
     }
 
     set(id: string, entry: T): void {
