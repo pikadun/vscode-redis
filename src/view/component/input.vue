@@ -3,7 +3,7 @@
     <span v-if="$slots.prepend">
       <slot name="prepend"></slot>
     </span>
-    <input :type="type" v-bind="$attrs"/>
+    <input :type="type" v-bind="$attrs" />
   </div>
 </template>
 
@@ -19,6 +19,8 @@ import Vue from "vue";
 export default Vue.extend({
   name: "RInput",
   props: {
+    // TODO: v-model 参考elementui
+    value: [String, Number],
     type: {
       type: String,
       default: "text"

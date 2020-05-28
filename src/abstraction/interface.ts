@@ -31,7 +31,8 @@ export interface RedisData {
 }
 
 export interface PanelOptions {
-    redisData?: RedisData;
+    data?: RedisData;
+    connection?: RedisConfig;
 }
 
 export interface HASH {

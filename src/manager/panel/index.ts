@@ -1,4 +1,4 @@
-import { window, ViewColumn, WebviewPanel, Uri, ExtensionContext } from 'vscode';
+import { window, ViewColumn, WebviewPanel, Uri, ExtensionContext, commands } from 'vscode';
 import { RedisPanel } from '../../abstraction/enum';
 import { PanelOptions } from 'src/abstraction/interface';
 import fs from 'fs';
@@ -25,9 +25,18 @@ class Panel {
         );
 
         panel.iconPath = Uri.file(path.resolve(this.basePath, 'resources', 'image', 'redis.png'));
+
         panel.onDidDispose(() => {
             this.panelDisPosed = true;
         });
+
+        panel.webview.onDidReceiveMessage(message => {
+            if (!message.fromWebview) {
+                return;
+            }
+            commands.executeCommand(message.command, ...message.args);
+        });
+
         this.panelDisPosed = false;
         this.panel = panel;
     }
@@ -46,26 +55,30 @@ class Panel {
 
         const common = { fromVscode: true, name };
 
+        let data = Object.create(null);
         switch (name) {
             case RedisPanel.KEY_INFO:
-                this.panel.webview.postMessage(Object.assign(options?.redisData, common));
+                data = Object.assign(common, options?.data);
                 break;
-            case RedisPanel.ADD_CONNECTION:
-                this.panel.webview.postMessage(common);
+            case RedisPanel.CONNECTION:
+                data = Object.assign(common, options?.connection);
                 break;
             default:
-                this.panel.webview.postMessage(common);
+                data = common;
         }
+        this.panel.webview.postMessage(data);
     }
 
+    /**
+     * Read the template html and replace the href and src path
+     * @param templateName template html name
+     */
     getWebViewContent(templateName: string): string {
         const resourcePath = path.join(this.viewPath, templateName);
-        let html = fs.readFileSync(resourcePath).toString();
-        html = html.replace(/(href=\.|src=\.)/g, (m) => {
-            return m.substring(0, m.length - 1) + Uri.file(this.viewPath).with({ scheme: 'vscode-resource' });
+        const html = fs.readFileSync(resourcePath).toString();
+        return html.replace(/(href=\.|src=\.)/g, (m) => {
+            return m.substring(0, m.length - 1) + this.panel.webview.asWebviewUri(Uri.file(this.viewPath));
         });
-
-        return html;
     }
 }
 

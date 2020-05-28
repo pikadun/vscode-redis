@@ -16,7 +16,7 @@ import { RedisPanel } from '../abstraction/enum';
 const router = new VueRouter({
     routes: [
         { name: RedisPanel.KEY_INFO, path: '/key/:key', component: key },
-        { name: RedisPanel.ADD_CONNECTION, path: '/connection', component: connection }
+        { name: RedisPanel.CONNECTION, path: '/connection', component: connection }
     ]
 });
 

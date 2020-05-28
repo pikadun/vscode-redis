@@ -18,13 +18,7 @@ export default Vue.extend({
       if (!data.fromVscode) {
         return;
       }
-      switch (data.name) {
-        case RedisPanel.KEY_INFO:
-          this.$router.push({ name: data.name, params: data });
-          break;
-        case RedisPanel.ADD_CONNECTION:
-          this.$router.push({ name: data.name });
-      }
+      this.$router.push({ name: data.name, params: data });
     });
   }
 });

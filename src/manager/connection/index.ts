@@ -1,18 +1,19 @@
 import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window } from 'vscode';
 import { Socket, connect } from 'net';
 
-import { Constant, RedisCommand } from '../../abstraction/enum';
-import { RedisItemConfig } from '../../abstraction/interface';
+import { Constant, RedisCommand, RedisPanel } from '../../abstraction/enum';
+import { RedisItemConfig, PanelOptions } from '../../abstraction/interface';
 
 
 import AbstractNode from '../../node/abstraction';
 import RESP from '../../redis/resp';
 import Command from '../../redis/command';
 import utils from '../../node/utils';
-import Dictionary from '../../comman/dictionary';
+import Dictionary from '../../common/dictionary';
 import RedisItem from '../../node/redis';
 import DBItem from '../../node/db';
 import { RedisInfo } from '../../abstraction/redisinfo';
+import Panel from '../panel';
 
 class Config {
     constructor(private context: ExtensionContext) { }
@@ -103,6 +104,25 @@ class Connection implements TreeDataProvider<AbstractNode> {
         await this.init(id, host, parseInt(port));
         this.config.set(id, { host, port: parseInt(port), auth, name });
         this.refresh();
+    }
+
+    /**
+     * Add or edit a connection
+     * @param panel Panel instance
+     * @param id connection id
+     */
+    edit(panel: Panel, id?: string): void {
+        const options: PanelOptions = {};
+        if (id) {
+            options.connection = this.config.get(id);
+        }
+        panel.show(RedisPanel.CONNECTION, options);
+    }
+
+    test(p1: string, p2: string, p3: string): void {
+        console.log(p1);
+        console.log(p2);
+        console.log(p3);
     }
 
     delete(element: AbstractNode): void {
