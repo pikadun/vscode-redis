@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.2 (2020-06-02)
+
++ Fix: redis panel does not take focus.
++ Fix: `Dictionary.has()` returned wrong value.
+
 ## v0.4.1 (2020-05-26)
 
 + Fix ttl does not show.
