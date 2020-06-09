@@ -19,21 +19,20 @@ import Vue from "vue";
 export default Vue.extend({
   name: "RInput",
   props: {
-    // TODO: v-model 参考elementui
     value: [String, Number],
     type: {
       type: String,
       default: "text"
     }
   },
-  data() {
-    return {
-      currValue: this.value
-    };
-  },
-  watch: {
-    currValue(val) {
-      this.$emit("input", val);
+  computed: {
+    currValue: {
+      get(): string | number {
+        return this.value;
+      },
+      set(newVal: string | number) {
+        this.$emit("input", newVal);
+      }
     }
   }
 });

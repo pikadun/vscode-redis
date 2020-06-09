@@ -71,7 +71,6 @@ export default Vue.extend({
       this.editing = false;
       this.hashSelected = "";
       this.hashDialog = false;
-
       this.redisData.type = this.$route.params.type;
       this.redisData.key = this.$route.params.key;
       this.redisData.value = this.$route.params.value;
