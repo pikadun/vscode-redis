@@ -5,7 +5,7 @@ import { RedisDataType } from './enum';
 export interface RedisConfig {
     host: string;
     port: number;
-    auth?: string;
+    auth: string;
 }
 
 export interface RedisItemConfig extends RedisConfig {
@@ -23,11 +23,18 @@ export interface Context extends ExtensionContext {
 
 export type TypeRedisData = string | HASH;
 
+export type ConnectionOptions = [string, string, number, string, ...string[]];
+
 export interface RedisData {
     type: RedisDataType;
     key: string;
     value: TypeRedisData;
     ttl: number;
+}
+
+export interface PanelOptions {
+    data?: RedisData;
+    connection?: RedisConfig;
 }
 
 export interface HASH {

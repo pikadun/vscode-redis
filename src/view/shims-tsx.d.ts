@@ -9,4 +9,13 @@ declare global {
             [elem: string]: object;
         }
     }
+    function acquireVsCodeApi(): void;
+}
+
+declare module 'vue/types/vue' {
+    interface Vue {
+        vscode: {
+            postMessage(args?: any): void;
+        }
+    }
 }

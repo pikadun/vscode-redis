@@ -14,7 +14,7 @@ const config: Configuration = {
     entry: './view/app.ts',
     output: {
         path: path.resolve(__dirname, '..', 'lib', 'view'),
-        publicPath: env === 'production' ? './' : '/',
+        publicPath: env ? './' : '/',
         filename: 'js/[name].js',
         chunkFilename: 'js/[name].js'
     },

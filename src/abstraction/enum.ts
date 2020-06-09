@@ -18,7 +18,8 @@ export enum RedisCommand {
 
 export enum RedisPanel {
     SERVER_INFO = 'SERVER_INFO',
-    KEY_INFO = 'KEY_INFO'
+    KEY_INFO = 'KEY_INFO',
+    CONNECTION = 'CONNECTION'
 }
 
 export enum RedisDataType {

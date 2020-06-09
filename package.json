@@ -13,10 +13,7 @@
         "dev": "webpack-dev-server --config './config/webpack.ts' --config-name 'view'",
         "lint": "eslint '**/*.ts'",
         "lint:fix": "eslint --fix '**/*.ts'",
-        "watch": "webpack --config './config/webpack.ts' --watch",
-        "build:extension": "webpack --config './config/webpack.ts' --config-name 'extension'",
-        "build:view": "webpack --config './config/webpack.ts' --config-name 'view'",
-        "build": "webpack --config './config/webpack.ts'",
+        "watch": "NODE_ENV='watch' webpack --config './config/webpack.ts' --watch",
         "compile": "rm -rf ./lib/* && NODE_ENV='production' webpack --config './config/webpack.ts'",
         "pre": "rm -rf ./lib && npm run compile",
         "vscode:prepublish": "npm run pre"
@@ -81,6 +78,11 @@
                 "icon": "resources/image/delete.png"
             },
             {
+                "command": "Connection.Edit",
+                "title": "Edit Connection",
+                "icon": "resources/image/add.png"
+            },
+            {
                 "command": "Key.Detail",
                 "title": "View Key Detail"
             },
@@ -130,7 +132,6 @@
         "css-loader": "^3.5.3",
         "eslint": "^6.8.0",
         "html-webpack-plugin": "^4.3.0",
-        "normalize.css": "^8.0.1",
         "ts-loader": "^7.0.5",
         "ts-node": "^8.10.1",
         "typescript": "^3.9.3",

@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es2017",
+        "target": "ES2017",
         "module": "commonjs",
         "baseUrl": "./",
         "outDir": "./lib",
@@ -17,6 +17,9 @@
         "paths": {
             "redis-parser": [
                 "src/@types/redis-parser.d.ts"
+            ],
+            "*.vue": [
+                "src/@types/shims-vue.d.ts"
             ]
         },
         "typeRoots": [

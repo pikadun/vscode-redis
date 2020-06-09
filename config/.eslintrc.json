@@ -24,6 +24,12 @@
         "@typescript-eslint/indent": [
             "error",
             4
+        ],
+        "prefer-const": [
+            "error",
+            {
+                "destructuring": "all"
+            }
         ]
     }
 }
