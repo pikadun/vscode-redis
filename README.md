@@ -9,4 +9,16 @@ Welcome to the redis extension for Visual Studio Code!
 
 ## Usage
 
-![guide](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=guide.gif)
+### You can add a Redis connection by follow steps
+
+![step](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=step1.png)
+
+## Redis Data Type Support
+
+**String:**
+
+![string](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=string.png)
+
+**Hash:**
+
+![hash](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=hash.png)
