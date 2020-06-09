@@ -1,19 +1,19 @@
-import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState } from 'vscode';
+import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window } from 'vscode';
 import { Socket, connect } from 'net';
 
 import { Constant, RedisCommand, RedisPanel } from '../../abstraction/enum';
-import { RedisItemConfig, PanelOptions, ConnectionOptions } from '../../abstraction/interface';
+import { RedisItemConfig, PanelOptions, ConnectionOptions, RedisConfig } from '../../abstraction/interface';
 
 
 import AbstractNode from '../../node/abstraction';
 import RESP from '../../redis/resp';
-import Command from '../../redis/command';
 import utils from '../../node/utils';
 import Dictionary from '../../common/dictionary';
 import RedisItem from '../../node/redis';
 import DBItem from '../../node/db';
 import { RedisInfo } from '../../abstraction/redisinfo';
 import Panel from '../panel';
+import command from '../../redis/command';
 
 class Config {
     constructor(private context: ExtensionContext) { }
@@ -56,7 +56,7 @@ class Connection implements TreeDataProvider<AbstractNode> {
         if (element && element instanceof RedisItem) {
             const id = (element as RedisItem).id;
             if (!this.sockets.has(id)) {
-                await this.init(id, this.config.get(id).host, this.config.get(id).port);
+                await this.init(id, this.config.get(id));
                 element.info = this.infos.get(id);
                 element.socket = this.sockets.get(id);
             }
@@ -85,7 +85,12 @@ class Connection implements TreeDataProvider<AbstractNode> {
         console.log(ca);
         const name = `${host}:${port}`;
         id = id || Date.now().toString();
-        await this.init(id, host, port);
+        try {
+            await this.init(id, { host, port, auth });
+        } catch (error) {
+            window.showErrorMessage(error.message);
+            return;
+        }
         this.config.set(id, { host, port, auth, name });
         this.refresh();
     }
@@ -93,7 +98,7 @@ class Connection implements TreeDataProvider<AbstractNode> {
     /**
      * Add or edit a connection
      * @param panel Panel instance
-     * @param id connection id
+     * @param id Connection id
      */
     edit(panel: Panel, id?: string): void {
         const options: PanelOptions = {};
@@ -112,14 +117,23 @@ class Connection implements TreeDataProvider<AbstractNode> {
         this._onDidChangeTreeData.fire(element);
     }
 
-    private async init(id: string, host: string, port: number): Promise<void> {
-        await this.open(id, host, port);
-        await this.info(id, this.sockets.get(id));
+    /**
+     * Init redis connection and auth.
+     * @param id Connection id
+     * @param config Redis connection config
+     */
+    private async init(id: string, config: RedisConfig): Promise<void> {
+        const socket = await this.open(config);
+        if (config.auth) {
+            await command.run<string>(socket, `AUTH ${config.auth}`);
+        }
+        this.sockets.set(id, socket);
+        await this.info(id, socket);
     }
 
-    private async open(id: string, host: string, port: number): Promise<void> {
+    private async open(config: RedisConfig): Promise<Socket> {
         const socket: Socket = await new Promise((resolve, reject) => {
-            const socket = connect(port, host);
+            const socket = connect(config.port, config.host);
             socket.once('connect', () => { resolve(socket); });
             socket.once('error', err => { reject(err); });
         });
@@ -132,11 +146,11 @@ class Connection implements TreeDataProvider<AbstractNode> {
             RESP.decode(buffer);
         });
 
-        this.sockets.set(id, socket);
+        return socket;
     }
 
     private async info(id: string, socket: Socket): Promise<void> {
-        const infostr = await Command.run<string>(socket, RedisCommand.INFO);
+        const infostr = await command.run<string>(socket, RedisCommand.INFO);
         const info = utils.parseInfo(infostr);
         this.infos.set(id, info);
     }
