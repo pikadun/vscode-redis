@@ -40,22 +40,24 @@ import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
-      host: "host",
-      port: "port",
-      auth: "auth"
+      id: "",
+      host: "127.0.0.1",
+      port: 6379,
+      auth: ""
     };
   },
   methods: {
     init() {
-      this.host = this.$route.params.host || "";
-      this.port = this.$route.params.port || "";
+      this.id = this.$route.params.id || "";
+      this.host = this.$route.params.host || this.host;
+      this.port = parseInt(this.$route.params.port) || this.port;
       this.auth = this.$route.params.auth || "";
     },
     addConnection() {
       this.vscode.postMessage({
         fromWebview: true,
-        command: "Connection.Test",
-        args: [this.host, this.port, this.auth]
+        command: "Connection.Edit",
+        args: [this.id, this.host, this.port, this.auth]
       });
     }
   },

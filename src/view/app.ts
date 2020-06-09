@@ -21,7 +21,9 @@ const router = new VueRouter({
 });
 
 //#endregion
-Vue.prototype.vscode = acquireVsCodeApi();
+if (process.env.NODE_ENV) {
+    Vue.prototype.vscode = acquireVsCodeApi();
+}
 
 new Vue({
     render: (h): VNode => h(app),

@@ -3,7 +3,7 @@
     <span v-if="$slots.prepend">
       <slot name="prepend"></slot>
     </span>
-    <input :type="type" v-bind="$attrs" />
+    <input :type="type" v-bind="$attrs" v-model="currValue" />
   </div>
 </template>
 
@@ -24,6 +24,16 @@ export default Vue.extend({
     type: {
       type: String,
       default: "text"
+    }
+  },
+  data() {
+    return {
+      currValue: this.value
+    };
+  },
+  watch: {
+    currValue(val) {
+      this.$emit("input", val);
     }
   }
 });

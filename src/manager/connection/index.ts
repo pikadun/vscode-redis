@@ -1,8 +1,8 @@
-import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window } from 'vscode';
+import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState } from 'vscode';
 import { Socket, connect } from 'net';
 
 import { Constant, RedisCommand, RedisPanel } from '../../abstraction/enum';
-import { RedisItemConfig, PanelOptions } from '../../abstraction/interface';
+import { RedisItemConfig, PanelOptions, ConnectionOptions } from '../../abstraction/interface';
 
 
 import AbstractNode from '../../node/abstraction';
@@ -74,35 +74,19 @@ class Connection implements TreeDataProvider<AbstractNode> {
         }
     }
 
-    async add(): Promise<void> {
-        let host = await this.getHost();
-        if (host === undefined) {
-            return;
-        } else if (host === '') {
-            host = '127.0.0.1';
-        }
-
-        let port = await this.getPort();
-        if (port === undefined) {
-            return;
-        } else if (port === '') {
-            port = '6379';
-        }
-
-        let name = await this.getName();
-        if (name === undefined) {
-            return;
-        } else if (name === '') {
-            name = `${host}:${port}`;
-        }
-
-        const auth = await this.getAuth();
-        if (auth === undefined) return;
-
-        const id = Date.now().toString();
-
-        await this.init(id, host, parseInt(port));
-        this.config.set(id, { host, port: parseInt(port), auth, name });
+    /**
+     * Add or edit a connection
+     * @param id Connection Id.
+     * @param host The hostname of the redis.
+     * @param port The port number to connect to.
+     * @param auth The auth of the redis. Leave empty to ignore.
+     */
+    async add([id, host, port, auth, ...ca]: ConnectionOptions): Promise<void> {
+        console.log(ca);
+        const name = `${host}:${port}`;
+        id = id || Date.now().toString();
+        await this.init(id, host, port);
+        this.config.set(id, { host, port, auth, name });
         this.refresh();
     }
 
@@ -119,12 +103,6 @@ class Connection implements TreeDataProvider<AbstractNode> {
         panel.show(RedisPanel.CONNECTION, options);
     }
 
-    test(p1: string, p2: string, p3: string): void {
-        console.log(p1);
-        console.log(p2);
-        console.log(p3);
-    }
-
     delete(element: AbstractNode): void {
         this.config.delete((element as RedisItem).id);
         this.refresh();
@@ -132,26 +110,6 @@ class Connection implements TreeDataProvider<AbstractNode> {
 
     refresh(element?: AbstractNode): void {
         this._onDidChangeTreeData.fire(element);
-    }
-
-    private async getHost(): Promise<string | undefined> {
-        const host = await window.showInputBox({ prompt: 'The hostname of the redis.', placeHolder: 'host (default 127.0.0.1)', ignoreFocusOut: true });
-        return host;
-    }
-
-    private async getPort(): Promise<string | undefined> {
-        const port = await window.showInputBox({ prompt: 'The port number to connect to.', placeHolder: 'port (default 6379)', ignoreFocusOut: true });
-        return port;
-    }
-
-    private async getName(): Promise<string | undefined> {
-        const name = await window.showInputBox({ prompt: 'The name of the connection.', placeHolder: 'name (default <host:port>)', ignoreFocusOut: true });
-        return name;
-    }
-
-    private async getAuth(): Promise<string | undefined> {
-        const auth = await window.showInputBox({ prompt: 'The auth of the redis. Leave empty to ignore', placeHolder: 'auth', ignoreFocusOut: true });
-        return auth;
     }
 
     private async init(id: string, host: string, port: number): Promise<void> {
