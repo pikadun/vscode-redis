@@ -21,7 +21,7 @@ const router = new VueRouter({
 });
 
 //#endregion
-if (process.env.NODE_ENV) {
+if (process.env.EXTENSION !== 'production') {
     Vue.prototype.vscode = acquireVsCodeApi();
 }
 

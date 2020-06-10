@@ -13,8 +13,8 @@
         "dev": "webpack-dev-server --config './config/webpack.ts' --config-name 'view'",
         "lint": "eslint '**/*.ts'",
         "lint:fix": "eslint --fix '**/*.ts'",
-        "watch": "NODE_ENV='watch' webpack --config './config/webpack.ts' --watch",
-        "compile": "rm -rf ./lib/* && NODE_ENV='production' webpack --config './config/webpack.ts'",
+        "watch": "EXTENSION='watch' webpack --config './config/webpack.ts' --watch",
+        "compile": "rm -rf ./lib/* && EXTENSION='production' webpack --config './config/webpack.ts'",
         "pre": "rm -rf ./lib && npm run compile",
         "vscode:prepublish": "npm run pre"
     },

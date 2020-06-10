@@ -6,7 +6,7 @@ import { VueLoaderPlugin } from 'vue-loader';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { Configuration as DevServerConfig } from 'webpack-dev-server';
 
-const env = process.env.NODE_ENV;
+const env = process.env.EXTENSION;
 type Configuration = WebpackConfig & DevServerConfig;
 
 const config: Configuration = {

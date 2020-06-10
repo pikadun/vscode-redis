@@ -3,8 +3,6 @@ import baseConfig from './webpack.base';
 import merge from 'webpack-merge';
 import path from 'path';
 
-// const env = process.env.NODE_ENV;
-
 const config: Configuration = {
     name: 'extension',
     target: 'node',
