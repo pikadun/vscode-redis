@@ -1,16 +1,15 @@
 import Command from './command';
 import RedisParser from 'redis-parser';
-import { window } from 'vscode';
 
 const parser = new RedisParser({
     returnReply(reply: string): void {
         Command.setReply(reply);
     },
     returnError(err: Error): void {
-        window.showErrorMessage(err.message);
+        Command.setError(err);
     },
     returnFatalError(err: Error): void {
-        window.showErrorMessage(err.message);
+        Command.setFatalError(err);
     }
 });
 

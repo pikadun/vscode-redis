@@ -83,16 +83,16 @@ class Connection implements TreeDataProvider<AbstractNode> {
      */
     async add([id, host, port, auth, ...ca]: ConnectionOptions): Promise<void> {
         console.log(ca);
-        const name = `${host}:${port}`;
-        id = id || Date.now().toString();
+        
         try {
+            const name = `${host}:${port}`;
+            id = id || Date.now().toString();
             await this.init(id, { host, port, auth });
+            this.config.set(id, { host, port, auth, name });
+            this.refresh();
         } catch (error) {
             window.showErrorMessage(error.message);
-            return;
         }
-        this.config.set(id, { host, port, auth, name });
-        this.refresh();
     }
 
     /**
