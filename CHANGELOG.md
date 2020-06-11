@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.1 (2020-06-09)
+
++ Add a way of feedback.
+
 ## v0.5.0 (2020-06-09)
 
 + Add redis auth support.
