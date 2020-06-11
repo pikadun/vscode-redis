@@ -7,7 +7,7 @@
 
 ## v0.4.2 (2020-06-02)
 
-+ Fix: redis panel does not take focus.
++ Fix redis panel does not take focus.
 
 ## v0.4.1 (2020-05-26)
 

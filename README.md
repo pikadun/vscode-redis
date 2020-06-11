@@ -1,4 +1,4 @@
-# Redis Manager
+# Redis for Visual Studio Code
 
 [![Build Status](https://dev.azure.com/pikadun/vscode-redis/_apis/build/status/redis-vscode-build?branchName=master)](https://marketplace.visualstudio.com/items?itemName=Dunn.redis)
 [![installs](https://vsmarketplacebadge.apphb.com/installs-short/Dunn.redis.svg)](https://marketplace.visualstudio.com/items?itemName=Dunn.redis)
@@ -7,9 +7,26 @@
 
 Welcome to the redis extension for Visual Studio Code!
 
+This extension lets you connect to a Redis Server, view the keys and data.
+
+## Feature
+
++ ✨A GUI for vscode to manage Redis Server.
++ ✨(TODO) Support **TLS**, **SSH** and **TLS-over-SSH tunneling**.
++ ✨(TODO) Support **string**, **hash**, **list**, **set**, **zset** and **stream** type.
++ ✨(TODO) Complete redis command line.
+
 ## Usage
 
-### You can add a Redis connection by follow steps
+### Installation
+
++ In Visual Studio Code, select **View** > **Command Palette**, or press **Ctrl+Shift+P**, or press **F1** to open the **Command Palette**.
++ In the **Command Palette**, select **Extensions: Install Extensions** from the dropdown.
++ In the **Extensions** pane, type *Dunn.redis*.
++ Select the **Redis** extension, and then select Install.
++ After the installation completes, select Reload to enable the extension.
+
+### You can add a redis connection by follow steps
 
 ![step](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=step1.png)
 
