@@ -94,12 +94,22 @@
             {
                 "command": "DB.AddKey",
                 "title": "Add Key"
+            },
+            {
+                "command": "VR.Feedback",
+                "title": "Feedback",
+                "icon": "resources/image/feedback.png"
             }
         ],
         "menus": {
             "view/title": [
                 {
                     "command": "Connection.Add",
+                    "group": "navigation",
+                    "when": "view == Connection"
+                },
+                {
+                    "command": "VR.Feedback",
                     "group": "navigation",
                     "when": "view == Connection"
                 }
