@@ -5,10 +5,11 @@ import KeyItem from './node/key';
 import DBItem from './node/db';
 import { ConnectionOptions } from './abstraction/interface';
 import { Constant } from './abstraction/enum';
+import RedisItem from './node/redis';
 
 export function activate(context: ExtensionContext): void {
     const manager = new Manager(context);
-    const { Connection, Panel } = manager;
+    const { Connection, Panel, Terminal } = manager;
 
     // tree
     window.registerTreeDataProvider('Connection', Connection);
@@ -19,7 +20,9 @@ export function activate(context: ExtensionContext): void {
 
     // view
     commands.registerCommand('Key.Detail', (element: KeyItem) => element.detail(Panel));
+
     // terminal
+    commands.registerCommand('Connection.Terminal', (element: RedisItem) => { Terminal.show(element); });
 
     // feedback
     commands.registerCommand('VR.Feedback', () => {
