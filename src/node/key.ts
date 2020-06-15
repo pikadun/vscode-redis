@@ -1,7 +1,6 @@
 import AbstractNode from './abstraction';
-import { TreeItemCollapsibleState, Command as VScodeCommand } from 'vscode';
+import { TreeItemCollapsibleState, Command as VScodeCommand, ThemeIcon } from 'vscode';
 import { TreeItemContextValue, RedisPanel, RedisDataType } from '../abstraction/enum';
-import path from 'path';
 import RedisItem from './redis';
 import DBItem from './db';
 import Command from '../redis/command';
@@ -15,7 +14,7 @@ class KeyItem extends AbstractNode {
         arguments: []
     };
     readonly contextValue = TreeItemContextValue.KEY;
-    readonly iconPath = path.join(__dirname, '..', 'resources', 'image', `${this.contextValue}.png`);
+    readonly iconPath = new ThemeIcon('key');
     constructor(
         readonly id: string,
         readonly root: RedisItem,

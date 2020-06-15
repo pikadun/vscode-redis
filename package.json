@@ -70,17 +70,17 @@
             {
                 "command": "Connection.Add",
                 "title": "Add Connection",
-                "icon": "resources/image/add.png"
+                "icon": "$(add)"
             },
             {
                 "command": "Connection.Delete",
                 "title": "Delete Connection",
-                "icon": "resources/image/delete.png"
+                "icon": "$(trashcan)"
             },
             {
                 "command": "Connection.Edit",
                 "title": "Edit Connection",
-                "icon": "resources/image/add.png"
+                "icon": "$(add)"
             },
             {
                 "command": "Key.Detail",
@@ -89,7 +89,7 @@
             {
                 "command": "DB.Reload",
                 "title": "Reload Keys",
-                "icon": "resources/image/refresh.png"
+                "icon": "$(refresh)"
             },
             {
                 "command": "DB.AddKey",
@@ -98,12 +98,12 @@
             {
                 "command": "VR.Feedback",
                 "title": "Feedback",
-                "icon": "resources/image/feedback.png"
+                "icon": "$(comment)"
             },
             {
                 "command": "Connection.Terminal",
                 "title": "Open Terminal",
-                "icon": "resources/image/terminal.png"
+                "icon": "$(terminal)"
             }
         ],
         "menus": {
