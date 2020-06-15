@@ -10,15 +10,15 @@ class Terminal {
         console.log(context);
     }
 
-    create(id: string, name: string): void {
-        const pty = new Pty(name, () => { this.onClose(id); });
-        const terminal = window.createTerminal({ name: `Redis-${name}`, pty });
-        this.terminals.set(id, terminal);
+    create(element: RedisItem): void {
+        const pty = new Pty(element.name, element.socket, () => { this.onClose(element.id); });
+        const terminal = window.createTerminal({ name: `Redis-${element.name}`, pty });
+        this.terminals.set(element.id, terminal);
     }
 
     show(element: RedisItem): void {
         if (!this.terminals.has(element.id)) {
-            this.create(element.id, element.name);
+            this.create(element);
         }
         const terminal = this.terminals.get(element.id);
         terminal.show();

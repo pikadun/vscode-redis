@@ -1,5 +1,6 @@
 import { Pseudoterminal, EventEmitter } from 'vscode';
-// import { stringify } from 'querystring';
+import { Socket } from 'net';
+import command from '../../redis/command';
 
 class Pty implements Pseudoterminal {
     private writeEmitter = new EventEmitter<string>();
@@ -9,6 +10,7 @@ class Pty implements Pseudoterminal {
 
     constructor(
         private name: string,
+        private socket: Socket,
         private closeEvent: Function
     ) {
         this.name = name + '> ';
@@ -33,7 +35,7 @@ class Pty implements Pseudoterminal {
      * https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
      * @param data User input data.
      */
-    handleInput(data: string): void {
+    async handleInput(data: string): Promise<void> {
         for (let i = 0; i < data.length; i++) {
             const char = data[i];
             switch (char.charCodeAt(0)) {
@@ -44,6 +46,7 @@ class Pty implements Pseudoterminal {
                     break;
                 case 10: // \n
                 case 13: // \r
+                    await this.finishInput();
                     this.cursor = 0;
                     this.input = [];
                     this.writeEmitter.fire('\r\n');
@@ -72,15 +75,28 @@ class Pty implements Pseudoterminal {
         }
 
         // Move cursor to start.
-        this.writeEmitter.fire('\x1b[1000D');
+        this.writeEmitter.fire('\x1b[G');
         // Clears from cursor to end of line.
         this.writeEmitter.fire('\x1b[0K');
+
         this.writeEmitter.fire(this.name);
         this.writeEmitter.fire(this.input.join(''));
+
         // Move cursor to start again.
-        this.writeEmitter.fire('\x1b[1000D');
+        this.writeEmitter.fire('\x1b[G');
         // Move cursor to cursor.
         this.writeEmitter.fire(`\x1b[${this.name.length + this.cursor}C`);
+    }
+
+    async finishInput(): Promise<void> {
+        let result = '';
+        try {
+            result = await command.run<string>(this.socket, this.input.join(''));
+        } catch (error) {
+            result = error.message;
+        }
+        this.writeEmitter.fire('\r\n');
+        this.writeEmitter.fire(result);
     }
 }
 

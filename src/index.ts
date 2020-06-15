@@ -22,7 +22,12 @@ export function activate(context: ExtensionContext): void {
     commands.registerCommand('Key.Detail', (element: KeyItem) => element.detail(Panel));
 
     // terminal
-    commands.registerCommand('Connection.Terminal', (element: RedisItem) => { Terminal.show(element); });
+    commands.registerCommand('Connection.Terminal', async (element: RedisItem) => {
+        if (!element.socket) {
+            [element.socket, element.info] = await Connection.init(element.id);
+        }
+        Terminal.show(element);
+    });
 
     // feedback
     commands.registerCommand('VR.Feedback', () => {

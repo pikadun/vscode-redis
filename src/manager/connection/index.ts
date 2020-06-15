@@ -56,9 +56,7 @@ class Connection implements TreeDataProvider<AbstractNode> {
         if (element && element instanceof RedisItem) {
             const id = (element as RedisItem).id;
             if (!this.sockets.has(id)) {
-                await this.init(id, this.config.get(id));
-                element.info = this.infos.get(id);
-                element.socket = this.sockets.get(id);
+                [element.socket, element.info] = await this.init(id);
             }
             return element.getChildren();
         } else if (element && element instanceof DBItem) {
@@ -83,7 +81,7 @@ class Connection implements TreeDataProvider<AbstractNode> {
      */
     async add([id, host, port, auth, ...ca]: ConnectionOptions): Promise<void> {
         console.log(ca);
-        
+
         try {
             const name = `${host}:${port}`;
             id = id || Date.now().toString();
@@ -122,16 +120,17 @@ class Connection implements TreeDataProvider<AbstractNode> {
      * @param id Connection id
      * @param config Redis connection config
      */
-    private async init(id: string, config: RedisConfig): Promise<void> {
-        const socket = await this.open(config);
+    async init(id: string, config?: RedisConfig): Promise<[Socket, RedisInfo]> {
+        config = config || this.config.get(id);
+        const socket = await this.open(id, config);
         if (config.auth) {
             await command.run<string>(socket, `AUTH ${config.auth}`);
         }
-        this.sockets.set(id, socket);
-        await this.info(id, socket);
+        const info = await this.info(id, socket);
+        return [socket, info];
     }
 
-    private async open(config: RedisConfig): Promise<Socket> {
+    private async open(id: string, config: RedisConfig): Promise<Socket> {
         const socket: Socket = await new Promise((resolve, reject) => {
             const socket = connect(config.port, config.host);
             socket.once('connect', () => { resolve(socket); });
@@ -145,14 +144,15 @@ class Connection implements TreeDataProvider<AbstractNode> {
         socket.on('data', buffer => {
             RESP.decode(buffer);
         });
-
+        this.sockets.set(id, socket);
         return socket;
     }
 
-    private async info(id: string, socket: Socket): Promise<void> {
+    private async info(id: string, socket: Socket): Promise<RedisInfo> {
         const infostr = await command.run<string>(socket, RedisCommand.INFO);
         const info = utils.parseInfo(infostr);
         this.infos.set(id, info);
+        return info;
     }
 }
 
