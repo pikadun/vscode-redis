@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.1 (2020-06-16)
+
++ Use vscode product icon instead some icon.
+
 ## v0.6.0 (2020-06-16)
 
 + Add redis command line support.
