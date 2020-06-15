@@ -99,6 +99,11 @@
                 "command": "VR.Feedback",
                 "title": "Feedback",
                 "icon": "resources/image/feedback.png"
+            },
+            {
+                "command": "Connection.Terminal",
+                "title": "Open Terminal",
+                "icon": "resources/image/terminal.png"
             }
         ],
         "menus": {
@@ -118,7 +123,12 @@
                 {
                     "command": "Connection.Delete",
                     "when": "viewItem == redis",
-                    "group": "inline"
+                    "group": "inline@2"
+                },
+                {
+                    "command": "Connection.Terminal",
+                    "when": "viewItem == redis",
+                    "group": "inline@1"
                 },
                 {
                     "command": "DB.Reload",
