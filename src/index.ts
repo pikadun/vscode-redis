@@ -34,4 +34,9 @@ export function activate(context: ExtensionContext): void {
         const uri = Uri.parse(Constant.FEEDBACK_URI);
         env.openExternal(uri);
     });
+    // github
+    commands.registerCommand('VR.Star', () => {
+        const uri = Uri.parse(Constant.GITHUB_REPO);
+        env.openExternal(uri);
+    });
 }

@@ -98,7 +98,12 @@
             {
                 "command": "VR.Feedback",
                 "title": "Feedback",
-                "icon": "$(comment)"
+                "icon": "$(feedback)"
+            },
+            {
+                "command": "VR.Star",
+                "title": "Star on github",
+                "icon": "$(github-alt)"
             },
             {
                 "command": "Connection.Terminal",
@@ -110,12 +115,17 @@
             "view/title": [
                 {
                     "command": "Connection.Add",
-                    "group": "navigation",
+                    "group": "navigation@1",
                     "when": "view == Connection"
                 },
                 {
                     "command": "VR.Feedback",
-                    "group": "navigation",
+                    "group": "navigation@3",
+                    "when": "view == Connection"
+                },
+                {
+                    "command": "VR.Star",
+                    "group": "navigation@2",
                     "when": "view == Connection"
                 }
             ],
