@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.0 (2020-06-16)
+
++ Add redis command line support.
+
 ## v0.5.1 (2020-06-09)
 
 + Add a way of feedback.
