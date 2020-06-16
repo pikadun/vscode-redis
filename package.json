@@ -23,7 +23,9 @@
     ],
     "keywords": [
         "redis",
-        "tools",
+        "redis cli",
+        "redis gui",
+        "terminal",
         "manager"
     ],
     "galleryBanner": {},
