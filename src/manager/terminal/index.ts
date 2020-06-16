@@ -2,17 +2,24 @@ import vscode, { ExtensionContext, window } from 'vscode';
 import Pty from './pty';
 import RedisItem from '../../node/redis';
 import Dictionary from '../../common/dictionary';
+import { Constant } from '../../abstraction/enum';
 
 
 class Terminal {
     terminals = new Dictionary<vscode.Terminal>();
-    constructor(context: ExtensionContext) {
-        console.log(context);
-    }
+    constructor(
+        private context: ExtensionContext
+    ) { }
 
     create(element: RedisItem): void {
-        const pty = new Pty(element.name, element.socket, () => { this.onClose(element.id); });
+        const timestamp = this.context.globalState.get<number>(Constant.GLOBAL_STATE_WELCOME_KEY) || Date.now();
+        const pty = new Pty(element.name, element.socket, timestamp < Date.now(), () => { this.onClose(element.id); });
         const terminal = window.createTerminal({ name: `Redis-${element.name}`, pty });
+
+        this.context.globalState.update(
+            Constant.GLOBAL_STATE_WELCOME_KEY,
+            new Date(new Date().toDateString()).getTime() + 24 * 60 * 60 * 1000 - 1
+        );
         this.terminals.set(element.id, terminal);
     }
 

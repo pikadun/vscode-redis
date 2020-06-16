@@ -1,6 +1,7 @@
 import { Pseudoterminal, EventEmitter } from 'vscode';
 import { Socket } from 'net';
 import command from '../../redis/command';
+import { Constant } from '../../abstraction/enum';
 
 class Pty implements Pseudoterminal {
     private writeEmitter = new EventEmitter<string>();
@@ -11,15 +12,22 @@ class Pty implements Pseudoterminal {
     constructor(
         private name: string,
         private socket: Socket,
+        private welcome: boolean,
         private closeEvent: Function
     ) {
         this.name = name + '> ';
     }
 
     /**
-     * Show the name of termianl after opened.
+     * Show welcome message once a day.
      */
     open(): void {
+        if (this.welcome) {
+            this.writeEmitter.fire('Welcome to redis extension!\r\n');
+            this.writeEmitter.fire(` ⭐ Star:     ${Constant.GITHUB_REPO}.\r\n`);
+            this.writeEmitter.fire(` 💬 Feedback: ${Constant.GITHUB_REPO}/issues.\r\n`);
+            this.writeEmitter.fire('\r\n');
+        }
         this.writeEmitter.fire(this.name);
     }
 
@@ -88,6 +96,9 @@ class Pty implements Pseudoterminal {
         this.writeEmitter.fire(`\x1b[${this.name.length + this.cursor}C`);
     }
 
+    /**
+     * Execute command when the user enters enter 
+     */
     async finishInput(): Promise<void> {
         let result = '';
         try {
