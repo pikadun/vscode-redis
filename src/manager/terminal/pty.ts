@@ -57,7 +57,6 @@ class Pty implements Pseudoterminal {
                     await this.finishInput();
                     this.cursor = 0;
                     this.input = [];
-                    this.writeEmitter.fire('\r\n');
                     break;
                 case 27:
                     const next1 = data[++i].charCodeAt(0);
@@ -95,17 +94,29 @@ class Pty implements Pseudoterminal {
     }
 
     /**
-     * Execute command when the user enters enter 
+     * Execute command when the user enters enter.
      */
     async finishInput(): Promise<void> {
+        const input = this.input.join('');
+        switch (input) {
+            case '':
+                return;
+            case 'clear':
+                this.writeEmitter.fire('\x1b[2J');
+                this.writeEmitter.fire('\x1b[0;0f');
+                return;
+        }
+
+
         let result = '';
         try {
-            result = await command.run<string>(this.socket, this.input.join(''));
+            result = await command.run<string>(this.socket, input);
         } catch (error) {
             result = error.message;
         }
         this.writeEmitter.fire('\r\n');
         this.writeEmitter.fire(result);
+        this.writeEmitter.fire('\r\n');
     }
 }
 
