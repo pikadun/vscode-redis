@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.2 (2020-06-16)
+
++ A welcome message will display when open the terminal for the first time every day.
+
 ## v0.6.1 (2020-06-16)
 
 + Use vscode product icon instead some icon.
