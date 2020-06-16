@@ -60,9 +60,7 @@ class Pty implements Pseudoterminal {
                     this.writeEmitter.fire('\r\n');
                     break;
                 case 27:
-                    // eslint-disable-next-line no-case-declarations
                     const next1 = data[++i].charCodeAt(0);
-                    // eslint-disable-next-line no-case-declarations
                     const next2 = data[++i].charCodeAt(0);
                     if (next1 === 91) {
                         if (next2 === 68) { // left

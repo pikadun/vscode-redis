@@ -30,6 +30,7 @@
             {
                 "destructuring": "all"
             }
-        ]
+        ],
+        "no-case-declarations": "off"
     }
 }
