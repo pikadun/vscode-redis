@@ -6,7 +6,6 @@
 
 <script>
 import Vue from "vue";
-import { RedisPanel } from "../abstraction/enum";
 
 export default Vue.extend({
   name: "app",

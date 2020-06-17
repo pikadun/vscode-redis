@@ -1,6 +1,6 @@
 import { ExtensionContext } from 'vscode';
 import Manager from '../manager';
-import { RedisDataType } from './enum';
+import { RedisType } from './enum';
 
 export interface RedisConfig {
     host: string;
@@ -21,14 +21,13 @@ export interface Context extends ExtensionContext {
     manager: Manager;
 }
 
-export type TypeRedisData = string | HASH;
 
 export type ConnectionOptions = [string, string, number, string, ...string[]];
 
 export interface RedisData {
-    type: RedisDataType;
+    type: RedisType;
     key: string;
-    value: TypeRedisData;
+    value: RedisDataType;
     ttl: number;
 }
 
@@ -41,9 +40,4 @@ export interface HASH {
     [x: string]: string;
 }
 
-export interface InputAttributes {
-    type: string;
-    value: string | number;
-    disabled: boolean;
-    readonly: boolean;
-}
+export type RedisDataType = string | HASH;

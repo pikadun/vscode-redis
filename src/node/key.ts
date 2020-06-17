@@ -1,11 +1,11 @@
 import AbstractNode from './abstraction';
 import { TreeItemCollapsibleState, Command as VScodeCommand, ThemeIcon } from 'vscode';
-import { TreeItemContextValue, RedisPanel, RedisDataType } from '../abstraction/enum';
+import { TreeItemContextValue, RedisPanel, RedisType } from '../abstraction/enum';
 import RedisItem from './redis';
 import DBItem from './db';
 import Command from '../redis/command';
 import Panel from '../manager/panel';
-import { TypeRedisData, HASH } from 'src/abstraction/interface';
+import { RedisDataType, HASH } from '../abstraction/interface';
 
 class KeyItem extends AbstractNode {
     readonly command: VScodeCommand = {
@@ -38,13 +38,13 @@ class KeyItem extends AbstractNode {
 
         const type = await Command.run<string>(this.root.socket, `TYPE ${this.label}`);
         const ttl = await Command.run<number>(this.root.socket, `TTL ${this.label}`);
-        let data: TypeRedisData;
+        let data: RedisDataType;
 
         switch (type) {
-            case RedisDataType.STRING:
+            case RedisType.STRING:
                 data = await this.string();
                 break;
-            case RedisDataType.HASH:
+            case RedisType.HASH:
                 data = await this.hash();
                 break;
             default:
@@ -52,16 +52,16 @@ class KeyItem extends AbstractNode {
         }
 
         panel.show(RedisPanel.KEY_INFO, {
-            data: { type: type as RedisDataType, key: this.label, value: data, ttl }
+            data: { type: type as RedisType, key: this.label, value: data, ttl }
         });
     }
 
-    private async string(): Promise<TypeRedisData> {
+    private async string(): Promise<RedisDataType> {
         const data = await Command.run<string>(this.root.socket, `GET ${this.label}`);
         return data;
     }
 
-    private async hash(): Promise<TypeRedisData> {
+    private async hash(): Promise<RedisDataType> {
         const data = await Command.run<string[]>(this.root.socket, `HGETALL ${this.label}`);
         const result: HASH = Object.create(null);
 

@@ -25,10 +25,11 @@ export enum RedisPanel {
     CONNECTION = 'CONNECTION'
 }
 
-export enum RedisDataType {
+export enum RedisType {
     STRING = 'string',
     LIST = 'list',
     HASH = 'hash',
     SET = 'set',
-    ZSET = 'zset'
+    ZSET = 'zset',
+    STREAM = 'stream'
 }

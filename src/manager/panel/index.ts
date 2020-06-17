@@ -1,6 +1,6 @@
 import { window, ViewColumn, WebviewPanel, Uri, ExtensionContext, commands } from 'vscode';
 import { RedisPanel } from '../../abstraction/enum';
-import { PanelOptions } from 'src/abstraction/interface';
+import { PanelOptions } from '../../abstraction/interface';
 import fs from 'fs';
 import path from 'path';
 
