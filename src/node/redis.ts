@@ -15,7 +15,8 @@ class RedisItem extends AbstractNode {
     constructor(
         readonly id: string,
         readonly name: string,
-        readonly collapsibleState: TreeItemCollapsibleState
+        readonly collapsibleState: TreeItemCollapsibleState,
+        public refresh: (e: AbstractNode) => void
     ) {
         super(name, collapsibleState);
     }

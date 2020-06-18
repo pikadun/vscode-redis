@@ -94,6 +94,11 @@
                 "icon": "$(refresh)"
             },
             {
+                "command": "DB.Search",
+                "title": "Keys Filter",
+                "icon": "$(search)"
+            },
+            {
                 "command": "DB.AddKey",
                 "title": "Add Key"
             },
@@ -145,7 +150,12 @@
                 {
                     "command": "DB.Reload",
                     "when": "viewItem == db",
-                    "group": "inline"
+                    "group": "inline@2"
+                },
+                {
+                    "command": "DB.Search",
+                    "when": "viewItem == db",
+                    "group": "inline@1"
                 }
             ]
         }

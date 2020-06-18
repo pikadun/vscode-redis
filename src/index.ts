@@ -17,6 +17,7 @@ export function activate(context: ExtensionContext): void {
     commands.registerCommand('Connection.Edit', (...args: ConnectionOptions) => { Connection.add(args); });
     commands.registerCommand('Connection.Delete', (element: AbstractNode) => Connection.delete(element));
     commands.registerCommand('DB.Reload', (element: DBItem) => Connection.refresh(element));
+    commands.registerCommand('DB.Search', (element: DBItem) => element.search());
 
     // view
     commands.registerCommand('Key.Detail', (element: KeyItem) => element.detail(Panel));

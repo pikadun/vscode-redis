@@ -4,7 +4,6 @@ import { Socket, connect } from 'net';
 import { Constant, RedisCommand, RedisPanel } from '../../abstraction/enum';
 import { RedisItemConfig, PanelOptions, ConnectionOptions, RedisConfig } from '../../abstraction/interface';
 
-
 import AbstractNode from '../../node/abstraction';
 import RESP from '../../redis/resp';
 import utils from '../../node/utils';
@@ -60,11 +59,15 @@ class Connection implements TreeDataProvider<AbstractNode> {
             }
             return element.getChildren();
         } else if (element && element instanceof DBItem) {
-            return element.getChildren('*');
+            return element.getChildren();
         } else {
             const config = this.config.all();
             return Object.keys(config).map(id => {
-                const item = new RedisItem(id, config[id].name, TreeItemCollapsibleState.Collapsed);
+                const item = new RedisItem(
+                    id, config[id].name,
+                    TreeItemCollapsibleState.Collapsed,
+                    (e?: AbstractNode) => { this.refresh(e); }
+                );
                 item.info = this.infos.get(id);
                 item.socket = this.sockets.get(id);
                 return item;
