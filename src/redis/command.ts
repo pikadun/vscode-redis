@@ -3,22 +3,22 @@ import { RedisCommand } from '../abstraction/enum';
 import RESP from './resp';
 
 class Command {
-    setReply!: Function;
-    setError!: Function;
-    setFatalError!: Function;
+    setReply!: (reply: unknown) => void;
+    setError!: (error: Error) => void;
+    setFatalError!: (error: Error) => void;
 
     async run<T>(socket: Socket, cmd: RedisCommand | string): Promise<T> {
 
         const str = RESP.encode(cmd);
 
         const result = new Promise<T>((resolve, reject) => {
-            this.setReply = (reply: T): void => {
-                resolve(reply);
+            this.setReply = reply => {  
+                resolve(reply as T);
             };
-            this.setError = (error: Error): void => {
+            this.setError = error => {
                 reject(error);
             };
-            this.setFatalError = (error: Error): void => {
+            this.setFatalError = error => {
                 reject(error);
             };
         });

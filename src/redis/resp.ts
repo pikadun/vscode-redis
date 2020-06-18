@@ -2,7 +2,7 @@ import Command from './command';
 import RedisParser from 'redis-parser';
 
 const parser = new RedisParser({
-    returnReply(reply: string): void {
+    returnReply(reply: unknown): void {
         Command.setReply(reply);
     },
     returnError(err: Error): void {

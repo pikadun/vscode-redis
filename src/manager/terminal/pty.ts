@@ -13,7 +13,7 @@ class Pty implements Pseudoterminal {
         private name: string,
         private socket: Socket,
         private welcome: boolean,
-        private closeEvent: Function
+        private closeEvent: () => void
     ) {
         this.name = name + '> ';
     }
