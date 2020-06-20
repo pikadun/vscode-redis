@@ -3,7 +3,7 @@
     "version": "0.6.2",
     "publisher": "Dunn",
     "engines": {
-        "vscode": "^1.22.0"
+        "vscode": "^1.45.0"
     },
     "license": "MIT",
     "main": "./lib/index.js",
@@ -14,9 +14,8 @@
         "lint": "eslint '**/*.ts'",
         "lint:fix": "eslint --fix '**/*.ts'",
         "watch": "EXTENSION='watch' webpack --config './config/webpack.ts' --watch",
-        "compile": "rm -rf ./lib/* && EXTENSION='production' webpack --config './config/webpack.ts'",
-        "pre": "rm -rf ./lib && npm run compile",
-        "vscode:prepublish": "npm run pre"
+        "compile": "rm -rf ./lib && EXTENSION='production' webpack --config './config/webpack.ts'",
+        "vscode:prepublish": "npm run compile"
     },
     "categories": [
         "Other"
@@ -165,7 +164,7 @@
     },
     "devDependencies": {
         "@types/node": "^14.0.13",
-        "@types/vscode": "^1.46.0",
+        "@types/vscode": "^1.45.0",
         "@types/webpack": "^4.41.17",
         "@types/webpack-dev-server": "^3.11.0",
         "@types/webpack-merge": "^4.1.5",
@@ -174,6 +173,7 @@
         "css-loader": "^3.6.0",
         "eslint": "^7.2.0",
         "html-webpack-plugin": "^4.3.0",
+        "redis-parser": "^3.0.0",
         "ts-loader": "^7.0.5",
         "ts-node": "^8.10.2",
         "typescript": "^3.9.5",
@@ -186,8 +186,5 @@
         "webpack-cli": "^3.3.11",
         "webpack-dev-server": "^3.11.0",
         "webpack-merge": "^4.2.2"
-    },
-    "dependencies": {
-        "redis-parser": "^3.0.0"
     }
 }

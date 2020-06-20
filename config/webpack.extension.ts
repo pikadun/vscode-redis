@@ -9,8 +9,7 @@ const config: Configuration = {
     node: false,
     entry: './index.ts',
     externals: {
-        'vscode': 'commonjs vscode',
-        'redis-parser': 'commonjs redis-parser'
+        'vscode': 'commonjs vscode'
     },
     output: {
         path: path.resolve(__dirname, '..', 'lib'),
