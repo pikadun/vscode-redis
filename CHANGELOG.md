@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.7.0 (2020-06-23)
+
++ Add keys filter in tree view.
++ Add a clear command into terminal.
++ Limit the minimum version to 1.45.0.
++ Fix bug that redis-server on windows has no tree view;
+
 ## v0.6.2 (2020-06-16)
 
 + A welcome message will display when open the terminal for the first time every day.
@@ -50,7 +57,7 @@
 
 ## v0.2.0 (2020-05-22)
 
-+ Use `vue` to provide webview content.
++ Use vue to provide webview content.
 
 ## v0.1.4 (2020-04-09)
 
