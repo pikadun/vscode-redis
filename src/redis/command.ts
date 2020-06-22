@@ -1,5 +1,4 @@
 import { Socket } from 'net';
-import { RedisCommand } from '../abstraction/enum';
 import RESP from './resp';
 
 class Command {
@@ -7,12 +6,12 @@ class Command {
     setError!: (error: Error) => void;
     setFatalError!: (error: Error) => void;
 
-    async run<T>(socket: Socket, cmd: RedisCommand | string): Promise<T> {
+    async run<T>(socket: Socket, cmd: string): Promise<T> {
 
         const str = RESP.encode(cmd);
 
         const result = new Promise<T>((resolve, reject) => {
-            this.setReply = reply => {  
+            this.setReply = reply => {
                 resolve(reply as T);
             };
             this.setError = error => {

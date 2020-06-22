@@ -1,6 +1,6 @@
 import path from 'path';
 import AbstractNode from './abstraction';
-import { TreeItemContextValue, RedisCommand } from '../abstraction/enum';
+import { TreeItemContextValue } from '../abstraction/enum';
 import { RedisInfo } from '../abstraction/redisinfo';
 import { TreeItemCollapsibleState } from 'vscode';
 import command from '../redis/command';
@@ -22,7 +22,7 @@ class RedisItem extends AbstractNode {
     }
 
     async getChildren(): Promise<DBItem[]> {
-        const dbInfo = await command.run<string>(this.socket, RedisCommand.CONFIG_GET_DATABASES);
+        const dbInfo = await command.run<string>(this.socket, 'CONFIG GET databases');
         const count = parseInt(dbInfo[1]);
         const result: DBItem[] = [];
         for (let i = 0; i < count; i++) {

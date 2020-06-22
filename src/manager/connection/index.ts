@@ -1,7 +1,7 @@
 import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window } from 'vscode';
 import { Socket, connect } from 'net';
 
-import { Constant, RedisCommand, RedisPanel } from '../../abstraction/enum';
+import { Constant, RedisPanel } from '../../abstraction/enum';
 import { RedisItemConfig, PanelOptions, ConnectionOptions, RedisConfig } from '../../abstraction/interface';
 
 import AbstractNode from '../../node/abstraction';
@@ -152,7 +152,7 @@ class Connection implements TreeDataProvider<AbstractNode> {
     }
 
     private async info(id: string, socket: Socket): Promise<RedisInfo> {
-        const infostr = await command.run<string>(socket, RedisCommand.INFO);
+        const infostr = await command.run<string>(socket, 'INFO');
         const info = utils.parseInfo(infostr);
         this.infos.set(id, info);
         return info;

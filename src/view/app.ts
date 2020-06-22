@@ -6,8 +6,6 @@ import component from './component';
 component.install();
 
 //#region Routes
-
-// Note: should use vue-router@3.0.x
 Vue.use(VueRouter);
 
 import key from './page/key.vue';
@@ -21,7 +19,7 @@ const router = new VueRouter({
 });
 
 //#endregion
-if (process.env.EXTENSION !== 'production') {
+if (process.env.EXTENSION !== undefined) {
     Vue.prototype.vscode = acquireVsCodeApi();
 }
 
