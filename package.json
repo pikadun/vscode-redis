@@ -1,6 +1,6 @@
 {
     "name": "redis",
-    "version": "0.6.2",
+    "version": "0.7.0",
     "publisher": "Dunn",
     "engines": {
         "vscode": "^1.45.0"
