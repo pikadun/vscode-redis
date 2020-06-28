@@ -19,7 +19,7 @@ const router = new VueRouter({
 });
 
 //#endregion
-if (process.env.EXTENSION !== undefined) {
+if (process.env.EXTENSION === undefined) {
     Vue.prototype.vscode = acquireVsCodeApi();
 }
 
