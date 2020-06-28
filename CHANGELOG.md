@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.7.1 (2020-06-28)
+
++ Fix: unable create a connection.
+
 ## v0.7.0 (2020-06-23)
 
 + Add keys filter in tree view.
