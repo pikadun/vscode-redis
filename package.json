@@ -10,11 +10,11 @@
     "displayName": "Redis",
     "description": "Redis For VS Code",
     "scripts": {
-        "dev": "EXTENSION='dev' webpack-dev-server --config './config/webpack.ts' --config-name 'view'",
+        "dev": "webpack-dev-server --mode=development --config=./config/webpack.ts --config-name=view",
         "lint": "eslint '**/*.ts'",
         "lint:fix": "eslint --fix '**/*.ts'",
-        "watch": "EXTENSION='watch' webpack --config './config/webpack.ts' --watch",
-        "compile": "rm -rf ./lib && EXTENSION='production' webpack --config './config/webpack.ts'",
+        "watch": "webpack --mode=none --config=./config/webpack.ts --watch",
+        "compile": "rm -rf ./lib && webpack --mode=production --config=./config/webpack.ts",
         "vscode:prepublish": "npm run compile"
     },
     "categories": [

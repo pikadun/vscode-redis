@@ -1,20 +1,16 @@
-import { Configuration as WebpackConfig, HotModuleReplacementPlugin } from 'webpack';
+import { Configuration, HotModuleReplacementPlugin } from 'webpack';
 import baseConfig from './webpack.base';
 import merge from 'webpack-merge';
 import path from 'path';
 import { VueLoaderPlugin } from 'vue-loader';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { Configuration as DevServerConfig } from 'webpack-dev-server';
-
-const env = process.env.EXTENSION;
-type Configuration = WebpackConfig & DevServerConfig;
 
 const config: Configuration = {
     name: 'view',
     entry: './view/app.ts',
     output: {
         path: path.resolve(__dirname, '..', 'lib', 'view'),
-        publicPath: env !== 'dev' ? './' : '/',
+        publicPath: '/',
         filename: 'js/[name].js',
         chunkFilename: 'js/[name].js'
     },
@@ -62,4 +58,9 @@ const config: Configuration = {
     }
 };
 
-export default merge(baseConfig, config);
+export default (_env: unknown, argv: Configuration): Configuration => {
+    if (argv.mode !== 'development' && config.output?.publicPath) {
+        config.output.publicPath = './';
+    }
+    return merge(baseConfig, config);
+};

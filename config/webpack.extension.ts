@@ -27,4 +27,9 @@ const config: Configuration = {
     }
 };
 
-export default merge(baseConfig, config);
+export default (_env: unknown, argv: Configuration): Configuration => {
+    if (argv.mode !== 'production') {
+        config.devtool = '#inline-source-map';
+    }
+    return merge(baseConfig, config);
+};
