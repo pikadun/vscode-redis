@@ -10,7 +10,7 @@ import { RedisDataType, HASH } from '../abstraction/interface';
 class KeyItem extends AbstractNode {
     readonly command: VScodeCommand = {
         title: 'View Key Detail',
-        command: 'Key.Detail',
+        command: 'Redis.Key.Detail',
         arguments: []
     };
     readonly contextValue = TreeItemContextValue.KEY;

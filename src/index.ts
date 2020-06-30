@@ -9,34 +9,34 @@ import RedisItem from './node/redis';
 
 export function activate(context: ExtensionContext): void {
     const manager = new Manager(context);
-    const { Connection, Panel, Terminal } = manager;
+    const { ConnectionProvider, Panel, Terminal } = manager;
 
     // tree
-    window.registerTreeDataProvider('Connection', Connection);
-    commands.registerCommand('Connection.Add', () => Connection.edit(Panel));
-    commands.registerCommand('Connection.Edit', (...args: ConnectionOptions) => { Connection.add(args); });
-    commands.registerCommand('Connection.Delete', (element: AbstractNode) => Connection.delete(element));
-    commands.registerCommand('DB.Reload', (element: DBItem) => Connection.refresh(element));
-    commands.registerCommand('DB.Search', (element: DBItem) => element.search());
+    window.registerTreeDataProvider('RedisExplorer', ConnectionProvider);
+    commands.registerCommand('Redis.Connection.Add', () => ConnectionProvider.edit(Panel));
+    commands.registerCommand('Redis.Connection.Edit', (...args: ConnectionOptions) => { ConnectionProvider.add(args); });
+    commands.registerCommand('Redis.Connection.Delete', (element: AbstractNode) => ConnectionProvider.delete(element));
+    commands.registerCommand('Redis.DB.Reload', (element: DBItem) => ConnectionProvider.refresh(element));
+    commands.registerCommand('Redis.DB.Search', (element: DBItem) => element.search());
 
     // view
-    commands.registerCommand('Key.Detail', (element: KeyItem) => element.detail(Panel));
+    commands.registerCommand('Redis.Key.Detail', (element: KeyItem) => element.detail(Panel));
 
     // terminal
-    commands.registerCommand('Connection.Terminal', async (element: RedisItem) => {
+    commands.registerCommand('Redis.Terminal', async (element: RedisItem) => {
         if (!element.socket) {
-            [element.socket, element.info] = await Connection.init(element.id);
+            [element.socket, element.info] = await ConnectionProvider.init(element.id);
         }
         Terminal.show(element);
     });
 
     // feedback
-    commands.registerCommand('VR.Feedback', () => {
+    commands.registerCommand('Redis.Feedback', () => {
         const uri = Uri.parse(Constant.FEEDBACK_URI);
         env.openExternal(uri);
     });
     // github
-    commands.registerCommand('VR.Star', () => {
+    commands.registerCommand('Redis.Star', () => {
         const uri = Uri.parse(Constant.GITHUB_REPO);
         env.openExternal(uri);
     });

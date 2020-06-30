@@ -76,7 +76,7 @@ export default Vue.extend({
         
       this.vscode.postMessage({
         fromWebview: true,
-        command: "Connection.Edit",
+        command: "Redis.Connection.Edit",
         args: [this.id, this.config]
       });
     }

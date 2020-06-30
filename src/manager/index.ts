@@ -1,14 +1,14 @@
 import { ExtensionContext } from 'vscode';
-import Connection from './connection';
+import ConnectionProvider from './connection';
 import Terminal from './terminal';
 import Panel from './panel';
 
 class Manager {
-    Connection: Connection;
+    ConnectionProvider: ConnectionProvider;
     Terminal: Terminal;
     Panel: Panel;
     constructor(context: ExtensionContext) {
-        this.Connection = new Connection(context);
+        this.ConnectionProvider = new ConnectionProvider(context);
         this.Terminal = new Terminal(context);
         this.Panel = new Panel(context);
     }

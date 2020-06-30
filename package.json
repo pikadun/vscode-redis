@@ -47,72 +47,72 @@
         "url": "https://github.com/pikadun/vscode-redis"
     },
     "activationEvents": [
-        "onView:Connection"
+        "onView:RedisExplorer"
     ],
     "contributes": {
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "Connection",
+                    "id": "RedisExplorer",
                     "title": "Redis Explorer",
                     "icon": "resources/image/icon.png"
                 }
             ]
         },
         "views": {
-            "Connection": [
+            "RedisExplorer": [
                 {
-                    "id": "Connection",
+                    "id": "RedisExplorer",
                     "name": "redis"
                 }
             ]
         },
         "commands": [
             {
-                "command": "Connection.Add",
+                "command": "Redis.Connection.Add",
                 "title": "Add Connection",
                 "icon": "$(add)"
             },
             {
-                "command": "Connection.Delete",
+                "command": "Redis.Connection.Delete",
                 "title": "Delete Connection",
                 "icon": "$(trashcan)"
             },
             {
-                "command": "Connection.Edit",
+                "command": "Redis.Connection.Edit",
                 "title": "Edit Connection",
                 "icon": "$(add)"
             },
             {
-                "command": "Key.Detail",
+                "command": "Redis.Key.Detail",
                 "title": "View Key Detail"
             },
             {
-                "command": "DB.Reload",
+                "command": "Redis.DB.Reload",
                 "title": "Reload Keys",
                 "icon": "$(refresh)"
             },
             {
-                "command": "DB.Search",
+                "command": "Redis.DB.Search",
                 "title": "Keys Filter",
                 "icon": "$(search)"
             },
             {
-                "command": "DB.AddKey",
+                "command": "Redis.DB.AddKey",
                 "title": "Add Key"
             },
             {
-                "command": "VR.Feedback",
+                "command": "Redis.Feedback",
                 "title": "Feedback",
                 "icon": "$(feedback)"
             },
             {
-                "command": "VR.Star",
+                "command": "Redis.Star",
                 "title": "Star on github",
                 "icon": "$(github-alt)"
             },
             {
-                "command": "Connection.Terminal",
+                "command": "Redis.Terminal",
                 "title": "Open Terminal",
                 "icon": "$(terminal)"
             }
@@ -120,39 +120,39 @@
         "menus": {
             "view/title": [
                 {
-                    "command": "Connection.Add",
+                    "command": "Redis.Connection.Add",
                     "group": "navigation@1",
-                    "when": "view == Connection"
+                    "when": "view == RedisExplorer"
                 },
                 {
-                    "command": "VR.Feedback",
+                    "command": "Redis.Feedback",
                     "group": "navigation@3",
-                    "when": "view == Connection"
+                    "when": "view == RedisExplorer"
                 },
                 {
-                    "command": "VR.Star",
+                    "command": "Redis.Star",
                     "group": "navigation@2",
-                    "when": "view == Connection"
+                    "when": "view == RedisExplorer"
                 }
             ],
             "view/item/context": [
                 {
-                    "command": "Connection.Delete",
+                    "command": "Redis.Connection.Delete",
                     "when": "viewItem == redis",
                     "group": "inline@2"
                 },
                 {
-                    "command": "Connection.Terminal",
+                    "command": "Redis.Terminal",
                     "when": "viewItem == redis",
                     "group": "inline@1"
                 },
                 {
-                    "command": "DB.Reload",
+                    "command": "Redis.DB.Reload",
                     "when": "viewItem == db",
                     "group": "inline@2"
                 },
                 {
-                    "command": "DB.Search",
+                    "command": "Redis.DB.Search",
                     "when": "viewItem == db",
                     "group": "inline@1"
                 }
