@@ -42,9 +42,9 @@ class Panel {
     }
     /**
      * Show a redis panel
-     * @param name panel name
+     * @param panelName panel name
      */
-    show(name: RedisPanel, options?: PanelOptions): void {
+    show(panelName: RedisPanel, options?: PanelOptions): void {
         if (this.panelDisPosed) {
             this.create();
         }
@@ -53,10 +53,10 @@ class Panel {
         const html = this.getWebViewContent('index.html');
         this.panel.webview.html = html;
 
-        const common = { fromVscode: true, name };
+        const common = { fromVscode: true, panelName };
 
         let data = Object.create(null);
-        switch (name) {
+        switch (panelName) {
             case RedisPanel.KEY_INFO:
                 data = Object.assign(common, options?.data);
                 break;

@@ -16,7 +16,7 @@
           <div class="prepend">Authentication password:</div>
         </template>
       </r-input>
-      <r-input type="password" id="name" v-model="config.name" placeholder="name (optional)">
+      <r-input type="text" id="name" v-model="config.name" placeholder="name (optional)">
         <template v-slot:prepend>
           <div class="prepend">Connection name:</div>
         </template>
@@ -41,7 +41,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { RedisItemConfig } from "../../abstraction/interface";
 
 export default Vue.extend({
   data() {
@@ -64,7 +63,6 @@ export default Vue.extend({
         auth = "",
         name = ""
       } = this.$route.params;
-
       this.id = id;
       this.config.host = host;
       this.config.port = parseInt(port as string);
@@ -73,11 +71,13 @@ export default Vue.extend({
     },
 
     addConnection() {
-      const config: RedisItemConfig = this.config;
+      this.config.name =
+        this.config.name || `${this.config.host}:${this.config.port}`;
+        
       this.vscode.postMessage({
         fromWebview: true,
         command: "Connection.Edit",
-        args: [this.id, config]
+        args: [this.id, this.config]
       });
     }
   },
