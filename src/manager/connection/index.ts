@@ -38,7 +38,7 @@ class Config {
     }
 }
 
-class Connection implements TreeDataProvider<AbstractNode> {
+class ConnectionProvider implements TreeDataProvider<AbstractNode> {
     _onDidChangeTreeData = new EventEmitter<AbstractNode | void>();
     readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
@@ -155,4 +155,4 @@ class Connection implements TreeDataProvider<AbstractNode> {
     }
 }
 
-export default Connection;
+export default ConnectionProvider;
