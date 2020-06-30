@@ -11,14 +11,16 @@ export default Vue.extend({
   name: "app",
   methods: {},
   mounted() {
-    window.addEventListener("message", event => {
-      const data = event.data;
-      // ignore other message
-      if (!data.fromVscode) {
-        return;
-      }
-      this.$router.push({ name: data.name, params: data });
-    });
+    // window.addEventListener("message", event => {
+    //   const data = event.data;
+    //   // ignore other message
+    //   if (!data.fromVscode) {
+    //     return;
+    //   }
+    //   this.$router.push({ name: data.name, params: data });
+    // });
+
+    this.$router.push({ name: "CONNECTION" });
   }
 });
 </script>

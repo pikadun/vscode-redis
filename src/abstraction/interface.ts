@@ -22,7 +22,7 @@ export interface Context extends ExtensionContext {
 }
 
 
-export type ConnectionOptions = [string, string, number, string, ...string[]];
+export type ConnectionOptions = [string, RedisItemConfig];
 
 export interface RedisData {
     type: RedisType;

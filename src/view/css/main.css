@@ -8,7 +8,7 @@ body{
     padding: 1vh;
 }
 
-input,button {
+input, button {
     background-color: var(--vscode-editor-background);
     color: var(--vscode-editor-foreground);
     border: 1px solid var(--vscode-editor-foreground);

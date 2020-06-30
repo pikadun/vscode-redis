@@ -1,19 +1,24 @@
 <template>
   <div>
     <div class="connection">
-      <r-input type="text" id="host" v-model="host">
+      <r-input type="text" id="host" v-model="config.host" placeholder="host">
         <template v-slot:prepend>
-          <span class="prepend">Host:</span>
+          <div class="prepend">IP address of the Redis server:</div>
         </template>
       </r-input>
-      <r-input type="text" id="port" v-model="port">
+      <r-input type="text" id="port" v-model="config.port" placeholder="port">
         <template v-slot:prepend>
-          <span class="prepend">Port:</span>
+          <div class="prepend">Port of the Redis server:</div>
         </template>
       </r-input>
-      <r-input type="password" id="auth" v-model="auth">
+      <r-input type="password" id="auth" v-model="config.auth" placeholder="auth (optional)">
         <template v-slot:prepend>
-          <span class="prepend">Auth:</span>
+          <div class="prepend">Authentication password:</div>
+        </template>
+      </r-input>
+      <r-input type="password" id="name" v-model="config.name" placeholder="name (optional)">
+        <template v-slot:prepend>
+          <div class="prepend">Connection name:</div>
         </template>
       </r-input>
     </div>
@@ -36,28 +41,43 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { RedisItemConfig } from "../../abstraction/interface";
 
 export default Vue.extend({
   data() {
     return {
       id: "",
-      host: "127.0.0.1",
-      port: 6379,
-      auth: ""
+      config: {
+        host: "127.0.0.1",
+        port: 6379,
+        auth: "",
+        name: ""
+      }
     };
   },
   methods: {
     init() {
-      this.id = this.$route.params.id || "";
-      this.host = this.$route.params.host || this.host;
-      this.port = parseInt(this.$route.params.port) || this.port;
-      this.auth = this.$route.params.auth || "";
+      const {
+        id = "",
+        host = this.config.host,
+        port = this.config.port,
+        auth = "",
+        name = ""
+      } = this.$route.params;
+
+      this.id = id;
+      this.config.host = host;
+      this.config.port = parseInt(port as string);
+      this.config.auth = auth;
+      this.config.name = name === `${host}:${port}` ? "" : name;
     },
+
     addConnection() {
+      const config: RedisItemConfig = this.config;
       this.vscode.postMessage({
         fromWebview: true,
         command: "Connection.Edit",
-        args: [this.id, this.host, this.port, this.auth]
+        args: [this.id, config]
       });
     }
   },

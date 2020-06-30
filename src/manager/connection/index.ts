@@ -78,15 +78,11 @@ class Connection implements TreeDataProvider<AbstractNode> {
     /**
      * Add or edit a connection
      * @param id Connection Id.
-     * @param host The hostname of the redis.
-     * @param port The port number to connect to.
-     * @param auth The auth of the redis. Leave empty to ignore.
+     * @param config The connection config.
      */
-    async add([id, host, port, auth, ...ca]: ConnectionOptions): Promise<void> {
-        console.log(ca);
-
+    async add([id, config]: ConnectionOptions): Promise<void> {
+        const { host, port, auth, name } = config;
         try {
-            const name = `${host}:${port}`;
             id = id || Date.now().toString();
             await this.init(id, { host, port, auth });
             this.config.set(id, { host, port, auth, name });
