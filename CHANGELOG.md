@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.0 (2020-06-30)
+
++ Name redis connection instead of socket.
+
 ## v0.7.1 (2020-06-28)
 
 + Fix: unable create a connection.
