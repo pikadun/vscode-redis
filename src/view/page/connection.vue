@@ -65,7 +65,7 @@ export default Vue.extend({
       } = this.$route.params;
       this.id = id;
       this.config.host = host;
-      this.config.port = parseInt(port as string);
+      this.config.port = parseInt(port + "");
       this.config.auth = auth;
       this.config.name = name === `${host}:${port}` ? "" : name;
     },
