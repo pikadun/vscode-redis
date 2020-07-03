@@ -1,5 +1,5 @@
 <template>
-  <button class="r-button" @click="handleClick">
+  <button class="r-button" @click="handleClick" :style="style">
     <span v-if="$slots.default">
       <slot></slot>
     </span>
@@ -19,11 +19,21 @@ export default Vue.extend({
     type: {
       type: String,
       default: "default"
-    }
+    },
+    border: String
   },
   methods: {
     handleClick(evt: Event) {
       this.$emit("click", evt);
+    }
+  },
+  computed: {
+    style() {
+      const s: { [x: string]: string } = {};
+      if (this.border === "false") {
+        s.border = "none";
+      }
+      return s;
     }
   }
 });

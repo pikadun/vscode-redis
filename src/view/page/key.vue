@@ -7,13 +7,16 @@
       <r-input type="text" id="ttl" v-model="redisData.ttl" :readonly="!editing">
         <template v-slot:prepend>TTL:</template>
       </r-input>
-      <r-button v-if="hashSelected&&redisData.type==='hash'" @click="hashDialog=true">View</r-button>
     </div>
 
-    <div name="placeholder" style="height:6vh"></div>
-
     <div class="hash" v-if="redisData.type==='hash'">
-      <r-table :datas="redisData.value" @selectRow="selectRow"></r-table>
+      <r-table :datas="redisData.value" serial="S" widths="1fr 2fr auto">
+        <template #field></template>
+        <template #value></template>
+        <template #operation>
+          <r-button border="false">View</r-button>
+        </template>
+      </r-table>
     </div>
 
     <div class="string" v-else-if="redisData.type==='string'" v-text="redisData.value"></div>
@@ -27,7 +30,7 @@
 
 <style scoped>
 .header {
-  position: fixed;
+  position: sticky;
   background-color: var(--vscode-editor-background);
   width: 100%;
   padding-bottom: 1vh;
@@ -37,7 +40,6 @@
   width: 100%;
   box-sizing: border-box;
   border: 1px solid;
-  min-height: 80vh;
 }
 .hashDialog div {
   width: 100%;
@@ -73,8 +75,19 @@ export default Vue.extend({
       this.hashDialog = false;
       this.redisData.type = this.$route.params.type;
       this.redisData.key = this.$route.params.key;
-      this.redisData.value = this.$route.params.value;
       this.redisData.ttl = parseInt(this.$route.params.ttl);
+
+      if (this.redisData.type === "hash") {
+        const values: any = this.$route.params.value;
+        this.redisData.value = Object.keys(values).map(e => {
+          return {
+            field: e,
+            value: values[e]
+          };
+        }) as any;
+      } else {
+        this.redisData.value = this.$route.params.value;
+      }
     },
     edit() {
       this.editing = true;

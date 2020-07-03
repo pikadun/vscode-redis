@@ -19,6 +19,15 @@ export default Vue.extend({
       }
       this.$router.push({ name: data.panelName, params: data });
     });
+    this.$router.push({
+      name: "KEY_INFO",
+      params: {
+        type: "hash",
+        key: "test",
+        value: { a: "a", b: "b", c: "c" },
+        ttl: -1
+      }
+    });
   }
 });
 </script>
