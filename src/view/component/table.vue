@@ -2,11 +2,20 @@
   <div class="r-table" :style="style">
     <!-- head -->
     <span v-if="serial" v-text="serial"></span>
-    <span :key="c" v-for="c in cols" v-text="c"></span>
+    <span :key="'head'+ i" v-for="(c,i) in cols" v-text="c" :style="itemStyle(i+1)"></span>
 
     <!-- body -->
-    <span :key="i" v-for="(item,i) in cells">
-      <slot :name="item.name">{{item.value}}</slot>
+    <span
+      class="r-table-body"
+      :key="'body' + i"
+      v-for="(item,i) in cells"
+      :style="itemStyle(i%count)"
+    >
+      <slot
+        :name="item.name"
+        :index="parseInt(i/count)"
+        :row="datas[parseInt(i/count)]"
+      >{{item.value}}</slot>
     </span>
   </div>
 </template>
@@ -19,6 +28,9 @@
 .r-table span {
   border: 1px solid var(--vscode-editor-foreground);
   box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
 
@@ -33,12 +45,22 @@ export default Vue.extend({
       default: []
     },
     serial: String,
-    widths: String
+    widths: String,
+    aligns: {
+      type: String,
+      default: ""
+    }
   },
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    itemStyle(index: number) {
+      return {
+        "text-align": this.aligns.split(",")[index - 1] || "start"
+      };
+    }
+  },
   computed: {
     style(): { [x: string]: string } {
       const widths = [];
@@ -54,9 +76,12 @@ export default Vue.extend({
 
       return { "grid-template-columns": widths.join(" ") };
     },
+    count(): number {
+      return this.serial ? this.cols.length + 1 : this.cols.length;
+    },
 
     cols(): string[] {
-      const cols = Object.keys(this.$slots);
+      const cols = Object.keys(this.$scopedSlots);
       return cols;
     },
 
@@ -65,7 +90,7 @@ export default Vue.extend({
       const cells: any[] = [];
       for (let i = 0; i < this.datas.length; i++) {
         const item: any = this.datas[i];
-        if (this.serial) cells.push({ name: "s", value: i + 1 });
+        if (this.serial) cells.push({ name: "s", value: i });
 
         cols.forEach(e => {
           cells.push({ name: e, value: item[e] });

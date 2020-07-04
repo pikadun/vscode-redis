@@ -8,6 +8,7 @@
 
 <style scoped>
 .r-button {
+  cursor: pointer;
 }
 </style>
 
@@ -20,7 +21,7 @@ export default Vue.extend({
       type: String,
       default: "default"
     },
-    border: String
+    rimless: Boolean
   },
   methods: {
     handleClick(evt: Event) {
@@ -30,7 +31,7 @@ export default Vue.extend({
   computed: {
     style() {
       const s: { [x: string]: string } = {};
-      if (this.border === "false") {
+      if (this.rimless) {
         s.border = "none";
       }
       return s;

@@ -10,11 +10,16 @@
     </div>
 
     <div class="hash" v-if="redisData.type==='hash'">
-      <r-table :datas="redisData.value" serial="S" widths="1fr 2fr auto">
+      <r-table
+        :datas="redisData.value"
+        serial="Serial"
+        widths="1fr 2fr auto"
+        aligns="start,start,center"
+      >
         <template #field></template>
         <template #value></template>
-        <template #operation>
-          <r-button border="false">View</r-button>
+        <template #operation="{index}">
+          <r-button rimless @click="selectHashRow(index)">View</r-button>
         </template>
       </r-table>
     </div>
@@ -22,8 +27,8 @@
     <div class="string" v-else-if="redisData.type==='string'" v-text="redisData.value"></div>
 
     <r-dialog :visible.sync="hashDialog" class="hashDialog">
-      <div style="border-bottom:1px" v-text="hashSelected"></div>
-      <div v-text="redisData.value[hashSelected]"></div>
+      <div style="border-bottom:1px" v-text="redisData.value[hashSelected].field"></div>
+      <div v-text="redisData.value[hashSelected].value"></div>
     </r-dialog>
   </div>
 </template>
@@ -64,14 +69,14 @@ export default Vue.extend({
         ttl: -1
       },
       editing: false,
-      hashSelected: "",
+      hashSelected: 0,
       hashDialog: false
     };
   },
   methods: {
     init() {
       this.editing = false;
-      this.hashSelected = "";
+      this.hashSelected = 0;
       this.hashDialog = false;
       this.redisData.type = this.$route.params.type;
       this.redisData.key = this.$route.params.key;
@@ -92,8 +97,12 @@ export default Vue.extend({
     edit() {
       this.editing = true;
     },
-    selectRow(k: string) {
-      this.hashSelected = k;
+    selectHashRow(index: number) {
+      this.hashSelected = index;
+      this.hashDialog = true;
+    },
+    selectRow(r: any) {
+      console.log(r);
     }
   },
   mounted() {
