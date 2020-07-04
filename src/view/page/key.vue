@@ -7,27 +7,35 @@
       <r-input type="text" id="ttl" v-model="redisData.ttl" :readonly="!editing">
         <template v-slot:prepend>TTL:</template>
       </r-input>
-      <r-button v-if="hashSelected&&redisData.type==='hash'" @click="hashDialog=true">View</r-button>
     </div>
 
-    <div name="placeholder" style="height:6vh"></div>
-
     <div class="hash" v-if="redisData.type==='hash'">
-      <r-table :datas="redisData.value" @selectRow="selectRow"></r-table>
+      <r-table
+        :datas="redisData.value"
+        serial="Serial"
+        widths="1fr 2fr auto"
+        aligns="start,start,center"
+      >
+        <template #field></template>
+        <template #value></template>
+        <template #operation="{index}">
+          <r-button rimless @click="selectHashRow(index)">View</r-button>
+        </template>
+      </r-table>
     </div>
 
     <div class="string" v-else-if="redisData.type==='string'" v-text="redisData.value"></div>
 
     <r-dialog :visible.sync="hashDialog" class="hashDialog">
-      <div style="border-bottom:1px" v-text="hashSelected"></div>
-      <div v-text="redisData.value[hashSelected]"></div>
+      <div style="border-bottom:1px" v-text="redisData.value[hashSelected].field"></div>
+      <div v-text="redisData.value[hashSelected].value"></div>
     </r-dialog>
   </div>
 </template>
 
 <style scoped>
 .header {
-  position: fixed;
+  position: sticky;
   background-color: var(--vscode-editor-background);
   width: 100%;
   padding-bottom: 1vh;
@@ -37,7 +45,6 @@
   width: 100%;
   box-sizing: border-box;
   border: 1px solid;
-  min-height: 80vh;
 }
 .hashDialog div {
   width: 100%;
@@ -62,25 +69,40 @@ export default Vue.extend({
         ttl: -1
       },
       editing: false,
-      hashSelected: "",
+      hashSelected: 0,
       hashDialog: false
     };
   },
   methods: {
     init() {
       this.editing = false;
-      this.hashSelected = "";
+      this.hashSelected = 0;
       this.hashDialog = false;
       this.redisData.type = this.$route.params.type;
       this.redisData.key = this.$route.params.key;
-      this.redisData.value = this.$route.params.value;
       this.redisData.ttl = parseInt(this.$route.params.ttl);
+
+      if (this.redisData.type === "hash") {
+        const values: any = this.$route.params.value;
+        this.redisData.value = Object.keys(values).map(e => {
+          return {
+            field: e,
+            value: values[e]
+          };
+        }) as any;
+      } else {
+        this.redisData.value = this.$route.params.value;
+      }
     },
     edit() {
       this.editing = true;
     },
-    selectRow(k: string) {
-      this.hashSelected = k;
+    selectHashRow(index: number) {
+      this.hashSelected = index;
+      this.hashDialog = true;
+    },
+    selectRow(r: any) {
+      console.log(r);
     }
   },
   mounted() {
