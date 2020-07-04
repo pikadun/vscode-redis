@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.2 (2020-07-04)
+
++ Optimize hash page.
+
 ## v0.8.1 (2020-06-30)
 
 + Fix bugs.
