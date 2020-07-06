@@ -1,5 +1,4 @@
-import AbstractNode from './abstraction';
-import { TreeItemCollapsibleState, Command as VScodeCommand, ThemeIcon } from 'vscode';
+import { TreeItemCollapsibleState, Command as VScodeCommand, ThemeIcon, TreeItem } from 'vscode';
 import { TreeItemContextValue, RedisPanel, RedisType } from '../abstraction/enum';
 import RedisItem from './redis';
 import DBItem from './db';
@@ -7,7 +6,7 @@ import Command from '../redis/command';
 import Panel from '../manager/panel';
 import { RedisDataType, HASH } from '../abstraction/interface';
 
-class KeyItem extends AbstractNode {
+class KeyItem extends TreeItem {
     readonly command: VScodeCommand = {
         title: 'View Key Detail',
         command: 'Redis.Key.Detail',
@@ -29,7 +28,7 @@ class KeyItem extends AbstractNode {
     /**
      * @todo Split the key by ':' and group them
      */
-    getChildren(): Promise<AbstractNode[]> {
+    getChildren(): Promise<TreeItem[]> {
         throw new Error('Method not implemented.');
     }
 

@@ -1,6 +1,5 @@
-import { window, commands, ExtensionContext, env, Uri } from 'vscode';
+import { window, commands, ExtensionContext, env, Uri, TreeItem } from 'vscode';
 import Manager from './manager';
-import AbstractNode from './node/abstraction';
 import KeyItem from './node/key';
 import DBItem from './node/db';
 import { ConnectionOptions } from './abstraction/interface';
@@ -15,7 +14,7 @@ export function activate(context: ExtensionContext): void {
     window.registerTreeDataProvider('RedisExplorer', ConnectionProvider);
     commands.registerCommand('Redis.Connection.Add', () => ConnectionProvider.edit(Panel));
     commands.registerCommand('Redis.Connection.Edit', (...args: ConnectionOptions) => { ConnectionProvider.add(args); });
-    commands.registerCommand('Redis.Connection.Delete', (element: AbstractNode) => ConnectionProvider.delete(element));
+    commands.registerCommand('Redis.Connection.Delete', (element: TreeItem) => ConnectionProvider.delete(element));
     commands.registerCommand('Redis.DB.Reload', (element: DBItem) => ConnectionProvider.refresh(element));
     commands.registerCommand('Redis.DB.Search', (element: DBItem) => element.search());
 

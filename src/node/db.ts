@@ -1,11 +1,10 @@
-import AbstractNode from './abstraction';
 import { TreeItemContextValue } from '../abstraction/enum';
-import { TreeItemCollapsibleState, ThemeIcon, window } from 'vscode';
+import { TreeItemCollapsibleState, ThemeIcon, window, TreeItem } from 'vscode';
 import Command from '../redis/command';
 import RedisItem from './redis';
 import KeyItem from './key';
 
-class DBItem extends AbstractNode {
+class DBItem extends TreeItem {
     contextValue = TreeItemContextValue.DB;
     iconPath = new ThemeIcon('database');
     private cursor = 0;
@@ -20,7 +19,7 @@ class DBItem extends AbstractNode {
         super(label, collapsibleState);
     }
 
-    async getChildren(): Promise<AbstractNode[]> {
+    async getChildren(): Promise<TreeItem[]> {
         await Command.run(this.root.socket, `SELECT ${this.index}`);
         const cmd = `SCAN ${this.cursor} MATCH ${this.pattern} COUNT 1000`;
         const keys = await Command.run<[number, string[]]>(this.root.socket, cmd);
