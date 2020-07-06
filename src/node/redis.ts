@@ -2,7 +2,7 @@ import path from 'path';
 import { TreeItemContextValue } from 'src/abstraction/enum';
 import { RedisInfo } from 'src/abstraction/redisinfo';
 import { TreeItemCollapsibleState, TreeItem } from 'vscode';
-import command from 'src/redis/command';
+import command from 'src/common/command';
 import DBItem from './db';
 import { Socket } from 'net';
 

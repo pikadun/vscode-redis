@@ -4,14 +4,14 @@ import { Socket, connect } from 'net';
 import { RedisPanel } from 'src/abstraction/enum';
 import { PanelOptions, ConnectionOptions, RedisConfig } from 'src/abstraction/interface';
 
-import resp from 'src/redis/resp';
+import resp from 'src/common/resp';
 import utils from 'src/common/utils';
 import Dictionary from 'src/common/dictionary';
 import RedisItem from 'src/node/redis';
 import DBItem from 'src/node/db';
 import { RedisInfo } from 'src/abstraction/redisinfo';
 import Panel from '../panel';
-import command from 'src/redis/command';
+import command from 'src/common/command';
 import Config from './config';
 
 class Connection implements TreeDataProvider<TreeItem> {

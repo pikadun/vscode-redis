@@ -2,7 +2,7 @@ import { TreeItemCollapsibleState, Command as VScodeCommand, ThemeIcon, TreeItem
 import { TreeItemContextValue, RedisPanel, RedisType } from 'src/abstraction/enum';
 import RedisItem from './redis';
 import DBItem from './db';
-import Command from 'src/redis/command';
+import Command from 'src/common/command';
 import Panel from 'src/manager/panel';
 import { RedisDataType, HASH } from 'src/abstraction/interface';
 
