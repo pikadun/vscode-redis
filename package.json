@@ -71,50 +71,60 @@
             {
                 "command": "Redis.Connection.Add",
                 "title": "Add Connection",
-                "icon": "$(add)"
+                "icon": "$(add)",
+                "category": "Redis"
             },
             {
                 "command": "Redis.Connection.Delete",
                 "title": "Delete Connection",
-                "icon": "$(trashcan)"
+                "icon": "$(trashcan)",
+                "category": "Redis"
             },
             {
                 "command": "Redis.Connection.Edit",
                 "title": "Edit Connection",
-                "icon": "$(add)"
+                "icon": "$(add)",
+                "category": "Redis"
             },
             {
                 "command": "Redis.Key.Detail",
-                "title": "View Key Detail"
+                "title": "View Key Detail",
+                "category": "Redis"
             },
             {
                 "command": "Redis.DB.Reload",
                 "title": "Reload Keys",
-                "icon": "$(refresh)"
+                "icon": "$(refresh)",
+                "category": "Redis"
             },
             {
                 "command": "Redis.DB.Search",
                 "title": "Keys Filter",
-                "icon": "$(search)"
+                "icon": "$(search)",
+                "category": "Redis"
             },
             {
                 "command": "Redis.DB.AddKey",
-                "title": "Add Key"
+                "title": "Add Key",
+                "category": "Redis"
             },
             {
                 "command": "Redis.Feedback",
                 "title": "Feedback",
-                "icon": "$(feedback)"
+                "icon": "$(feedback)",
+                "category": "Redis"
             },
             {
                 "command": "Redis.Star",
                 "title": "Star on github",
-                "icon": "$(github-alt)"
+                "icon": "$(github-alt)",
+                "category": "Redis"
             },
             {
                 "command": "Redis.Terminal",
                 "title": "Open Terminal",
-                "icon": "$(terminal)"
+                "icon": "$(terminal)",
+                "category": "Redis"
             }
         ],
         "menus": {
