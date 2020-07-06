@@ -1,8 +1,8 @@
 import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window } from 'vscode';
 import { Socket, connect } from 'net';
 
-import { Constant, RedisPanel } from '../../abstraction/enum';
-import { RedisItemConfig, PanelOptions, ConnectionOptions, RedisConfig } from '../../abstraction/interface';
+import { RedisPanel } from '../../abstraction/enum';
+import { PanelOptions, ConnectionOptions, RedisConfig } from '../../abstraction/interface';
 
 import AbstractNode from '../../node/abstraction';
 import RESP from '../../redis/resp';
@@ -13,30 +13,7 @@ import DBItem from '../../node/db';
 import { RedisInfo } from '../../abstraction/redisinfo';
 import Panel from '../panel';
 import command from '../../redis/command';
-
-class Config {
-    constructor(private context: ExtensionContext) { }
-    all(): { [key: string]: RedisItemConfig } {
-        return this.context.globalState.get<{ [key: string]: RedisItemConfig }>(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY) || {};
-    }
-
-    get(id: string): RedisItemConfig {
-        const configs = this.all();
-        return configs[id];
-    }
-
-    set(id: string, config: RedisItemConfig): void {
-        const configs = this.all();
-        configs[id] = config;
-        this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, configs);
-    }
-
-    delete(id: string): void {
-        const configs = this.all();
-        delete configs[id];
-        this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, configs);
-    }
-}
+import Config from './config';
 
 class ConnectionProvider implements TreeDataProvider<AbstractNode> {
     _onDidChangeTreeData = new EventEmitter<AbstractNode | void>();
