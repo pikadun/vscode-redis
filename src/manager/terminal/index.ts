@@ -1,8 +1,8 @@
 import vscode, { ExtensionContext, window } from 'vscode';
 import Pty from './pty';
-import RedisItem from '../../node/redis';
-import Dictionary from '../../common/dictionary';
-import { Constant } from '../../abstraction/enum';
+import RedisItem from 'src/node/redis';
+import Dictionary from 'src/common/dictionary';
+import { Constant } from 'src/abstraction/enum';
 
 
 class Terminal {

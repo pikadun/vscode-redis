@@ -1,17 +1,17 @@
 import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window, TreeItem } from 'vscode';
 import { Socket, connect } from 'net';
 
-import { RedisPanel } from '../../abstraction/enum';
-import { PanelOptions, ConnectionOptions, RedisConfig } from '../../abstraction/interface';
+import { RedisPanel } from 'src/abstraction/enum';
+import { PanelOptions, ConnectionOptions, RedisConfig } from 'src/abstraction/interface';
 
-import RESP from '../../redis/resp';
-import utils from '../../node/utils';
-import Dictionary from '../../common/dictionary';
-import RedisItem from '../../node/redis';
-import DBItem from '../../node/db';
-import { RedisInfo } from '../../abstraction/redisinfo';
+import RESP from 'src/redis/resp';
+import utils from 'src/node/utils';
+import Dictionary from 'src/common/dictionary';
+import RedisItem from 'src/node/redis';
+import DBItem from 'src/node/db';
+import { RedisInfo } from 'src/abstraction/redisinfo';
 import Panel from '../panel';
-import command from '../../redis/command';
+import command from 'src/redis/command';
 import Config from './config';
 
 class ConnectionProvider implements TreeDataProvider<TreeItem> {

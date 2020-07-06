@@ -1,7 +1,7 @@
 import { Pseudoterminal, EventEmitter } from 'vscode';
 import { Socket } from 'net';
-import command from '../../redis/command';
-import { Constant } from '../../abstraction/enum';
+import command from 'src/redis/command';
+import { Constant } from 'src/abstraction/enum';
 
 class Pty implements Pseudoterminal {
     private writeEmitter = new EventEmitter<string>();
