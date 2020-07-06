@@ -7,14 +7,14 @@
 
 Welcome to the redis extension for Visual Studio Code!
 
-This extension lets you connect to a Redis Server, view the keys and data.
+This extension lets you connect to a Redis Server and manage data.
 
 ## Feature
 
-+ ✨A GUI for vscode to manage Redis Server.
-+ ✨Complete redis command line implement in vscode.
++ ✨An easy-to-use GUI to access your Redis databases.
++ ✨Execute the redis commands through the terminal in vscode.
++ ✨Support **string**, **hash**, **list**(TODO), **set**(TODO), **zset**(TODO) and **stream**(TODO) type.
 + ✨(TODO) Support **TLS**, **SSH** and **TLS-over-SSH tunneling**.
-+ ✨(TODO) Support **string**, **hash**, **list**, **set**, **zset** and **stream** type.
 
 ## Usage
 
