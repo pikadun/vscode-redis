@@ -4,7 +4,7 @@ import { Socket, connect } from 'net';
 import { RedisPanel } from 'src/abstraction/enum';
 import { PanelOptions, ConnectionOptions, RedisConfig } from 'src/abstraction/interface';
 
-import RESP from 'src/redis/resp';
+import resp from 'src/redis/resp';
 import utils from 'src/node/utils';
 import Dictionary from 'src/common/dictionary';
 import RedisItem from 'src/node/redis';
@@ -14,7 +14,7 @@ import Panel from '../panel';
 import command from 'src/redis/command';
 import Config from './config';
 
-class ConnectionProvider implements TreeDataProvider<TreeItem> {
+class Connection implements TreeDataProvider<TreeItem> {
     _onDidChangeTreeData = new EventEmitter<TreeItem | void>();
     readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
@@ -117,7 +117,7 @@ class ConnectionProvider implements TreeDataProvider<TreeItem> {
         socket.setNoDelay(true);
 
         socket.on('data', buffer => {
-            RESP.decode(buffer);
+            resp.decode(buffer);
         });
         this.sockets.set(id, socket);
         return socket;
@@ -131,4 +131,4 @@ class ConnectionProvider implements TreeDataProvider<TreeItem> {
     }
 }
 
-export default ConnectionProvider;
+export default Connection;

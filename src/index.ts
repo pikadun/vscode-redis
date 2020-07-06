@@ -8,14 +8,14 @@ import RedisItem from './node/redis';
 
 export function activate(context: ExtensionContext): void {
     const manager = new Manager(context);
-    const { ConnectionProvider, Panel, Terminal } = manager;
+    const { Connection, Panel, Terminal } = manager;
 
     // tree
-    window.registerTreeDataProvider('RedisExplorer', ConnectionProvider);
-    commands.registerCommand('Redis.Connection.Add', () => ConnectionProvider.edit(Panel));
-    commands.registerCommand('Redis.Connection.Edit', (...args: ConnectionOptions) => { ConnectionProvider.add(args); });
-    commands.registerCommand('Redis.Connection.Delete', (element: TreeItem) => ConnectionProvider.delete(element));
-    commands.registerCommand('Redis.DB.Reload', (element: DBItem) => ConnectionProvider.refresh(element));
+    window.registerTreeDataProvider('RedisExplorer', Connection);
+    commands.registerCommand('Redis.Connection.Add', () => Connection.edit(Panel));
+    commands.registerCommand('Redis.Connection.Edit', (...args: ConnectionOptions) => { Connection.add(args); });
+    commands.registerCommand('Redis.Connection.Delete', (element: TreeItem) => Connection.delete(element));
+    commands.registerCommand('Redis.DB.Reload', (element: DBItem) => Connection.refresh(element));
     commands.registerCommand('Redis.DB.Search', (element: DBItem) => element.search());
 
     // view
@@ -24,7 +24,7 @@ export function activate(context: ExtensionContext): void {
     // terminal
     commands.registerCommand('Redis.Terminal', async (element: RedisItem) => {
         if (!element.socket) {
-            [element.socket, element.info] = await ConnectionProvider.init(element.id);
+            [element.socket, element.info] = await Connection.init(element.id);
         }
         Terminal.show(element);
     });
