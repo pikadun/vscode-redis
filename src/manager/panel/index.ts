@@ -8,7 +8,7 @@ class Panel {
     private readonly viewType = 'RedisView';
     private readonly title = 'Redis';
     private readonly basePath = this.context.extensionPath;
-    private readonly viewPath = path.join(this.basePath, 'lib/view');
+    private readonly viewPath = path.join(this.basePath, 'out/view');
     private panel!: WebviewPanel;
     private panelDisPosed = true;
     constructor(private context: ExtensionContext) { }
@@ -24,7 +24,7 @@ class Panel {
             }
         );
 
-        panel.iconPath = Uri.file(path.resolve(this.basePath, 'resources', 'image', 'redis.png'));
+        panel.iconPath = Uri.file(path.resolve(this.basePath, 'img', 'redis.png'));
 
         panel.onDidDispose(() => {
             this.panelDisPosed = true;

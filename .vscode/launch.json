@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "outFiles": [
-                "${workspaceFolder}/lib/**/*.js"
+                "${workspaceFolder}/out/**/*.js"
             ],
             "args": [
                 // "--disable-extensions",

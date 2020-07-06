@@ -6,7 +6,7 @@
         "vscode": "^1.46.0"
     },
     "license": "MIT",
-    "main": "./lib/index.js",
+    "main": "./out/index.js",
     "displayName": "Redis",
     "description": "Redis For VS Code",
     "scripts": {
@@ -14,7 +14,7 @@
         "lint": "eslint '**/*.ts'",
         "lint:fix": "eslint --fix '**/*.ts'",
         "watch": "webpack --mode=none --config=./config/webpack.ts --watch",
-        "compile": "rm -rf ./lib && webpack --mode=production --config=./config/webpack.ts",
+        "compile": "rm -rf ./out && webpack --mode=production --config=./config/webpack.ts",
         "vscode:prepublish": "npm run compile"
     },
     "categories": [
@@ -36,7 +36,7 @@
         }
     ],
     "badges": [],
-    "icon": "resources/image/logo.png",
+    "icon": "img/logo.png",
     "homepage": "https://github.com/pikadun/vscode-redis/blob/master/README.md",
     "bugs": {
         "url": "https://github.com/pikadun/vscode-redis/issues",
@@ -55,7 +55,7 @@
                 {
                     "id": "RedisExplorer",
                     "title": "Redis Explorer",
-                    "icon": "resources/image/icon.png"
+                    "icon": "img/icon.png"
                 }
             ]
         },

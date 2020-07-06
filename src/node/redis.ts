@@ -9,7 +9,7 @@ import { Socket } from 'net';
 
 class RedisItem extends AbstractNode {
     contextValue = TreeItemContextValue.REDIS;
-    iconPath = path.join(__dirname, '..', 'resources', 'image', `${this.contextValue}.png`);
+    iconPath = path.join(__dirname, '..', 'img', `${this.contextValue}.png`);
     info!: RedisInfo;
     socket!: Socket;
     constructor(

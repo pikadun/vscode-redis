@@ -9,7 +9,7 @@ const config: Configuration = {
     name: 'view',
     entry: './view/app.ts',
     output: {
-        path: path.resolve(__dirname, '..', 'lib', 'view'),
+        path: path.resolve(__dirname, '..', 'out', 'view'),
         publicPath: '/',
         filename: 'js/[name].js',
         chunkFilename: 'js/[name].js'
@@ -52,7 +52,7 @@ const config: Configuration = {
     ],
     devServer: {
         inline: true,
-        contentBase: path.resolve(__dirname, '..', 'lib', 'view'),
+        contentBase: path.resolve(__dirname, '..', 'out', 'view'),
         port: 9000,
         hot: true
     }

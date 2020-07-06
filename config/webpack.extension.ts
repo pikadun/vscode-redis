@@ -12,7 +12,7 @@ const config: Configuration = {
         'vscode': 'commonjs vscode'
     },
     output: {
-        path: path.resolve(__dirname, '..', 'lib'),
+        path: path.resolve(__dirname, '..', 'out'),
         filename: 'index.js',
         libraryTarget: 'commonjs2',
         devtoolModuleFilenameTemplate: '../src/[resource-path]'
