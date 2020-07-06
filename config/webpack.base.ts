@@ -5,6 +5,7 @@ const config: Configuration = {
     context: path.resolve(__dirname, '..', 'src'),
     stats: 'minimal',
     resolve: {
+        alias: { 'src': path.resolve('src') },
         extensions: ['.ts', '.js']
     }
 };
