@@ -10,7 +10,7 @@ Vue.use(VueRouter);
 
 import key from './page/key.vue';
 import connection from './page/connection.vue';
-import { RedisPanel } from '../abstraction/enum';
+import { RedisPanel } from 'src/abstraction/enum';
 const router = new VueRouter({
     routes: [
         { name: RedisPanel.KEY_INFO, path: '/key/:key', component: key },

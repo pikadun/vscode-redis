@@ -1,4 +1,4 @@
-import { RedisInfo } from '../abstraction/redisinfo';
+import { RedisInfo } from 'src/abstraction/redisinfo';
 
 class Utils {
     /**

@@ -1,8 +1,8 @@
 import path from 'path';
-import { TreeItemContextValue } from '../abstraction/enum';
-import { RedisInfo } from '../abstraction/redisinfo';
+import { TreeItemContextValue } from 'src/abstraction/enum';
+import { RedisInfo } from 'src/abstraction/redisinfo';
 import { TreeItemCollapsibleState, TreeItem } from 'vscode';
-import command from '../redis/command';
+import command from 'src/redis/command';
 import DBItem from './db';
 import { Socket } from 'net';
 

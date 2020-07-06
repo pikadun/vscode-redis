@@ -1,6 +1,6 @@
-import { TreeItemContextValue } from '../abstraction/enum';
+import { TreeItemContextValue } from 'src/abstraction/enum';
 import { TreeItemCollapsibleState, ThemeIcon, window, TreeItem } from 'vscode';
-import Command from '../redis/command';
+import Command from 'src/redis/command';
 import RedisItem from './redis';
 import KeyItem from './key';
 

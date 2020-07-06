@@ -5,7 +5,7 @@ import { RedisPanel } from 'src/abstraction/enum';
 import { PanelOptions, ConnectionOptions, RedisConfig } from 'src/abstraction/interface';
 
 import resp from 'src/redis/resp';
-import utils from 'src/node/utils';
+import utils from 'src/common/utils';
 import Dictionary from 'src/common/dictionary';
 import RedisItem from 'src/node/redis';
 import DBItem from 'src/node/db';

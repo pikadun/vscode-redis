@@ -1,5 +1,5 @@
 import { ExtensionContext } from 'vscode';
-import Manager from '../manager';
+import Manager from 'src/manager';
 import { RedisType } from './enum';
 
 export interface RedisConfig {
