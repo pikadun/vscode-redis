@@ -57,11 +57,10 @@ class Connection implements TreeDataProvider<TreeItem> {
      * @param config The connection config.
      */
     async add([id, config]: ConnectionOptions): Promise<void> {
-        const { host, port, auth, name } = config;
         try {
             id = id || Date.now().toString();
-            await this.init(id, { host, port, auth });
-            this.config.set(id, { host, port, auth, name });
+            await this.init(id, config);
+            this.config.set(id, config);
             this.refresh();
         } catch (error) {
             window.showErrorMessage(error.message);
