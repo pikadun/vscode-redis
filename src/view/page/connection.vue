@@ -22,7 +22,8 @@
         </template>
       </r-input>
     </div>
-    <r-button @click="addConnection">Connection</r-button>
+    <r-button @click="addConnection">Test Connection</r-button>
+    <r-button @click="addConnection">Add</r-button>
   </div>
 </template>
 
@@ -73,10 +74,20 @@ export default Vue.extend({
     addConnection() {
       this.config.name =
         this.config.name || `${this.config.host}:${this.config.port}`;
-        
+
       this.vscode.postMessage({
         fromWebview: true,
         command: "Redis.Connection.Edit",
+        args: [this.id, this.config]
+      });
+    },
+    testConnection() {
+      this.config.name =
+        this.config.name || `${this.config.host}:${this.config.port}`;
+
+      this.vscode.postMessage({
+        fromWebview: true,
+        command: "Redis.Connection.Test",
         args: [this.id, this.config]
       });
     }

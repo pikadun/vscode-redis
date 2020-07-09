@@ -1,21 +1,20 @@
 import { Pseudoterminal, EventEmitter } from 'vscode';
-import { Socket } from 'net';
-import command from 'src/common/command';
 import { Constant } from 'src/abstraction/enum';
+import RedisItem from 'src/node/redis';
 
 class Pty implements Pseudoterminal {
     private writeEmitter = new EventEmitter<string>();
     readonly onDidWrite = this.writeEmitter.event;
     private input: string[] = [];
     private cursor = 0;
+    private name: string;
 
     constructor(
-        private name: string,
-        private socket: Socket,
+        private redisItem: RedisItem,
         private welcome: boolean,
         private closeEvent: () => void
     ) {
-        this.name = name + '> ';
+        this.name = redisItem.config.name + '> ';
     }
 
     /**
@@ -110,7 +109,7 @@ class Pty implements Pseudoterminal {
 
         let result = '';
         try {
-            result = await command.run<string>(this.socket, input);
+            result = await this.redisItem.run<string>(input);
         } catch (error) {
             result = error.message;
         }

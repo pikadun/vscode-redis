@@ -29,13 +29,8 @@ class RedisItem extends Element {
         const count = parseInt(dbInfo[1]);
         const result: DBItem[] = [];
         for (let i = 0; i < count; i++) {
-            const dbName = `db${i}`;
-            const db = new DBItem(
-                `${this.id}.${i}`, i, this,
-                `${dbName}(${this.info.Keyspace[dbName]?.keys || 0})`,
-                TreeItemCollapsibleState.Collapsed
-            );
-            result.push(db);
+            const dbName = `db${i}(${this.info.Keyspace[`db${i}`]?.keys || 0})`;
+            result.push(new DBItem(this, i, dbName, TreeItemCollapsibleState.Collapsed));
         }
         return result;
     }
@@ -96,6 +91,7 @@ class RedisItem extends Element {
         if (!this.socketReady) {
             await this.init();
         }
+
         return command.run<T>(this.socket, cmd);
     }
 }

@@ -2,7 +2,6 @@ import { TreeItemCollapsibleState, Command as VScodeCommand, ThemeIcon } from 'v
 import { TreeItemContextValue, RedisPanel, RedisType } from 'src/abstraction/enum';
 import RedisItem from './redis';
 import DBItem from './db';
-import Command from 'src/common/command';
 import Panel from 'src/manager/panel';
 import { RedisDataType, HASH } from 'src/abstraction/interface';
 import Element from 'src/manager/connection/element';
@@ -16,7 +15,6 @@ class KeyItem extends Element {
     readonly contextValue = TreeItemContextValue.KEY;
     readonly iconPath = new ThemeIcon('key');
     constructor(
-        readonly id: string,
         readonly root: RedisItem,
         readonly db: DBItem,
         readonly label: string,
@@ -24,6 +22,7 @@ class KeyItem extends Element {
     ) {
         super(label, collapsibleState);
         this.command.arguments?.push(this);
+        this.id = `${this.db.id}.${label}`;
     }
 
     /**
@@ -34,10 +33,10 @@ class KeyItem extends Element {
     }
 
     public async detail(panel: Panel): Promise<void> {
-        await Command.run(this.root.socket, `SELECT ${this.db.index}`);
+        await this.root.run(`SELECT ${this.db.index}`);
 
-        const type = await Command.run<string>(this.root.socket, `TYPE ${this.label}`);
-        const ttl = await Command.run<number>(this.root.socket, `TTL ${this.label}`);
+        const type = await this.root.run<string>(`TYPE ${this.label}`);
+        const ttl = await this.root.run<number>(`TTL ${this.label}`);
         let data: RedisDataType;
 
         switch (type) {
@@ -57,12 +56,12 @@ class KeyItem extends Element {
     }
 
     private async string(): Promise<RedisDataType> {
-        const data = await Command.run<string>(this.root.socket, `GET ${this.label}`);
+        const data = await this.root.run<string>(`GET ${this.label}`);
         return data;
     }
 
     private async hash(): Promise<RedisDataType> {
-        const data = await Command.run<string[]>(this.root.socket, `HGETALL ${this.label}`);
+        const data = await this.root.run<string[]>(`HGETALL ${this.label}`);
         const result: HASH = Object.create(null);
 
         for (let i = 0; i < data.length; i++) {

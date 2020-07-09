@@ -11,16 +11,16 @@ class Terminal {
         private context: ExtensionContext
     ) { }
 
-    create(element: RedisItem): void {
+    create(redisItem: RedisItem): void {
         const timestamp = this.context.globalState.get<number>(Constant.GLOBAL_STATE_WELCOME_KEY) || Date.now();
-        const pty = new Pty(element.config.name, element.socket, timestamp < Date.now(), () => { this.onClose(element.id); });
-        const terminal = window.createTerminal({ name: `Redis-${element.config.name}`, pty });
+        const pty = new Pty(redisItem, timestamp < Date.now(), () => { this.onClose(redisItem.id); });
+        const terminal = window.createTerminal({ name: `Redis-${redisItem.config.name}`, pty });
 
         this.context.globalState.update(
             Constant.GLOBAL_STATE_WELCOME_KEY,
             new Date(new Date().toDateString()).getTime() + 24 * 60 * 60 * 1000 - 1
         );
-        this.terminals.set(element.id, terminal);
+        this.terminals.set(redisItem.id, terminal);
     }
 
     show(element: RedisItem): void {

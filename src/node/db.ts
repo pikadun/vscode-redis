@@ -1,6 +1,5 @@
 import { TreeItemContextValue } from 'src/abstraction/enum';
 import { TreeItemCollapsibleState, ThemeIcon, window } from 'vscode';
-import Command from 'src/common/command';
 import RedisItem from './redis';
 import KeyItem from './key';
 import Element from 'src/manager/connection/element';
@@ -11,23 +10,24 @@ class DBItem extends Element {
     private cursor = 0;
     private pattern = '*';
     constructor(
-        readonly id: string,
-        readonly index: number,
         readonly root: RedisItem,
+        readonly index: number,
         readonly label: string,
         readonly collapsibleState: TreeItemCollapsibleState
     ) {
         super(label, collapsibleState);
+        this.id = `${root.id}.${index}`;
+
     }
 
     async getChildren(): Promise<Element[]> {
-        await Command.run(this.root.socket, `SELECT ${this.index}`);
+        await this.root.run(`SELECT ${this.index}`);
         const cmd = `SCAN ${this.cursor} MATCH ${this.pattern} COUNT 1000`;
-        const keys = await Command.run<[number, string[]]>(this.root.socket, cmd);
+        const keys = await this.root.run<[number, string[]]>(cmd);
         this.cursor = keys[0];
 
         const result = keys[1].map((key: string) => {
-            return new KeyItem(`${this.id}.${key}`, this.root, this, key, TreeItemCollapsibleState.None);
+            return new KeyItem(this.root, this, key, TreeItemCollapsibleState.None);
         });
         return result;
     }
