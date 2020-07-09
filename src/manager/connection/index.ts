@@ -1,4 +1,4 @@
-import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window, TreeItem } from 'vscode';
+import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window } from 'vscode';
 import { Socket, connect } from 'net';
 
 import { RedisPanel } from 'src/abstraction/enum';
@@ -13,9 +13,10 @@ import { RedisInfo } from 'src/abstraction/redisinfo';
 import Panel from '../panel';
 import command from 'src/common/command';
 import Config from './config';
+import Element from './element';
 
-class Connection implements TreeDataProvider<TreeItem> {
-    _onDidChangeTreeData = new EventEmitter<TreeItem | void>();
+class Connection implements TreeDataProvider<Element> {
+    _onDidChangeTreeData = new EventEmitter<Element | void>();
     readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
     private sockets = new Dictionary<Socket>();
@@ -23,11 +24,12 @@ class Connection implements TreeDataProvider<TreeItem> {
     private config = new Config(this.context);
 
     constructor(private context: ExtensionContext) { }
-    getTreeItem(element: TreeItem): TreeItem {
+    getTreeItem(element: Element): Element {
+        element.refresh = (e) => { this.refresh(e); };
         return element;
     }
 
-    async getChildren(element?: TreeItem): Promise<TreeItem[]> {
+    async getChildren(element?: Element): Promise<Element[]> {
         if (element && element instanceof RedisItem) {
             const id = (element as RedisItem).id;
             if (!this.sockets.has(id)) {
@@ -41,8 +43,7 @@ class Connection implements TreeDataProvider<TreeItem> {
             return Object.keys(config).map(id => {
                 const item = new RedisItem(
                     id, config[id].name,
-                    TreeItemCollapsibleState.Collapsed,
-                    (e?: TreeItem) => { this.refresh(e); }
+                    TreeItemCollapsibleState.Collapsed
                 );
                 item.info = this.infos.get(id);
                 item.socket = this.sockets.get(id);
@@ -80,12 +81,12 @@ class Connection implements TreeDataProvider<TreeItem> {
         panel.show(RedisPanel.CONNECTION, options);
     }
 
-    delete(element: TreeItem): void {
-        this.config.delete((element as RedisItem).id);
+    delete(element: RedisItem): void {
+        this.config.delete(element.id);
         this.refresh();
     }
 
-    refresh(element?: TreeItem): void {
+    refresh(element?: Element): void {
         this._onDidChangeTreeData.fire(element);
     }
 

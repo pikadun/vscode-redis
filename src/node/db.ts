@@ -47,7 +47,7 @@ class DBItem extends Element {
 
         this.cursor = 0;
         this.pattern = pattern || '*';
-        this.root.refresh(this);
+        this.refresh(this);
     }
 }
 

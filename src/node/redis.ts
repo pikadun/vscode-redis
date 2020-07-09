@@ -15,8 +15,7 @@ class RedisItem extends Element {
     constructor(
         readonly id: string,
         readonly name: string,
-        readonly collapsibleState: TreeItemCollapsibleState,
-        public refresh: (e: Element) => void
+        readonly collapsibleState: TreeItemCollapsibleState
     ) {
         super(name, collapsibleState);
     }
