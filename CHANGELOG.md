@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.3 (2020-07-09)
+
++ Optimize network connection.
+
 ## v0.8.2 (2020-07-04)
 
 + Optimize hash page.
