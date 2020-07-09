@@ -12,10 +12,9 @@ class DBItem extends Element {
     constructor(
         readonly root: RedisItem,
         readonly index: number,
-        readonly label: string,
-        readonly collapsibleState: TreeItemCollapsibleState
+        readonly label: string
     ) {
-        super(label, collapsibleState);
+        super(label, TreeItemCollapsibleState.Collapsed);
         this.id = `${root.id}.${index}`;
 
     }
@@ -27,7 +26,7 @@ class DBItem extends Element {
         this.cursor = keys[0];
 
         const result = keys[1].map((key: string) => {
-            return new KeyItem(this.root, this, key, TreeItemCollapsibleState.None);
+            return new KeyItem(this.root, this, key);
         });
         return result;
     }

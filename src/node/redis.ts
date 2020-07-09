@@ -13,15 +13,14 @@ import resp from 'src/common/resp';
 class RedisItem extends Element {
     contextValue = TreeItemContextValue.REDIS;
     iconPath = path.join(__dirname, '..', 'img', `${this.contextValue}.png`);
-    info!: RedisInfo;
-    socket!: Socket;
+    info?: RedisInfo;
+    socket?: Socket;
     socketReady = false;
     constructor(
         readonly id: string,
-        readonly config: RedisConfig,
-        readonly collapsibleState: TreeItemCollapsibleState
+        readonly config: RedisConfig
     ) {
-        super(config.name, collapsibleState);
+        super(config.name, TreeItemCollapsibleState.Collapsed);
     }
 
     async getChildren(): Promise<DBItem[]> {
@@ -29,8 +28,8 @@ class RedisItem extends Element {
         const count = parseInt(dbInfo[1]);
         const result: DBItem[] = [];
         for (let i = 0; i < count; i++) {
-            const dbName = `db${i}(${this.info.Keyspace[`db${i}`]?.keys || 0})`;
-            result.push(new DBItem(this, i, dbName, TreeItemCollapsibleState.Collapsed));
+            const dbName = `db${i}(${this.info?.Keyspace[`db${i}`]?.keys || 0})`;
+            result.push(new DBItem(this, i, dbName));
         }
         return result;
     }
@@ -92,7 +91,11 @@ class RedisItem extends Element {
             await this.init();
         }
 
-        return command.run<T>(this.socket, cmd);
+        return command.run<T>(this.socket as Socket, cmd);
+    }
+
+    dispose(): void {
+        this.socket?.end();
     }
 }
 

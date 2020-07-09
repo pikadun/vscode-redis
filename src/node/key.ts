@@ -17,10 +17,9 @@ class KeyItem extends Element {
     constructor(
         readonly root: RedisItem,
         readonly db: DBItem,
-        readonly label: string,
-        readonly collapsibleState: TreeItemCollapsibleState
+        readonly label: string
     ) {
-        super(label, collapsibleState);
+        super(label, TreeItemCollapsibleState.None);
         this.command.arguments?.push(this);
         this.id = `${this.db.id}.${label}`;
     }

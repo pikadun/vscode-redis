@@ -1,7 +1,7 @@
-import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window } from 'vscode';
+import { TreeDataProvider, EventEmitter, ExtensionContext, window } from 'vscode';
 
 import { RedisPanel } from 'src/abstraction/enum';
-import { PanelOptions, ConnectionOptions } from 'src/abstraction/interface';
+import { PanelOptions, ConnectionOptions, RedisConfig } from 'src/abstraction/interface';
 
 import RedisItem from 'src/node/redis';
 import Panel from '../panel';
@@ -27,7 +27,7 @@ class Connection implements TreeDataProvider<Element> {
 
         // Return [RedisItem](#RedisItem) if element not passed.
         return Object.entries(this.config.all())
-            .map(([id, config]) => new RedisItem(id, config, TreeItemCollapsibleState.Collapsed));
+            .map(([id, config]) => new RedisItem(id, config));
     }
 
     /**
@@ -36,13 +36,9 @@ class Connection implements TreeDataProvider<Element> {
      * @param config The connection config.
      */
     async add([id, config]: ConnectionOptions): Promise<void> {
-        try {
-            id = id || Date.now().toString();
-            this.config.set(id, config);
-            this.refresh();
-        } catch (error) {
-            window.showErrorMessage(error.message);
-        }
+        id = id || Date.now().toString();
+        this.config.set(id, config);
+        this.refresh();
     }
 
     /**
@@ -65,6 +61,22 @@ class Connection implements TreeDataProvider<Element> {
 
     refresh(element?: Element): void {
         this._onDidChangeTreeData.fire(element);
+    }
+
+    /**
+     * Test redis connection
+     */
+    async test(config: RedisConfig): Promise<void> {
+        const redisItem = new RedisItem('test', config);
+        
+        try {
+            await redisItem.init();
+            window.showInformationMessage('Connection succeeded!');
+        } catch (error) {
+            window.showErrorMessage((error as Error).message);
+        }
+
+        redisItem.dispose();
     }
 }
 
