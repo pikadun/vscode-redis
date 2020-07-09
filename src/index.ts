@@ -23,9 +23,7 @@ export function activate(context: ExtensionContext): void {
 
     // terminal
     commands.registerCommand('Redis.Terminal', async (element: RedisItem) => {
-        if (!element.socket) {
-            [element.socket, element.info] = await Connection.init(element.id);
-        }
+        await element.init();
         Terminal.show(element);
     });
 

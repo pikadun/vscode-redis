@@ -13,8 +13,8 @@ class Terminal {
 
     create(element: RedisItem): void {
         const timestamp = this.context.globalState.get<number>(Constant.GLOBAL_STATE_WELCOME_KEY) || Date.now();
-        const pty = new Pty(element.name, element.socket, timestamp < Date.now(), () => { this.onClose(element.id); });
-        const terminal = window.createTerminal({ name: `Redis-${element.name}`, pty });
+        const pty = new Pty(element.config.name, element.socket, timestamp < Date.now(), () => { this.onClose(element.id); });
+        const terminal = window.createTerminal({ name: `Redis-${element.config.name}`, pty });
 
         this.context.globalState.update(
             Constant.GLOBAL_STATE_WELCOME_KEY,
