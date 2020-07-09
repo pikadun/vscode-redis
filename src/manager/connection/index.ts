@@ -1,78 +1,33 @@
-import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItemCollapsibleState, window } from 'vscode';
-import { Socket, connect } from 'net';
+import { TreeDataProvider, EventEmitter, ExtensionContext, window } from 'vscode';
 
-import { Constant, RedisPanel } from '../../abstraction/enum';
-import { RedisItemConfig, PanelOptions, ConnectionOptions, RedisConfig } from '../../abstraction/interface';
+import { RedisPanel } from 'src/abstraction/enum';
+import { PanelOptions, ConnectionOptions, RedisConfig } from 'src/abstraction/interface';
 
-import AbstractNode from '../../node/abstraction';
-import RESP from '../../redis/resp';
-import utils from '../../node/utils';
-import Dictionary from '../../common/dictionary';
-import RedisItem from '../../node/redis';
-import DBItem from '../../node/db';
-import { RedisInfo } from '../../abstraction/redisinfo';
+import RedisItem from 'src/node/redis';
 import Panel from '../panel';
-import command from '../../redis/command';
+import Config from './config';
+import Element from './element';
 
-class Config {
-    constructor(private context: ExtensionContext) { }
-    all(): { [key: string]: RedisItemConfig } {
-        return this.context.globalState.get<{ [key: string]: RedisItemConfig }>(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY) || {};
-    }
-
-    get(id: string): RedisItemConfig {
-        const configs = this.all();
-        return configs[id];
-    }
-
-    set(id: string, config: RedisItemConfig): void {
-        const configs = this.all();
-        configs[id] = config;
-        this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, configs);
-    }
-
-    delete(id: string): void {
-        const configs = this.all();
-        delete configs[id];
-        this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, configs);
-    }
-}
-
-class ConnectionProvider implements TreeDataProvider<AbstractNode> {
-    _onDidChangeTreeData = new EventEmitter<AbstractNode | void>();
+class Connection implements TreeDataProvider<Element> {
+    _onDidChangeTreeData = new EventEmitter<Element | void>();
     readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
-    private sockets = new Dictionary<Socket>();
-    private infos = new Dictionary<RedisInfo>();
     private config = new Config(this.context);
 
     constructor(private context: ExtensionContext) { }
-    getTreeItem(element: AbstractNode): AbstractNode {
+    getTreeItem(element: Element): Element {
+        element.refresh = (e) => { this.refresh(e); };
         return element;
     }
 
-    async getChildren(element?: AbstractNode): Promise<AbstractNode[]> {
-        if (element && element instanceof RedisItem) {
-            const id = (element as RedisItem).id;
-            if (!this.sockets.has(id)) {
-                [element.socket, element.info] = await this.init(id);
-            }
+    async getChildren(element?: Element): Promise<Element[]> {
+        if (element) {
             return element.getChildren();
-        } else if (element && element instanceof DBItem) {
-            return element.getChildren();
-        } else {
-            const config = this.config.all();
-            return Object.keys(config).map(id => {
-                const item = new RedisItem(
-                    id, config[id].name,
-                    TreeItemCollapsibleState.Collapsed,
-                    (e?: AbstractNode) => { this.refresh(e); }
-                );
-                item.info = this.infos.get(id);
-                item.socket = this.sockets.get(id);
-                return item;
-            });
         }
+
+        // Return [RedisItem](#RedisItem) if element not passed.
+        return Object.entries(this.config.all())
+            .map(([id, config]) => new RedisItem(id, config));
     }
 
     /**
@@ -81,15 +36,9 @@ class ConnectionProvider implements TreeDataProvider<AbstractNode> {
      * @param config The connection config.
      */
     async add([id, config]: ConnectionOptions): Promise<void> {
-        const { host, port, auth, name } = config;
-        try {
-            id = id || Date.now().toString();
-            await this.init(id, { host, port, auth });
-            this.config.set(id, { host, port, auth, name });
-            this.refresh();
-        } catch (error) {
-            window.showErrorMessage(error.message);
-        }
+        id = id || Date.now().toString();
+        this.config.set(id, config);
+        this.refresh();
     }
 
     /**
@@ -105,54 +54,30 @@ class ConnectionProvider implements TreeDataProvider<AbstractNode> {
         panel.show(RedisPanel.CONNECTION, options);
     }
 
-    delete(element: AbstractNode): void {
-        this.config.delete((element as RedisItem).id);
+    delete(element: RedisItem): void {
+        this.config.delete(element.id);
         this.refresh();
     }
 
-    refresh(element?: AbstractNode): void {
+    refresh(element?: Element): void {
         this._onDidChangeTreeData.fire(element);
     }
 
     /**
-     * Init redis connection and auth.
-     * @param id Connection id
-     * @param config Redis connection config
+     * Test redis connection
      */
-    async init(id: string, config?: RedisConfig): Promise<[Socket, RedisInfo]> {
-        config = config || this.config.get(id);
-        const socket = await this.open(id, config);
-        if (config.auth) {
-            await command.run<string>(socket, `AUTH ${config.auth}`);
+    async test(config: RedisConfig): Promise<void> {
+        const redisItem = new RedisItem('test', config);
+        
+        try {
+            await redisItem.init();
+            window.showInformationMessage('Connection succeeded!');
+        } catch (error) {
+            window.showErrorMessage((error as Error).message);
         }
-        const info = await this.info(id, socket);
-        return [socket, info];
-    }
 
-    private async open(id: string, config: RedisConfig): Promise<Socket> {
-        const socket: Socket = await new Promise((resolve, reject) => {
-            const socket = connect(config.port, config.host);
-            socket.once('connect', () => { resolve(socket); });
-            socket.once('error', err => { reject(err); });
-        });
-
-        socket.setKeepAlive(true);
-        socket.setTimeout(10000);
-        socket.setNoDelay(true);
-
-        socket.on('data', buffer => {
-            RESP.decode(buffer);
-        });
-        this.sockets.set(id, socket);
-        return socket;
-    }
-
-    private async info(id: string, socket: Socket): Promise<RedisInfo> {
-        const infostr = await command.run<string>(socket, 'INFO');
-        const info = utils.parseInfo(infostr);
-        this.infos.set(id, info);
-        return info;
+        redisItem.dispose();
     }
 }
 
-export default ConnectionProvider;
+export default Connection;

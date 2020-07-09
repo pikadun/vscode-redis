@@ -87,6 +87,10 @@
                 "category": "Redis"
             },
             {
+                "command": "Redis.Connection.Test",
+                "title": "Test Connection"
+            },
+            {
                 "command": "Redis.Key.Detail",
                 "title": "View Key Detail",
                 "category": "Redis"

@@ -1,14 +1,11 @@
 import { ExtensionContext } from 'vscode';
-import Manager from '../manager';
+import Manager from 'src/manager';
 import { RedisType } from './enum';
 
 export interface RedisConfig {
     host: string;
     port: number;
     auth: string;
-}
-
-export interface RedisItemConfig extends RedisConfig {
     name: string;
 }
 
@@ -21,8 +18,10 @@ export interface Context extends ExtensionContext {
     manager: Manager;
 }
 
-
-export type ConnectionOptions = [string, RedisItemConfig];
+/**
+ * Connection Options
+ */
+export type ConnectionOptions = [string, RedisConfig];
 
 export interface RedisData {
     type: RedisType;
