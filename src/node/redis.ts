@@ -1,12 +1,13 @@
 import path from 'path';
 import { TreeItemContextValue } from 'src/abstraction/enum';
 import { RedisInfo } from 'src/abstraction/redisinfo';
-import { TreeItemCollapsibleState, TreeItem } from 'vscode';
+import { TreeItemCollapsibleState } from 'vscode';
 import command from 'src/common/command';
 import DBItem from './db';
 import { Socket } from 'net';
+import Element from 'src/manager/connection/element';
 
-class RedisItem extends TreeItem {
+class RedisItem extends Element {
     contextValue = TreeItemContextValue.REDIS;
     iconPath = path.join(__dirname, '..', 'img', `${this.contextValue}.png`);
     info!: RedisInfo;
@@ -15,7 +16,7 @@ class RedisItem extends TreeItem {
         readonly id: string,
         readonly name: string,
         readonly collapsibleState: TreeItemCollapsibleState,
-        public refresh: (e: TreeItem) => void
+        public refresh: (e: Element) => void
     ) {
         super(name, collapsibleState);
     }
