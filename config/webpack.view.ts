@@ -1,6 +1,6 @@
 import { Configuration, HotModuleReplacementPlugin } from 'webpack';
 import baseConfig from './webpack.base';
-import merge from 'webpack-merge';
+import { merge } from 'webpack-merge';
 import path from 'path';
 import { VueLoaderPlugin } from 'vue-loader';
 import HtmlWebpackPlugin from 'html-webpack-plugin';

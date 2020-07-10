@@ -1,6 +1,6 @@
 import { Configuration } from 'webpack';
 import baseConfig from './webpack.base';
-import merge from 'webpack-merge';
+import { merge } from 'webpack-merge';
 import path from 'path';
 
 const config: Configuration = {
