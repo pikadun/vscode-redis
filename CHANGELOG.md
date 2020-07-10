@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.4 (2020-07-10)
+
++ Add welcome content to redis explore
+
 ## v0.8.3 (2020-07-09)
 
 + Optimize network connection.
