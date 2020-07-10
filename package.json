@@ -53,20 +53,26 @@
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "RedisExplorer",
+                    "id": "redis",
                     "title": "Redis Explorer",
                     "icon": "img/icon.png"
                 }
             ]
         },
         "views": {
-            "RedisExplorer": [
+            "redis": [
                 {
                     "id": "RedisExplorer",
                     "name": "redis"
                 }
             ]
         },
+        "viewsWelcome": [
+            {
+                "view": "RedisExplorer",
+                "contents": "You can click the button below to add the first connection.\nOr you can click the \"+\" on the navigation bar to add.\n[Read our docs](https://github.com/pikadun/vscode-redis) to learn more how to use this extension.\n[Add](command:Redis.Connection.Add)\n"
+            }
+        ],
         "commands": [
             {
                 "command": "Redis.Connection.Add",
