@@ -18,6 +18,7 @@
         "vscode:prepublish": "npm run compile"
     },
     "categories": [
+        "Visualization",
         "Other"
     ],
     "keywords": [
@@ -28,7 +29,6 @@
         "manager"
     ],
     "galleryBanner": {},
-    "preview": true,
     "contributors": [
         {
             "name": "Dunn",
