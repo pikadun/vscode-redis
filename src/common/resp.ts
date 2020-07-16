@@ -1,5 +1,8 @@
 import Command from './command';
 import RedisParser from 'redis-parser';
+import {RESP} from '@pikadun/resp';
+
+const resp = new RESP();
 
 const parser = new RedisParser({
     returnReply(reply: unknown): void {
@@ -13,16 +16,9 @@ const parser = new RedisParser({
     }
 });
 
-class RESP {
+class RESP_Old {
     encode(cmd: string): string {
-        const args = cmd.split(' ');
-        let result = `*${args.length}\r\n`;
-
-        for (let i = 0; i < args.length; i++) {
-            const arg = args[i];
-            result += `$${Buffer.byteLength(arg)}\r\n${arg}\r\n`;
-        }
-        return result;
+        return resp.encode(cmd);
     }
 
     decode(buffer: Buffer): void {
@@ -30,4 +26,4 @@ class RESP {
     }
 }
 
-export default new RESP();
+export default new RESP_Old();

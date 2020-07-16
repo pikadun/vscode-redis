@@ -184,6 +184,7 @@
         "extends": "./config/.eslintrc.json"
     },
     "devDependencies": {
+        "@pikadun/resp": "0.0.5",
         "@types/node": "^14.0.20",
         "@types/vscode": "1.45.0",
         "@types/webpack": "^4.41.21",
