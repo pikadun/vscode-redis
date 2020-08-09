@@ -18,6 +18,9 @@ export function activate(context: ExtensionContext): void {
     commands.registerCommand('Redis.Connection.Delete', (element: RedisItem) => Connection.delete(element));
     commands.registerCommand('Redis.DB.Reload', (element: DBItem) => Connection.refresh(element));
     commands.registerCommand('Redis.DB.Search', (element: DBItem) => element.search());
+    commands.registerCommand('Redis.Key.Delete', async (element: KeyItem) => {
+        await element.delete() && Connection.refresh(element.db);
+    });
 
     // view
     commands.registerCommand('Redis.Key.Detail', (element: KeyItem) => element.detail(Panel));

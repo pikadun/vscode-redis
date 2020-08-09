@@ -103,6 +103,12 @@
                 "category": "Redis"
             },
             {
+                "command": "Redis.Key.Delete",
+                "title": "Delete Key",
+                "icon": "$(trashcan)",
+                "category": "Redis"
+            },
+            {
                 "command": "Redis.DB.Reload",
                 "title": "Reload Keys",
                 "icon": "$(refresh)",
@@ -175,6 +181,11 @@
                 {
                     "command": "Redis.DB.Search",
                     "when": "viewItem == db",
+                    "group": "inline@1"
+                },
+                {
+                    "command": "Redis.Key.Delete",
+                    "when": "viewItem == key",
                     "group": "inline@1"
                 }
             ]

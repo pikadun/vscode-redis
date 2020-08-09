@@ -1,4 +1,4 @@
-import { TreeItemCollapsibleState, Command as VScodeCommand, ThemeIcon } from 'vscode';
+import { TreeItemCollapsibleState, Command as VScodeCommand, ThemeIcon, window } from 'vscode';
 import { TreeItemContextValue, RedisPanel, RedisType } from 'src/abstraction/enum';
 import RedisItem from './redis';
 import DBItem from './db';
@@ -68,6 +68,17 @@ class KeyItem extends Element {
         }
 
         return result;
+    }
+
+    public async delete(): Promise<Boolean> {
+        const reply = await this.root.run<number>(`DEL ${this.label}`);
+
+        if (reply == 0) {
+            window.showErrorMessage(`Failed to delete key ${this.label}`);
+            return false;
+        }
+
+        return true;
     }
 }
 
