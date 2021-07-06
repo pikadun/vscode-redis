@@ -7,16 +7,20 @@
     export let ttl = "";
 </script>
 
-<div>
+<div class="string">
     <Header {id} {key} {ttl} type="String" />
     <textarea class="value" readonly>{value}</textarea>
 </div>
 
 <style>
+    .string {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        height: 100%;
+    }
     .value {
         padding: 0.5vw;
         width: 100%;
-        height: 80vh;
         overflow: scroll;
         resize: none;
         box-sizing: border-box;
