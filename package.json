@@ -18,7 +18,7 @@
     "watch": "npm run watch:client & npm run watch:server",
     "build:client": "snowpack build --config ./eng/snowpack.js",
     "build:server": "tsc -p src/server",
-    "build": "npm run build:client & npm run build:server",
+    "build": "npm run build:client && npm run build:server",
     "package": "npm run build && vsce package -o vscode-redis.vsix"
   },
   "categories": [
@@ -55,9 +55,11 @@
     "eslint": "^7.24.0",
     "husky": "^7.0.0",
     "snowpack": "^3.4.0",
+    "svelte": "^3.38.3",
     "svelte-preprocess": "^4.7.3",
     "ts-node": "^10.0.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "vsce": "^1.95.0"
   },
   "dependencies": {
     "@camaro/redis": "^2.2.6"
