@@ -1,0 +1,7 @@
+{
+  "extends": "../../eng/tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "outDir": "../../lib/client"
+  }
+}

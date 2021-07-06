@@ -1,0 +1,230 @@
+{
+  "name": "redis",
+  "version": "0.8.4",
+  "publisher": "Dunn",
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "license": "MIT",
+  "main": "lib/server/index.js",
+  "displayName": "Redis",
+  "description": "Redis For VS Code",
+  "scripts": {
+    "prepare": "husky install ./eng/husky",
+    "format": "ts-node ./eng/format.ts",
+    "dev": "snowpack dev --config ./eng/snowpack.js",
+    "watch:client": "snowpack build --config ./eng/snowpack.js",
+    "watch:server": "tsc -p src/server -w --sourceMap",
+    "watch": "npm run watch:client & npm run watch:server",
+    "build:client": "snowpack build --config ./eng/snowpack.js",
+    "build:server": "tsc -p src/server",
+    "build": "npm run build:client & npm run build:server",
+    "package": "npm run build && vsce package -o vscode-redis.vsix"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "redis",
+    "redis cli",
+    "redis gui",
+    "terminal",
+    "manager"
+  ],
+  "eslintConfig": {
+    "extends": "./eng/.eslintrc.json"
+  },
+  "icon": "img/logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pikadun/vscode-redis"
+  },
+  "bugs": {
+    "url": "https://github.com/pikadun/vscode-redis/issues",
+    "email": "wg0121@outlook.com"
+  },
+  "homepage": "https://github.com/pikadun/vscode-redis#readme",
+  "devDependencies": {
+    "@snowpack/plugin-svelte": "^3.7.0",
+    "@snowpack/plugin-typescript": "^1.2.1",
+    "@types/node": "^15.12.2",
+    "@types/vscode": "^1.55.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
+    "husky": "^7.0.0",
+    "snowpack": "^3.4.0",
+    "svelte-preprocess": "^4.7.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "@camaro/redis": "^2.2.6"
+  },
+  "activationEvents": [
+    "onView:RedisExplorer"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "redis",
+          "title": "Redis Explorer",
+          "icon": "img/icon.png"
+        }
+      ]
+    },
+    "views": {
+      "redis": [
+        {
+          "id": "RedisExplorer",
+          "name": "redis"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "RedisExplorer",
+        "contents": "You can click the button below to add the first connection.\nOr you can click the \"+\" on the navigation bar to add.\n[Read our docs](https://github.com/pikadun/vscode-redis) to learn more how to use this extension.\n[Add](command:Redis.Connection.Settings.Add)\n"
+      }
+    ],
+    "commands": [
+      {
+        "command": "Redis.Connection.Settings.Add",
+        "title": "New Connection Settings",
+        "icon": "$(add)",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.Connection.Settings.Edit",
+        "title": "Edit Connection Settings",
+        "icon": "$(edit)",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.Connection.Add",
+        "title": "Add Connection",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.Connection.Delete",
+        "title": "Delete Connection",
+        "icon": "$(trashcan)",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.Connection.Test",
+        "title": "Test Connection",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.Connection.Reload",
+        "title": "Reload Server",
+        "icon": "$(refresh)",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.DB.Filter",
+        "title": "Keys Filter",
+        "icon": "$(search)",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.DB.Reload",
+        "title": "Reload Keys",
+        "icon": "$(refresh)",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.Key.Detail",
+        "title": "View Redis Value"
+      },
+      {
+        "command": "Redis.Key.Rename",
+        "title": "Rename key"
+      },
+      {
+        "command": "Redis.Key.Expire",
+        "title": "Set key TTL"
+      },
+      {
+        "command": "Redis.Key.Reload",
+        "title": "Reload value"
+      },
+      {
+        "command": "Redis.Key.Delete",
+        "title": "Delete key"
+      },
+      {
+        "command": "Redis.Issue",
+        "title": "Report issue",
+        "icon": "$(issues)",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.Star",
+        "title": "Star on GitHub",
+        "icon": "$(github-alt)",
+        "category": "Redis"
+      },
+      {
+        "command": "Redis.Terminal",
+        "title": "Open Terminal",
+        "icon": "$(terminal)",
+        "category": "Redis"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "Redis.Connection.Settings.Add",
+          "group": "navigation@1",
+          "when": "view == RedisExplorer"
+        },
+        {
+          "command": "Redis.Star",
+          "group": "navigation@2",
+          "when": "view == RedisExplorer"
+        },
+        {
+          "command": "Redis.Issue",
+          "group": "navigation@3",
+          "when": "view == RedisExplorer"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "Redis.Terminal",
+          "when": "viewItem == redis",
+          "group": "inline@1"
+        },
+        {
+          "command": "Redis.Connection.Reload",
+          "when": "viewItem == redis",
+          "group": "inline@2"
+        },
+        {
+          "command": "Redis.Connection.Settings.Edit",
+          "when": "viewItem == redis",
+          "group": "inline@3"
+        },
+        {
+          "command": "Redis.Connection.Delete",
+          "when": "viewItem == redis",
+          "group": "inline@4"
+        },
+        {
+          "command": "Redis.DB.Filter",
+          "when": "viewItem == db",
+          "group": "inline@1"
+        },
+        {
+          "command": "Redis.DB.Reload",
+          "when": "viewItem == db",
+          "group": "inline@2"
+        }
+      ]
+    }
+  }
+}

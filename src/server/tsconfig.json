@@ -1,0 +1,7 @@
+{
+  "extends": "../../eng/tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "../../lib/server"
+  }
+}

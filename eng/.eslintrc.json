@@ -1,0 +1,30 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/quotes": [
+      "error",
+      "single"
+    ],
+    "@typescript-eslint/semi": [
+      "error",
+      "always"
+    ],
+    "@typescript-eslint/indent": [
+      "error",
+      4
+    ],
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "all"
+      }
+    ]
+  }
+}
