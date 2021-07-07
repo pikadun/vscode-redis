@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.0.2 (2021-07-06)
+
++ Optimize page display.
++ Fix bugs.
+
+## v1.0.1 (2021-07-06)
+
++ Fix bugs.
+
 ## v1.0.0 (2021-07-06)
 
 + Add key operation.
