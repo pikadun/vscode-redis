@@ -62,7 +62,7 @@
     "vsce": "^1.95.0"
   },
   "dependencies": {
-    "@camaro/redis": "^2.2.6"
+    "@camaro/redis": "^2.2.7"
   },
   "activationEvents": [
     "onView:RedisExplorer"
