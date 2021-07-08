@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.0 (2021-07-06)
+
++ Add `hash` support.
+
 ## v1.0.2 (2021-07-06)
 
 + Optimize page display.

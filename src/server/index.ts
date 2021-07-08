@@ -44,45 +44,25 @@ export function activate(context: ExtensionContext): void {
     // Reload DB keys
     commands.registerCommand('Redis.DB.Reload', (element: DBItem) => element.refresh());
 
-    // View key detail
-    commands.registerCommand('Redis.Key.Detail', async (element: KeyItem) => {
-        const detail = await element.detail();
-        panel.show(detail.type, detail.data);
-    });
-
-    // Rename key
-    commands.registerCommand('Redis.Key.Rename', async (id: string) => {
+    commands.registerCommand('Redis.Key.Operation', async (
+        id: string,
+        op: 'rename' | 'expire' | 'del' | 'hdel' | 'detail',
+        ...params: string[]
+    ) => {
+        type T = { [x: string]: (...args: unknown[]) => Promise<void> };
         const element = provider.getTreeItemById(id) as KeyItem;
-        const executed = await element.rename();
-        if (executed) {
-            const detail = await element.detail();
-            panel.show(detail.type, detail.data);
+        let result;
+        switch (op) {
+            case 'detail': break;
+            default:
+                result = await (element as unknown as T)[op]?.(...params);
         }
-    });
 
-    // Update ttl
-    commands.registerCommand('Redis.Key.Expire', async (id: string, ttl: string) => {
-        const element = provider.getTreeItemById(id) as KeyItem;
-        const executed = await element.expire(ttl);
-        if (executed) {
-            const detail = await element.detail();
-            panel.show(detail.type, detail.data);
-        }
-    });
-
-    // Reload key
-    commands.registerCommand('Redis.Key.Reload', async (id: string) => {
-        const element = provider.getTreeItemById(id) as KeyItem;
-        const detail = await element.detail();
-        panel.show(detail.type, detail.data);
-    });
-
-    // Delete key
-    commands.registerCommand('Redis.Key.Delete', async (id: string) => {
-        const element = provider.getTreeItemById(id) as KeyItem;
-        const deleted = await element.delete();
-        if (deleted) {
+        if (op === 'del' && result) {
             panel.close();
+        } else {
+            const detail = await element.detail();
+            panel.show(detail.type, detail.data);
         }
     });
 

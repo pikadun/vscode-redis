@@ -10,32 +10,32 @@
     const rename = () => {
         window.vscode.postMessage({
             self: true,
-            command: "Redis.Key.Rename",
-            args: [id],
+            command: "Redis.Key.Operation",
+            args: [id, "rename"],
         });
     };
 
     const expire = () => {
         window.vscode.postMessage({
             self: true,
-            command: "Redis.Key.Expire",
-            args: [id, ttl],
+            command: "Redis.Key.Operation",
+            args: [id, "expire", ttl],
         });
     };
 
     const reload = () => {
         window.vscode.postMessage({
             self: true,
-            command: "Redis.Key.Reload",
-            args: [id],
+            command: "Redis.Key.Operation",
+            args: [id, "detail"],
         });
     };
 
-    const _delete = () => {
+    const del = () => {
         window.vscode.postMessage({
             self: true,
-            command: "Redis.Key.Delete",
-            args: [id],
+            command: "Redis.Key.Operation",
+            args: [id, "del"],
         });
     };
 </script>
@@ -46,7 +46,7 @@
     <Button on:click={rename}>Rename</Button>
     <Button on:click={expire}>TTL:{ttl}</Button>
     <Button on:click={reload}>Reload</Button>
-    <Button on:click={_delete}>Delete</Button>
+    <Button on:click={del}>Delete</Button>
 </div>
 
 <style>

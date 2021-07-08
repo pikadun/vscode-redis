@@ -139,24 +139,8 @@
         "category": "Redis"
       },
       {
-        "command": "Redis.Key.Detail",
-        "title": "View Redis Value"
-      },
-      {
-        "command": "Redis.Key.Rename",
-        "title": "Rename key"
-      },
-      {
-        "command": "Redis.Key.Expire",
-        "title": "Set key TTL"
-      },
-      {
-        "command": "Redis.Key.Reload",
-        "title": "Reload value"
-      },
-      {
-        "command": "Redis.Key.Delete",
-        "title": "Delete key"
+        "command": "Redis.Key.Operation",
+        "title": "Redis key Operation"
       },
       {
         "command": "Redis.Issue",

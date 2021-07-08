@@ -19,7 +19,7 @@ export default class KeyItem extends Element {
     command: VSCCommand = {
         title: 'View',
         tooltip: 'Click',
-        command: 'Redis.Key.Detail',
+        command: 'Redis.Key.Operation',
         arguments: []
     };
 
@@ -32,7 +32,7 @@ export default class KeyItem extends Element {
         private parent: DBItem
     ) {
         super(label, TreeItemCollapsibleState.None);
-        this.command.arguments?.push(this);
+        this.command.arguments?.push(id, 'detail');
     }
 
     async detail(): Promise<KeyDetail> {
@@ -44,6 +44,9 @@ export default class KeyItem extends Element {
         switch (type) {
             case PanelName.STRING:
                 data = await this.client.GET(this.label);
+                break;
+            case PanelName.HASH:
+                data = await this.client.HGETALL(this.label);
                 break;
             default:
                 window.showErrorMessage(`Unsupport data type: ${type}.`);
@@ -65,37 +68,33 @@ export default class KeyItem extends Element {
         throw new Error('Method not implemented.');
     }
 
-    async rename(): Promise<boolean> {
+    async rename(): Promise<void> {
         const newkey = await window.showInputBox({
             prompt: 'Rename key',
             value: this.label,
         });
-        if (newkey === undefined) {
-            return false;
+        if (newkey !== undefined) {
+            this.client.SELECT(this.parent.index);
+            await this.client.RENAME(this.label, newkey);
+            // Modify `this.label` to `newkey` for future use.
+            this.label = newkey;
+            this.parent.refresh();
         }
-        this.client.SELECT(this.parent.index);
-        await this.client.RENAME(this.label, newkey);
-        // Modify `this.label` to `newkey` for future use.
-        this.label = newkey;
-        this.parent.refresh();
-        return true;
     }
 
-    async expire(ttl: string): Promise<boolean> {
+    async expire(ttl: string): Promise<void> {
         const newttl = await window.showInputBox({
             prompt: 'Set key TTL',
             value: ttl,
         });
-        if (newttl === undefined) {
-            return false;
+        if (newttl !== undefined) {
+            this.client.SELECT(this.parent.index);
+            await this.client.EXPIRE(this.label, parseInt(newttl));
+            this.parent.refresh();
         }
-        this.client.SELECT(this.parent.index);
-        await this.client.EXPIRE(this.label, parseInt(newttl));
-        this.parent.refresh();
-        return true;
     }
 
-    async delete(): Promise<boolean> {
+    async del(): Promise<void | boolean> {
         const res = await window.showInformationMessage(
             'Do you really want to delete this key?',
             'Yes', 'No'
@@ -107,6 +106,17 @@ export default class KeyItem extends Element {
             this.parent.refresh();
             return true;
         }
-        return false;
+    }
+
+    async hdel(field: string): Promise<void> {
+        const res = await window.showInformationMessage(
+            'Do you really want to delete this field?',
+            'Yes', 'No'
+        );
+        if (res === 'Yes') {
+            this.client.SELECT(this.parent.index);
+            await this.client.HDEL(this.label, field);
+            this.parent.refresh();
+        }
     }
 }

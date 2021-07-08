@@ -14,11 +14,23 @@
 
 <div class="r-input">
     <slot name="prepend" />
-    <input {id} {placeholder} {readonly} bind:value bind:this={element} />
+    <input
+        {id}
+        {placeholder}
+        {readonly}
+        bind:value
+        bind:this={element}
+        on:blur
+        on:click
+        on:focus
+        on:keyup
+    />
+    <slot name="append" />
 </div>
 
 <style>
     .r-input {
+        position: relative;
         display: inline-block;
         margin: 10px 0;
     }

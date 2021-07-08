@@ -2,6 +2,7 @@ import 'svelte';
 import Route from './component/route.svelte';
 import Settings from './page/settings.svelte';
 import String from './page/string.svelte';
+import Hash from './page/hash.svelte';
 
 const app = new Route({
     target: document.body
@@ -10,6 +11,7 @@ const app = new Route({
 const routeMap = new Map();
 routeMap.set('settings', Settings);
 routeMap.set('string', String);
+routeMap.set('hash', Hash);
 
 if (import.meta.env.MODE === 'production') {
     window.vscode = acquireVsCodeApi();
