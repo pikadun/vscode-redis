@@ -48,7 +48,7 @@
 <div class="r-select">
     <slot name="prepend" />
     <Input
-        bind:value={selected[labelField]}
+        bind:value={selectedLabel}
         {placeholder}
         readonly={filterable && !showOptions}
         on:blur={handleBlur}
