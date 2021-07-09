@@ -4,7 +4,7 @@
     import Button from "../component/button.svelte";
 
     export let key = "";
-    export let value: string[] = ["aaa", "a", "bbb", "b"];
+    export let value: string[] = [];
     export let id = "";
     export let ttl = "";
 
@@ -36,7 +36,7 @@
 </script>
 
 <div class="hash">
-    <Header {id} {key} {ttl} type="Hash" />
+    <Header {id} {key} {ttl} type="hash" />
     <div class="sub-header">
         <Select filterable bind:selected options={datas} labelField="field">
             <span slot="prepend">Field:</span>
@@ -63,6 +63,5 @@
         width: 100%;
         overflow: scroll;
         resize: none;
-        box-sizing: border-box;
     }
 </style>

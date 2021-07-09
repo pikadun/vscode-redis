@@ -41,8 +41,8 @@
 </script>
 
 <div class="header">
-    <b>{type}:</b>
-    <span><Input {id} bind:value={key} readonly /></span>
+    <b>{type.toUpperCase()}:</b>
+    <Input {id} bind:value={key} width="100%" readonly />
     <Button on:click={rename}>Rename</Button>
     <Button on:click={expire}>TTL:{ttl}</Button>
     <Button on:click={reload}>Reload</Button>
@@ -51,11 +51,8 @@
 
 <style>
     .header {
-        display: flex;
+        display: grid;
+        grid-template-columns: auto 1fr auto auto auto auto;
         align-items: center;
-        justify-content: space-between;
-    }
-    .header > span {
-        flex-grow: 1;
     }
 </style>

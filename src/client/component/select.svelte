@@ -93,7 +93,6 @@
         border-left: 1px solid var(--vscode-editor-foreground);
         border-right: 1px solid var(--vscode-editor-foreground);
         overflow-y: scroll;
-        box-sizing: border-box;
     }
     .r-option-item {
         list-style: none;

@@ -8,7 +8,7 @@
 </script>
 
 <div class="string">
-    <Header {id} {key} {ttl} type="String" />
+    <Header {id} {key} {ttl} type="string" />
     <textarea class="value" readonly>{value}</textarea>
 </div>
 
@@ -23,6 +23,5 @@
         width: 100%;
         overflow: scroll;
         resize: none;
-        box-sizing: border-box;
     }
 </style>

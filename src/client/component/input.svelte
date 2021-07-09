@@ -5,6 +5,7 @@
     export let placeholder = "";
     export let value: string | number | undefined = undefined;
     export let readonly: boolean | undefined = undefined;
+    export let width = "";
 
     let element: HTMLInputElement;
     onMount(() => {
@@ -15,6 +16,7 @@
 <div class="r-input">
     <slot name="prepend" />
     <input
+        style="width:{width}"
         {id}
         {placeholder}
         {readonly}
@@ -32,6 +34,6 @@
     .r-input {
         position: relative;
         display: inline-block;
-        margin: 10px 0;
+        margin: 5px 2px;
     }
 </style>

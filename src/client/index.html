@@ -3,10 +3,18 @@
 
 <head></head>
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
   :not(b) {
     font-family: var(--vscode-editor-font-family);
     font-weight: var(--vscode-editor-font-weight);
     font-size: var(--vscode-editor-font-size);
+  }
+
+  ::selection {
+    background-color: var(--vscode-editor-selectionBackground);
   }
 
   input,
@@ -15,10 +23,6 @@
     background-color: var(--vscode-editor-background);
     color: var(--vscode-editor-foreground);
     border: 1px solid var(--vscode-editor-foreground);
-  }
-
-  ::selection {
-    background-color: var(--vscode-editor-selectionBackground);
   }
 </style>
 
