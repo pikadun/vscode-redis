@@ -7,34 +7,69 @@
     box-sizing: border-box;
   }
 
-  :not(b) {
+  ::selection {
+    background-color: var(--vscode-editor-selectionBackground);
+  }
+
+  body,
+  input,
+  button,
+  textarea {
     font-family: var(--vscode-editor-font-family);
     font-weight: var(--vscode-editor-font-weight);
     font-size: var(--vscode-editor-font-size);
   }
 
-  ::selection {
-    background-color: var(--vscode-editor-selectionBackground);
+  input,
+  textarea {
+    background-color: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: none;
+    padding: 2px 4px;
   }
 
-  input,
-  button,
-  textarea {
+  input:focus,
+  textarea:focus {
+    outline: 1px solid var(--vscode-inputOption-activeBorder);
+  }
+
+  input::placeholder {
+    color: var(--vscode-input-placeholderForeground);
+  }
+
+  button {
+    color: var(--vscode-button-foreground);
+    background: var(--vscode-button-background);
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+  }
+
+  button:hover {
+    background: var(--vscode-button-hoverBackground);
+  }
+
+  button:focus {
+    outline: 1px solid var(--vscode-inputOption-activeBorder);
+    outline-offset: 2px;
+  }
+
+  /* textarea {
     background-color: var(--vscode-editor-background);
     color: var(--vscode-editor-foreground);
     border: 1px solid var(--vscode-editor-foreground);
-  }
+  } */
 
-  th,
+  /* th,
   td {
     color: var(--vscode-editor-foreground);
     border-collapse: collapse;
     border: 1px solid var(--vscode-editor-foreground);
-  }
+  } */
 
-  table {
+  /* table {
     border: 1px solid var(--vscode-editor-foreground);
-  }
+  } */
 </style>
 
 <body style="height: calc(100% - 16px)">

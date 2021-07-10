@@ -32,8 +32,8 @@
 
 <style>
     .r-input {
-        position: relative;
         display: inline-block;
-        margin: 5px 2px;
+        position: relative;
+        margin: 4px 2px;
     }
 </style>
