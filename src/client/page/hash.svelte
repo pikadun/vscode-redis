@@ -93,7 +93,6 @@
 
     .field,
     .value {
-        padding: 0.5vw;
         width: 100%;
         overflow: scroll;
         resize: none;

@@ -33,7 +33,8 @@
     outline: 1px solid var(--vscode-inputOption-activeBorder);
   }
 
-  input::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     color: var(--vscode-input-placeholderForeground);
   }
 
@@ -54,22 +55,20 @@
     outline-offset: 2px;
   }
 
-  /* textarea {
-    background-color: var(--vscode-editor-background);
-    color: var(--vscode-editor-foreground);
-    border: 1px solid var(--vscode-editor-foreground);
-  } */
+  button:disabled {
+    cursor: not-allowed;
+  }
 
-  /* th,
+  table,
+  th,
   td {
-    color: var(--vscode-editor-foreground);
     border-collapse: collapse;
-    border: 1px solid var(--vscode-editor-foreground);
-  } */
+    border: 1px solid var(--vscode-inputOption-activeBorder);
+  }
 
-  /* table {
-    border: 1px solid var(--vscode-editor-foreground);
-  } */
+  table tbody tr:hover {
+    background: var(--vscode-list-hoverBackground);
+  }
 </style>
 
 <body style="height: calc(100% - 16px)">

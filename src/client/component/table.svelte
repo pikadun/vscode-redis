@@ -4,14 +4,12 @@
     export let index = true;
     export let selected: any = {};
 
-    let hoverRow = -1;
     let seletedRow = -1;
 
     $: rowsUpdated(rows);
 
     const rowsUpdated = (_rows: any[]) => {
         seletedRow = -1;
-        hoverRow = -1;
         selected = undefined;
     };
 
@@ -22,17 +20,17 @@
 </script>
 
 <table class="r-table">
-    <thead style="width: calc(100% - 0.4rem)">
+    <thead>
         <tr>
             {#if index}
-                <th style="width: 3rem;">Index</th>
+                <th class="r-table-index">Index</th>
             {/if}
             {#each columns as col}
                 <th>{col.title}</th>
             {/each}
         </tr>
     </thead>
-    <tbody style="max-height: 5rem;">
+    <tbody>
         {#each rows as row, n}
             <tr
                 class:r-table-selected={seletedRow === n}
@@ -41,7 +39,7 @@
                 }}
             >
                 {#if index}
-                    <td style="width: 3rem;">{n}</td>
+                    <td class="r-table-index">{n}</td>
                 {/if}
                 {#each columns as col}
                     <td>{row[col.key]}</td>
@@ -53,10 +51,13 @@
 
 <style>
     .r-table {
-        border-collapse: collapse;
         width: 100%;
         table-layout: fixed;
         text-align: center;
+    }
+
+    .r-table-index {
+        width: 5rem;
     }
 
     .r-table th {
@@ -65,15 +66,19 @@
     }
 
     .r-table tbody {
+        max-height: 10rem;
         display: block;
         overflow-y: scroll;
+    }
+    .r-table tbody::-webkit-scrollbar {
+        display: none;
     }
 
     .r-table thead,
     .r-table tbody tr {
         display: table;
-        width: 100%;
         table-layout: fixed;
+        width: 100%;
     }
 
     .r-table td {
@@ -81,11 +86,6 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-
-    .r-table tbody tr:hover {
-        background-color: var(--vscode-list-hoverBackground);
-    }
-
     .r-table tbody tr:active,
     .r-table-selected {
         background-color: var(--vscode-list-activeSelectionBackground);
