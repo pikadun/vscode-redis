@@ -1,6 +1,11 @@
 # Changelog
 
-## v1.1.0 (2021-07-06)
+## v1.1.1 (2021-07-10)
+
++ Update `hash` page.
++ UI update.
+
+## v1.1.0 (2021-07-08)
 
 + Add `hash` support.
 

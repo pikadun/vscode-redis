@@ -1,30 +1,52 @@
 <script lang="ts">
     import Header from "./component/header.svelte";
-    import Select from "../component/select.svelte";
+    import Table from "../component/table.svelte";
     import Button from "../component/button.svelte";
 
     export let key = "";
-    export let value: string[] = [];
+    export let value: string[] = [
+        "aaa",
+        "a",
+        "bbb",
+        "b",
+        "aaa",
+        "a",
+        "bbb",
+        "b",
+        "aaa",
+        "a",
+        "bbb",
+        "key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1key1	",
+    ];
     export let id = "";
     export let ttl = "";
 
-    let oldValue = value;
-    let selected: any = { field: value[0], value: value[1] };
+    $: valueUpdated(value);
 
-    $: if (oldValue.toString() !== value.toString()) {
-        selected = { field: value[0], value: value[1] };
-        oldValue = value;
-    }
+    const valueUpdated = (values: string[]) => {
+        rows = values
+            .map((_e, i) => {
+                if (i % 2 === 0) {
+                    return { field: value[i], value: value[i + 1] };
+                } else {
+                    return undefined;
+                }
+            })
+            .filter((e) => e !== undefined);
+    };
 
-    $: datas = value
-        .map((_e, i) => {
-            if (i % 2 === 0) {
-                return { field: value[i], value: value[i + 1] };
-            } else {
-                return undefined;
-            }
-        })
-        .filter((e) => e !== undefined) as any[];
+    let rows: any[];
+    let selected: any;
+    const columns = [
+        {
+            key: "field",
+            title: "Field",
+        },
+        {
+            key: "value",
+            title: "Value",
+        },
+    ];
 
     const deleteField = () => {
         window.vscode.postMessage({
@@ -37,31 +59,47 @@
 
 <div class="hash">
     <Header {id} {key} {ttl} type="hash" />
-    <div class="sub-header">
-        <Select filterable bind:selected options={datas} labelField="field">
-            <span slot="prepend">Field:</span>
-            <span slot="option" let:option>{option["field"]}</span>
-        </Select>
-        <Button on:click={deleteField}>Delete Field</Button>
+    <div class="datas">
+        <Table {rows} {columns} bind:selected />
+        <div class="operation">
+            <Button on:click={deleteField} disabled={selected === undefined}
+                >Delete Field</Button
+            >
+        </div>
     </div>
-    <textarea class="value" readonly>{selected["value"]}</textarea>
+
+    <b style="display: block;">Field:</b>
+    <textarea
+        class="field"
+        readonly
+        rows="1"
+        value={selected?.["field"] || ""}
+    />
+    <b style="display: block;">Value:</b>
+    <textarea class="value" readonly value={selected?.["value"] || ""} />
 </div>
 
 <style>
     .hash {
         display: grid;
-        grid-template-rows: auto auto 1fr;
+        grid-template-rows: repeat(5, auto) 1fr;
         height: 100%;
     }
-    .sub-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .datas {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        margin: 5px 0;
     }
+
+    .field,
     .value {
         padding: 0.5vw;
         width: 100%;
         overflow: scroll;
         resize: none;
+    }
+
+    .value {
+        height: 100%;
     }
 </style>

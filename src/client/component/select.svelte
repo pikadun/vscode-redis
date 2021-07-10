@@ -5,7 +5,7 @@
     export let options: any[];
     export let labelField: string;
     export let selected: any;
-    
+
     let selectedLabel = selected[labelField];
     let showOptions = false;
     let placeholder = selectedLabel;
@@ -45,43 +45,38 @@
     };
 </script>
 
-<div class="r-select">
-    <slot name="prepend" />
-    <Input
-        bind:value={selectedLabel}
-        {placeholder}
-        readonly={filterable && !showOptions}
-        on:blur={handleBlur}
-        on:click={toggleMenu}
-        on:keyup={search}
+<Input
+    width="100%"
+    bind:value={selectedLabel}
+    {placeholder}
+    readonly={filterable && !showOptions}
+    on:blur={handleBlur}
+    on:click={toggleMenu}
+    on:keyup={search}
+>
+    <ul
+        class="r-option"
+        slot="append"
+        style={showOptions
+            ? "border-bottom: 1px solid var(--vscode-editor-foreground)"
+            : ""}
     >
-        <ul
-            class="r-option"
-            slot="append"
-            style={showOptions
-                ? "border-bottom: 1px solid var(--vscode-editor-foreground)"
-                : ""}
-        >
-            {#if showOptions}
-                {#each filterOptions as option (option[labelField])}
-                    <li
-                        class="r-option-item"
-                        on:mousedown={(e) => e.preventDefault()}
-                        on:click={() => handleSelectOption(option)}
-                        title={option[labelField]}
-                    >
-                        <slot name="option" {option} />
-                    </li>
-                {/each}
-            {/if}
-        </ul>
-    </Input>
-</div>
+        {#if showOptions}
+            {#each filterOptions as option (option[labelField])}
+                <li
+                    class="r-option-item"
+                    on:mousedown={(e) => e.preventDefault()}
+                    on:click={() => handleSelectOption(option)}
+                    title={option[labelField]}
+                >
+                    <slot name="option" {option} />
+                </li>
+            {/each}
+        {/if}
+    </ul>
+</Input>
 
 <style>
-    .r-select {
-        display: inline-block;
-    }
     .r-option {
         z-index: 1;
         position: absolute;

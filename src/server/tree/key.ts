@@ -108,7 +108,7 @@ export default class KeyItem extends Element {
         }
     }
 
-    async hdel(field: string): Promise<void> {
+    async hdel(field: string): Promise<void | boolean> {
         const res = await window.showInformationMessage(
             'Do you really want to delete this field?',
             'Yes', 'No'
@@ -117,6 +117,7 @@ export default class KeyItem extends Element {
             this.client.SELECT(this.parent.index);
             await this.client.HDEL(this.label, field);
             this.parent.refresh();
+            return true;
         }
     }
 }
