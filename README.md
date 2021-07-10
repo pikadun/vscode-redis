@@ -29,17 +29,17 @@ This extension lets you connect to a Redis Server and manage data.
 
 ### You can add a redis connection by follow steps
 
-![Settings](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=v1.0.0/settings.png)
+![Settings](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/settings.png)
 
 ### Open a terminal to use redis-cli
 
-![Terminal](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=v1.0.0/terminal.png)
+![Terminal](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/terminal.png)
 
 ## Redis Data Type Support
 
 **String:**
 
-![String](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=v1.1.0/string.png)
+![String](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/string.png)
 
 **String:**
-![Hash](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=v1.1.0/hash.png)
+![Hash](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/hash.png)
