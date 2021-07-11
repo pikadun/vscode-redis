@@ -28,30 +28,18 @@
 </script>
 
 <div class="settings">
-    <Input id="host" placeholder="(optional) host" bind:value={host}>
-        <div slot="prepend" class="prepend">
-            IP address of the Redis server:
-        </div>
-    </Input>
+    <span class="title">IP address of the Redis server:</span>
+    <Input placeholder="(optional) host" bind:value={host} />
+    <span class="title">Port of the Redis server:</span>
+    <Input type="number" placeholder="(optional) port" bind:value={port} />
+    <span class="title">Authentication password:</span>
     <Input
-        id="port"
-        type="number"
-        placeholder="(optional) port"
-        bind:value={port}
-    >
-        <div slot="prepend" class="prepend">Port of the Redis server:</div>
-    </Input>
-    <Input
-        id="password"
         type="password"
         placeholder="(optional) auth"
         bind:value={password}
-    >
-        <div slot="prepend" class="prepend">Authentication password:</div>
-    </Input>
-    <Input id="name" placeholder="(optional) name" bind:value={name}>
-        <div slot="prepend" class="prepend">Connection name:</div>
-    </Input>
+    />
+    <span class="title">Connection name:</span>
+    <Input placeholder="(optional) name" bind:value={name} />
     <div>
         <Button on:click={testConnection}>Test Connection</Button>
         <Button on:click={addConnection}>OK</Button>
@@ -59,8 +47,8 @@
 </div>
 
 <style>
-    .settings {
-        display: flex;
-        flex-direction: column;
+    .title {
+        display: block;
+        margin-top: 10px;
     }
 </style>

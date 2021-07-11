@@ -1,5 +1,6 @@
 <script lang="ts">
     import Header from "./component/header.svelte";
+    import Input from "../component/input.svelte";
 
     export let key = "";
     export let value = "";
@@ -9,7 +10,7 @@
 
 <div class="string">
     <Header {id} {key} {ttl} type="string" />
-    <textarea class="value" readonly>{value}</textarea>
+    <Input type="textarea" {value} readonly />
 </div>
 
 <style>
@@ -17,10 +18,5 @@
         display: grid;
         grid-template-rows: auto 1fr;
         height: 100%;
-    }
-    .value {
-        width: 100%;
-        overflow: scroll;
-        resize: none;
     }
 </style>

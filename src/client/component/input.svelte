@@ -1,39 +1,64 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    export let id = "";
-    export let type: string = "text";
+    export let type: "text" | "number" | "password" | "textarea" = "text";
     export let placeholder = "";
-    export let value: string | number | undefined = undefined;
-    export let readonly: boolean | undefined = undefined;
-    export let width = "";
+    export let value: string | number = "";
+    export let readonly = false;
 
     let element: HTMLInputElement;
     onMount(() => {
-        element.type = type;
+        if (element) {
+            element.type = type;
+        }
     });
 </script>
 
 <div class="r-input">
-    <slot name="prepend" />
-    <input
-        style="width:{width}"
-        {id}
-        {placeholder}
-        {readonly}
-        bind:value
-        bind:this={element}
-        on:blur
-        on:click
-        on:focus
-        on:keyup
-    />
-    <slot name="append" />
+    {#if type === "textarea"}
+        <textarea
+            class="r-input__textarea"
+            {placeholder}
+            {readonly}
+            bind:value
+        />
+    {:else}
+        <input
+            class="r-input__input"
+            {placeholder}
+            {readonly}
+            bind:value
+            bind:this={element}
+        />
+    {/if}
 </div>
 
 <style>
     .r-input {
         display: inline-block;
-        position: relative;
-        margin: 4px 2px;
+        margin: 5px 2px;
+    }
+
+    .r-input__input,
+    .r-input__textarea {
+        width: 100%;
+        height: 100%;
+        background-color: var(--vscode-input-background);
+        color: var(--vscode-input-foreground);
+        border: none;
+        padding: 2px 4px;
+    }
+
+    .r-input__input:focus,
+    .r-input__textarea:focus {
+        outline: 1px solid var(--vscode-inputOption-activeBorder);
+    }
+
+    .r-input__input::placeholder,
+    .r-input__textarea::placeholder {
+        color: var(--vscode-input-placeholderForeground);
+    }
+
+    .r-input__textarea {
+        resize: none;
     }
 </style>

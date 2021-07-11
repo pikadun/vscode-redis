@@ -14,40 +14,44 @@
     };
 
     const handleRowClick = (n: number) => {
+        console.log("click:" + n);
         seletedRow = n;
         selected = rows[n];
+        console.log(selected)
     };
 </script>
 
-<table class="r-table">
-    <thead>
-        <tr>
-            {#if index}
-                <th class="r-table-index">Index</th>
-            {/if}
-            {#each columns as col}
-                <th>{col.title}</th>
-            {/each}
-        </tr>
-    </thead>
-    <tbody>
-        {#each rows as row, n}
-            <tr
-                class:r-table-selected={seletedRow === n}
-                on:click={() => {
-                    handleRowClick(n);
-                }}
-            >
+<div class="r-table">
+    <table>
+        <thead>
+            <tr>
                 {#if index}
-                    <td class="r-table-index">{n}</td>
+                    <th class="r-table-index">Index</th>
                 {/if}
                 {#each columns as col}
-                    <td>{row[col.key]}</td>
+                    <th>{col.title}</th>
                 {/each}
             </tr>
-        {/each}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {#each rows as row, n}
+                <tr
+                    class:r-table-selected={seletedRow === n}
+                    on:click={() => {
+                        handleRowClick(n);
+                    }}
+                >
+                    {#if index}
+                        <td class="r-table-index">{n}</td>
+                    {/if}
+                    {#each columns as col}
+                        <td>{row[col.key]}</td>
+                    {/each}
+                </tr>
+            {/each}
+        </tbody>
+    </table>
+</div>
 
 <style>
     .r-table {
@@ -86,9 +90,21 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
+    .r-table tbody tr:hover {
+        background: var(--vscode-list-hoverBackground);
+    }
+
     .r-table tbody tr:active,
     .r-table-selected {
-        background-color: var(--vscode-list-activeSelectionBackground);
+        background-color: var(--vscode-list-activeSelectionBackground) !important;
         color: var(--vscode-list-activeSelectionForeground);
+    }
+
+    .r-table table,
+    .r-table th,
+    .r-table td {
+        border-collapse: collapse;
+        border: 1px solid var(--vscode-inputOption-activeBorder);
     }
 </style>

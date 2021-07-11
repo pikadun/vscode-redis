@@ -2,6 +2,7 @@
     import Header from "./component/header.svelte";
     import Table from "../component/table.svelte";
     import Button from "../component/button.svelte";
+    import Input from "../component/input.svelte";
 
     export let key = "";
     export let value: string[] = [
@@ -69,14 +70,9 @@
     </div>
 
     <b style="display: block;">Field:</b>
-    <textarea
-        class="field"
-        readonly
-        rows="1"
-        value={selected?.["field"] || ""}
-    />
+    <Input type="textarea" readonly value={selected?.["field"] || ""} />
     <b style="display: block;">Value:</b>
-    <textarea class="value" readonly value={selected?.["value"] || ""} />
+    <Input type="textarea" readonly value={selected?.["value"] || ""} />
 </div>
 
 <style>
@@ -89,16 +85,5 @@
         display: grid;
         grid-template-columns: 1fr auto;
         margin: 5px 0;
-    }
-
-    .field,
-    .value {
-        width: 100%;
-        overflow: scroll;
-        resize: none;
-    }
-
-    .value {
-        height: 100%;
     }
 </style>
