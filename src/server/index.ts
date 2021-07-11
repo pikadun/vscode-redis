@@ -46,10 +46,10 @@ export function activate(context: ExtensionContext): void {
 
     commands.registerCommand('Redis.Key.Operation', async (
         id: string,
-        op: 'rename' | 'expire' | 'del' | 'hdel' | 'detail',
+        op: 'rename' | 'expire' | 'del' | 'hdel' | 'detail' | 'lrem',
         ...params: string[]
     ) => {
-        type T = { [x: string]: (...args: unknown[]) => Promise<void> };
+        type T = { [x: string]: (...args: unknown[]) => Promise<boolean> };
         const element = provider.getTreeItemById(id) as KeyItem;
         let result;
         switch (op) {
@@ -60,10 +60,15 @@ export function activate(context: ExtensionContext): void {
 
         if (op === 'del' && result) {
             panel.close();
-        } else {
-            const detail = await element.detail();
-            panel.show(detail.type, detail.data);
+            return;
         }
+
+        if (result === false) {
+            return;
+        }
+
+        const detail = await element.detail();
+        panel.show(detail.type, detail.data);
     });
 
     // Open terminal

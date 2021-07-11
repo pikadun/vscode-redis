@@ -46,7 +46,11 @@ export default class KeyItem extends Element {
                 data = await this.client.GET(this.label);
                 break;
             case PanelName.HASH:
-                data = await this.client.HGETALL(this.label);
+                data = await this.client.HSCAN(this.label, 0, 'match', '*', 'count', 10000);
+                data = data[1];
+                break;
+            case PanelName.LIST:
+                data = await this.client.LRANGE(this.label, 0, -1);
                 break;
             default:
                 window.showErrorMessage(`Unsupport data type: ${type}.`);
@@ -68,7 +72,7 @@ export default class KeyItem extends Element {
         throw new Error('Method not implemented.');
     }
 
-    async rename(): Promise<void> {
+    async rename(): Promise<boolean> {
         const newkey = await window.showInputBox({
             prompt: 'Rename key',
             value: this.label,
@@ -79,10 +83,12 @@ export default class KeyItem extends Element {
             // Modify `this.label` to `newkey` for future use.
             this.label = newkey;
             this.parent.refresh();
+            return true;
         }
+        return false;
     }
 
-    async expire(ttl: string): Promise<void> {
+    async expire(ttl: string): Promise<boolean> {
         const newttl = await window.showInputBox({
             prompt: 'Set key TTL',
             value: ttl,
@@ -91,10 +97,12 @@ export default class KeyItem extends Element {
             this.client.SELECT(this.parent.index);
             await this.client.EXPIRE(this.label, parseInt(newttl));
             this.parent.refresh();
+            return true;
         }
+        return false;
     }
 
-    async del(): Promise<void | boolean> {
+    async del(): Promise<boolean> {
         const res = await window.showInformationMessage(
             'Do you really want to delete this key?',
             'Yes', 'No'
@@ -106,9 +114,10 @@ export default class KeyItem extends Element {
             this.parent.refresh();
             return true;
         }
+        return false;
     }
 
-    async hdel(field: string): Promise<void | boolean> {
+    async hdel(field: string): Promise<boolean> {
         const res = await window.showInformationMessage(
             'Do you really want to delete this field?',
             'Yes', 'No'
@@ -119,5 +128,22 @@ export default class KeyItem extends Element {
             this.parent.refresh();
             return true;
         }
+        return false;
+    }
+
+    async lrem(index: number): Promise<boolean> {
+        const tmpValue = '---VALUE_REMOVED_BY_VSCODE_REDIS---';
+        const res = await window.showInformationMessage(
+            'Do you really want to delete this value?',
+            'Yes', 'No'
+        );
+        if (res === 'Yes') {
+            this.client.SELECT(this.parent.index);
+            this.client.LSET(this.label, index, tmpValue);
+            await this.client.LREM(this.label, 0, tmpValue);
+            this.parent.refresh();
+            return true;
+        }
+        return false;
     }
 }

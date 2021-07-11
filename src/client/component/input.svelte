@@ -20,6 +20,8 @@
             {placeholder}
             {readonly}
             bind:value
+            on:click
+            on:blur
         />
     {:else}
         <input
@@ -28,6 +30,8 @@
             {readonly}
             bind:value
             bind:this={element}
+            on:click
+            on:blur
         />
     {/if}
 </div>
@@ -42,7 +46,7 @@
     .r-input__textarea {
         width: 100%;
         height: 100%;
-        background-color: var(--vscode-input-background);
+        background: var(--vscode-input-background);
         color: var(--vscode-input-foreground);
         border: none;
         padding: 2px 4px;

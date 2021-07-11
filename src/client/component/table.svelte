@@ -3,6 +3,7 @@
     export let rows: any[];
     export let index = true;
     export let selected: any = {};
+    export let maxHeight = "10rem";
 
     let seletedRow = -1;
 
@@ -14,10 +15,8 @@
     };
 
     const handleRowClick = (n: number) => {
-        console.log("click:" + n);
         seletedRow = n;
         selected = rows[n];
-        console.log(selected)
     };
 </script>
 
@@ -33,7 +32,7 @@
                 {/each}
             </tr>
         </thead>
-        <tbody>
+        <tbody style="max-height: {maxHeight};">
             {#each rows as row, n}
                 <tr
                     class:r-table-selected={seletedRow === n}
@@ -70,7 +69,6 @@
     }
 
     .r-table tbody {
-        max-height: 10rem;
         display: block;
         overflow-y: scroll;
     }
@@ -97,7 +95,9 @@
 
     .r-table tbody tr:active,
     .r-table-selected {
-        background-color: var(--vscode-list-activeSelectionBackground) !important;
+        background-color: var(
+            --vscode-list-activeSelectionBackground
+        ) !important;
         color: var(--vscode-list-activeSelectionForeground);
     }
 

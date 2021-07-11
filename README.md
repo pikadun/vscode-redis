@@ -38,8 +38,10 @@ This extension lets you connect to a Redis Server and manage data.
 ## Redis Data Type Support
 
 **String:**
-
 ![String](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/string.png)
 
-**String:**
+**Hash:**
 ![Hash](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/hash.png)
+
+**List:**
+![List](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/list.png)

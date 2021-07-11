@@ -15,6 +15,8 @@
     }
 
     .r-button__button {
+        width: 100%;
+        height: 100%;
         color: var(--vscode-button-foreground);
         background: var(--vscode-button-background);
         border: none;

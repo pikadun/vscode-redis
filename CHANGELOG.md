@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.0 (2021-07-11)
+
++ Add `list` support.
+
 ## v1.1.1 (2021-07-10)
 
 + Update `hash` page.
