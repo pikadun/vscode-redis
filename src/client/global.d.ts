@@ -6,7 +6,8 @@ interface vscode {
 
 declare global {
     interface Window {
-        vscode: vscode
+        vscode: vscode;
+        color?: string;
     }
     interface ImportMeta {
         env: {

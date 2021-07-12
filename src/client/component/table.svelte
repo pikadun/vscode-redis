@@ -18,17 +18,22 @@
         seletedRow = n;
         selected = rows[n];
     };
+
+    const borderClass =
+        window.color === "vscode-light"
+            ? "r-table-border-light"
+            : "r-table-border";
 </script>
 
 <div class="r-table">
-    <table>
+    <table class={borderClass}>
         <thead>
             <tr>
                 {#if index}
-                    <th class="r-table-index">Index</th>
+                    <th class="r-table-index {borderClass}">Index</th>
                 {/if}
                 {#each columns as col}
-                    <th>{col.title}</th>
+                    <th class={borderClass}>{col.title}</th>
                 {/each}
             </tr>
         </thead>
@@ -41,10 +46,10 @@
                     }}
                 >
                     {#if index}
-                        <td class="r-table-index">{n}</td>
+                        <td class="r-table-index {borderClass}">{n}</td>
                     {/if}
                     {#each columns as col}
-                        <td>{row[col.key]}</td>
+                        <td class={borderClass}>{row[col.key]}</td>
                     {/each}
                 </tr>
             {/each}
@@ -101,9 +106,12 @@
         color: var(--vscode-list-activeSelectionForeground);
     }
 
-    .r-table table,
-    .r-table th,
-    .r-table td {
+    .r-table-border-light {
+        border-collapse: collapse;
+        border: 1px solid var(--vscode-settings-textInputBorder);
+    }
+
+    .r-table-border {
         border-collapse: collapse;
         border: 1px solid var(--vscode-inputOption-activeBorder);
     }

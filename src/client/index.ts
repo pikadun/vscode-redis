@@ -7,6 +7,9 @@ import List from './page/list.svelte';
 import Set from './page/set.svelte';
 import ZSet from './page/zset.svelte';
 
+// Get color theme.
+window.color = document.body.classList[0];
+
 const app = new Route({
     target: document.body
 });

@@ -13,7 +13,7 @@
     });
 </script>
 
-<div class="r-input">
+<div class="r-input" class:r-input-light={window.color === 'vscode-light'}>
     {#if type === "textarea"}
         <textarea
             class="r-input__textarea"
@@ -40,6 +40,10 @@
     .r-input {
         display: inline-block;
         margin: 5px 2px;
+    }
+
+    .r-input-light {
+        border: 1px solid var(--vscode-settings-textInputBorder);
     }
 
     .r-input__input,
