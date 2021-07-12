@@ -11,11 +11,11 @@ This extension lets you connect to a Redis Server and manage data.
 
 ## Feature
 
-+ ✨An easy-to-use GUI to access your Redis databases.
-+ ✨Execute the redis commands through the terminal in vscode.
-+ ✨Support **string**, **hash**, **list**, **set**, **zset** and **stream** type.
-+ ✨(TODO) Support **TLS**, **SSH** and **TLS-over-SSH tunneling**.
-+ ✨(TODO) Multilingual support.
++ 💻An easy-to-use GUI to access your Redis databases.
++ 🎹Execute the redis commands through the terminal in vscode.
++ 💾Support **string**, **hash**, **list**, **set**, **zset** and **stream** type.
++ 🔐(TODO) Support **SSL/TLS** and **SSH Tunnel**.
++ 🌏(TODO) Multilingual support.
 
 ## Usage
 
