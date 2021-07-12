@@ -24,9 +24,9 @@ export default class ConnectionConfigStore {
 
     set(id: string, config: ConnectionConfig): void {
         const configs = this.all();
-        config.host = config.host ?? '127.0.0.1';
-        config.port = config.port ?? 6379;
-        config.name = config.name ?? `${config.host}:${config.port}`;
+        config.host = config.host || '127.0.0.1';
+        config.port = config.port || 6379;
+        config.name = config.name || `${config.host}:${config.port}`;
         configs[id] = config;
         this.context.globalState.update(Constant.GLOBAL_STATE_REDIS_CONFIG_KEY, configs);
     }
