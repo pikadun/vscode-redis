@@ -35,6 +35,10 @@ This extension lets you connect to a Redis Server and manage data.
 
 ![Terminal](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/terminal.png)
 
+### View redis command execution log
+
+![Log](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/log.png)
+
 ## Redis Data Type Support
 
 **String:**

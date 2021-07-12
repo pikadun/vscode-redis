@@ -1,6 +1,7 @@
 import { ClientV2 } from '@camaro/redis';
 import { join } from 'path';
 import { TreeItemCollapsibleState } from 'vscode';
+import logger from '../common/logger';
 import { TreeItemContextValue } from '../common/treeItemContextValue';
 import { ConnectionConfig } from './config';
 import DBItem from './db';
@@ -14,6 +15,10 @@ export default class RedisItem extends Element {
     contextValue = TreeItemContextValue.REDIS;
     iconPath = join(__dirname, `../../../img/${this.contextValue}.png`);
     private client!: ClientV2 & Client;
+    private logger = (_err: Error, _reply: unknown, command: string, args?: string[]) => {
+        const msg = `${this.label}> ${command.toUpperCase()} ${args?.join(' ')}`;
+        logger.info(msg);
+    };
     constructor(
         readonly id: string,
         readonly config: ConnectionConfig
@@ -23,7 +28,6 @@ export default class RedisItem extends Element {
 
     async getChildren(): Promise<Element[]> {
         await this.connect();
-
         this.client.options.reconnection = true;
         const [keyspaceStr, info] = await Promise.all([
             this.client.INFO('keyspace'),
@@ -52,6 +56,7 @@ export default class RedisItem extends Element {
         return new Promise((resolve, reject) => {
             this.client = new ClientV2(this.config) as ClientV2 & Client;
             this.client.options.reconnection = !!reconnection;
+            this.client.options.logger = this.logger;
             this.client.on('error', e => {
                 reject(e + '');
             });
