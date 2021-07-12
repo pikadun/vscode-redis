@@ -50,8 +50,8 @@
     };
 </script>
 
-<div class="hash">
-    <Header {id} {key} {ttl} type="hash" />
+<div class="list">
+    <Header {id} {key} {ttl} type="list" />
     <div class="datas">
         <Table {rows} {columns} bind:selected />
         <div class="operation">
@@ -66,7 +66,7 @@
 </div>
 
 <style>
-    .hash {
+    .list {
         display: grid;
         grid-template-rows: repeat(3, auto) 1fr;
         height: 100%;

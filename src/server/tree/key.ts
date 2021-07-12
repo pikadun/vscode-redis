@@ -56,6 +56,10 @@ export default class KeyItem extends Element {
                 data = await this.client.SSCAN(this.label, 0, 'match', '*', 'count', 1000);
                 data = data[1];
                 break;
+            case PanelName.ZSET:
+                data = await this.client.ZSCAN(this.label, 0, 'match', '*', 'count', 1000);
+                data = data[1];
+                break;
             default:
                 return undefined;
         }
@@ -150,7 +154,6 @@ export default class KeyItem extends Element {
         return false;
     }
 
-
     async srem(value: string): Promise<boolean> {
         const res = await window.showInformationMessage(
             'Do you really want to delete this value?',
@@ -159,6 +162,20 @@ export default class KeyItem extends Element {
         if (res === 'Yes') {
             this.client.SELECT(this.parent.index);
             await this.client.SREM(this.label, value);
+            this.parent.refresh();
+            return true;
+        }
+        return false;
+    }
+
+    async zrem(value: string): Promise<boolean> {
+        const res = await window.showInformationMessage(
+            'Do you really want to delete this value?',
+            'Yes', 'No'
+        );
+        if (res === 'Yes') {
+            this.client.SELECT(this.parent.index);
+            await this.client.ZREM(this.label, value);
             this.parent.refresh();
             return true;
         }

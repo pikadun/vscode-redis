@@ -4,7 +4,8 @@ enum PanelName {
     STRING = 'string',
     HASH = 'hash',
     LIST = 'list',
-    SET = 'set'
+    SET = 'set',
+    ZSET = 'zset',
 }
 
 export default PanelName;

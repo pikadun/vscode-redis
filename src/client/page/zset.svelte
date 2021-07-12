@@ -10,8 +10,17 @@
     export let ttl = "";
 
     $: valueUpdated(value);
+
     const valueUpdated = (values: string[]) => {
-        rows = values.map((v) => ({ value: v }));
+        rows = values
+            .map((_e, i) => {
+                if (i % 2 === 0) {
+                    return { value: value[i], score: value[i + 1] };
+                } else {
+                    return undefined;
+                }
+            })
+            .filter((e) => e !== undefined);
     };
 
     let rows: any[];
@@ -21,48 +30,47 @@
             key: "value",
             title: "Value",
         },
+        {
+            key: "score",
+            title: "Score",
+        },
     ];
 
-    const deleteValue = () => {
+    const deleteField = () => {
         window.vscode.postMessage({
             self: true,
             command: "Redis.Key.Operation",
-            args: [id, "srem", selected["value"]],
+            args: [id, "zrem", selected["value"]],
         });
     };
 </script>
 
-<div class="set">
-    <Header {id} {key} {ttl} type="set" />
+<div class="zset">
+    <Header {id} {key} {ttl} type="zset" />
     <div class="datas">
         <Table {rows} {columns} bind:selected />
         <div class="operation">
-            <Button on:click={deleteValue} disabled={selected === undefined}
+            <Button on:click={deleteField} disabled={selected === undefined}
                 >Delete Value</Button
             >
         </div>
     </div>
+
+    <b style="display: block;">Score:</b>
+    <Input type="number" readonly value={selected?.["score"] || ""} />
     <b style="display: block;">Value:</b>
     <Input type="textarea" readonly value={selected?.["value"] || ""} />
 </div>
 
 <style>
-    .set {
+    .zset {
         display: grid;
-        grid-template-rows: repeat(3, auto) 1fr;
+        grid-template-rows: repeat(5, auto) 1fr;
         height: 100%;
     }
-
     .datas {
         display: grid;
         grid-template-columns: 1fr auto;
         margin: 5px 0;
-    }
-
-    .operation {
-        display: flex;
-        flex-direction: column;
-        width: max-content;
-        max-width: 12rem;
     }
 </style>

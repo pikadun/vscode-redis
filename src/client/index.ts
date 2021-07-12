@@ -5,6 +5,7 @@ import String from './page/string.svelte';
 import Hash from './page/hash.svelte';
 import List from './page/list.svelte';
 import Set from './page/set.svelte';
+import ZSet from './page/zset.svelte';
 
 const app = new Route({
     target: document.body
@@ -16,6 +17,7 @@ routeMap.set('string', String);
 routeMap.set('hash', Hash);
 routeMap.set('list', List);
 routeMap.set('set', Set);
+routeMap.set('zset', ZSet);
 
 if (import.meta.env.MODE === 'production') {
     window.vscode = acquireVsCodeApi();
