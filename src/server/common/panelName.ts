@@ -3,7 +3,8 @@ enum PanelName {
     SETTINGS = 'settings',
     STRING = 'string',
     HASH = 'hash',
-    LIST = 'list'
+    LIST = 'list',
+    SET = 'set'
 }
 
 export default PanelName;

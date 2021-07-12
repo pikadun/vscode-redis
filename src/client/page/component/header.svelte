@@ -42,7 +42,7 @@
 
 <div class="header">
     <b>{type.toUpperCase()}:</b>
-    <Input {id} bind:value={key} width="100%" readonly />
+    <Input bind:value={key} readonly />
     <Button on:click={rename}>Rename</Button>
     <Button on:click={expire}>TTL:{ttl}</Button>
     <Button on:click={reload}>Reload</Button>

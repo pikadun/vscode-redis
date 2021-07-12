@@ -35,7 +35,7 @@ export default class KeyItem extends Element {
         this.command.arguments?.push(id, 'detail');
     }
 
-    async detail(): Promise<KeyDetail> {
+    async detail(): Promise<KeyDetail | undefined> {
         this.client.SELECT(this.parent.index);
         const type = await this.client.TYPE(this.label);
         const ttl = await this.client.TTL(this.label);
@@ -46,15 +46,18 @@ export default class KeyItem extends Element {
                 data = await this.client.GET(this.label);
                 break;
             case PanelName.HASH:
-                data = await this.client.HSCAN(this.label, 0, 'match', '*', 'count', 10000);
+                data = await this.client.HSCAN(this.label, 0, 'match', '*', 'count', 1000);
                 data = data[1];
                 break;
             case PanelName.LIST:
                 data = await this.client.LRANGE(this.label, 0, -1);
                 break;
+            case PanelName.SET:
+                data = await this.client.SSCAN(this.label, 0, 'match', '*', 'count', 1000);
+                data = data[1];
+                break;
             default:
-                window.showErrorMessage(`Unsupport data type: ${type}.`);
-                throw Error();
+                return undefined;
         }
 
         return {
@@ -141,6 +144,21 @@ export default class KeyItem extends Element {
             this.client.SELECT(this.parent.index);
             this.client.LSET(this.label, index, tmpValue);
             await this.client.LREM(this.label, 0, tmpValue);
+            this.parent.refresh();
+            return true;
+        }
+        return false;
+    }
+
+
+    async srem(value: string): Promise<boolean> {
+        const res = await window.showInformationMessage(
+            'Do you really want to delete this value?',
+            'Yes', 'No'
+        );
+        if (res === 'Yes') {
+            this.client.SELECT(this.parent.index);
+            await this.client.SREM(this.label, value);
             this.parent.refresh();
             return true;
         }

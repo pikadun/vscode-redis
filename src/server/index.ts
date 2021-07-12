@@ -46,7 +46,7 @@ export function activate(context: ExtensionContext): void {
 
     commands.registerCommand('Redis.Key.Operation', async (
         id: string,
-        op: 'rename' | 'expire' | 'del' | 'hdel' | 'detail' | 'lrem',
+        op: 'rename' | 'expire' | 'del' | 'hdel' | 'detail' | 'lrem' | 'srem',
         ...params: string[]
     ) => {
         type T = { [x: string]: (...args: unknown[]) => Promise<boolean> };
@@ -68,7 +68,11 @@ export function activate(context: ExtensionContext): void {
         }
 
         const detail = await element.detail();
-        panel.show(detail.type, detail.data);
+        if (detail === undefined) {
+            panel.close();
+        } else {
+            panel.show(detail.type, detail.data);
+        }
     });
 
     // Open terminal

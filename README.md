@@ -13,7 +13,7 @@ This extension lets you connect to a Redis Server and manage data.
 
 + ✨An easy-to-use GUI to access your Redis databases.
 + ✨Execute the redis commands through the terminal in vscode.
-+ ✨Support **string**, **hash**, **list**, **set**(TODO), **zset**(TODO) and **stream**(TODO) type.
++ ✨Support **string**, **hash**, **list**, **set**, **zset**(TODO) and **stream**(TODO) type.
 + ✨(TODO) Support **TLS**, **SSH** and **TLS-over-SSH tunneling**.
 + ✨(TODO) Multilingual support.
 
@@ -49,3 +49,6 @@ This extension lets you connect to a Redis Server and manage data.
 
 **List:**
 ![List](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/list.png)
+
+**Set:**
+![Set](https://dev.azure.com/pikadun/lfs/_apis/git/repositories/vscode-redis/items?%24format=octetStream&path=readme/set.png)
