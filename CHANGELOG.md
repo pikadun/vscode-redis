@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.3.0 (2021-07-12)
+
++ Add `zset` support.
++ Add `set` support.
++ Add redis commands execution log.
++ Fix bugs.
+
 ## v1.2.0 (2021-07-11)
 
 + Add `list` support.
