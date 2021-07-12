@@ -56,9 +56,9 @@
         </div>
     </div>
 
-    <b style="display: block;">Field:</b>
+    <b style="display: block;">Field</b>
     <Input type="textarea" readonly value={selected?.["field"] || ""} />
-    <b style="display: block;">Value:</b>
+    <b style="display: block;">Value</b>
     <Input type="textarea" readonly value={selected?.["value"] || ""} />
 </div>
 

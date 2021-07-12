@@ -6,6 +6,7 @@ enum PanelName {
     LIST = 'list',
     SET = 'set',
     ZSET = 'zset',
+    STREAM = 'stream'
 }
 
 export default PanelName;

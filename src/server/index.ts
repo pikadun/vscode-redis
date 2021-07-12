@@ -46,7 +46,7 @@ export function activate(context: ExtensionContext): void {
 
     commands.registerCommand('Redis.Key.Operation', async (
         id: string,
-        op: 'rename' | 'expire' | 'del' | 'hdel' | 'detail' | 'lrem' | 'srem',
+        op: 'rename' | 'expire' | 'del' | 'hdel' | 'detail' | 'lrem' | 'srem' | 'xdel',
         ...params: string[]
     ) => {
         type T = { [x: string]: (...args: unknown[]) => Promise<boolean> };

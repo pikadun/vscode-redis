@@ -1,6 +1,11 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    export let type: "text" | "number" | "password" | "textarea" = "text";
+    export let type:
+        | "text"
+        | "number"
+        | "password"
+        | "datetime-local"
+        | "textarea" = "text";
     export let placeholder = "";
     export let value: string | number = "";
     export let readonly = false;

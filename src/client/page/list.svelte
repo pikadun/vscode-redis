@@ -61,7 +61,7 @@
             <Select options={["Positive", "Reverse"]} bind:selected={sort} />
         </div>
     </div>
-    <b style="display: block;">Value:</b>
+    <b style="display: block;">Value</b>
     <Input type="textarea" readonly value={selected?.["value"] || ""} />
 </div>
 

@@ -36,7 +36,7 @@
         },
     ];
 
-    const deleteField = () => {
+    const deleteValue = () => {
         window.vscode.postMessage({
             self: true,
             command: "Redis.Key.Operation",
@@ -50,15 +50,15 @@
     <div class="datas">
         <Table {rows} {columns} bind:selected />
         <div class="operation">
-            <Button on:click={deleteField} disabled={selected === undefined}
+            <Button on:click={deleteValue} disabled={selected === undefined}
                 >Delete Value</Button
             >
         </div>
     </div>
 
-    <b style="display: block;">Score:</b>
+    <b style="display: block;">Score</b>
     <Input type="number" readonly value={selected?.["score"] || ""} />
-    <b style="display: block;">Value:</b>
+    <b style="display: block;">Value</b>
     <Input type="textarea" readonly value={selected?.["value"] || ""} />
 </div>
 

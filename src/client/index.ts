@@ -6,6 +6,7 @@ import Hash from './page/hash.svelte';
 import List from './page/list.svelte';
 import Set from './page/set.svelte';
 import ZSet from './page/zset.svelte';
+import Stream from './page/stream.svelte';
 
 // Get color theme.
 window.color = document.body.classList[0];
@@ -21,6 +22,7 @@ routeMap.set('hash', Hash);
 routeMap.set('list', List);
 routeMap.set('set', Set);
 routeMap.set('zset', ZSet);
+routeMap.set('stream', Stream);
 
 if (import.meta.env.MODE === 'production') {
     window.vscode = acquireVsCodeApi();

@@ -60,6 +60,15 @@ export default class KeyItem extends Element {
                 data = await this.client.ZSCAN(this.label, 0, 'match', '*', 'count', 1000);
                 data = data[1];
                 break;
+            case PanelName.STREAM:
+                data = await this.client.XRANGE(
+                    this.label,
+                    '-' as unknown as number,
+                    '+' as unknown as number,
+                    'count',
+                    1000
+                );
+                break;
             default:
                 return undefined;
         }
@@ -87,7 +96,6 @@ export default class KeyItem extends Element {
         if (newkey !== undefined) {
             this.client.SELECT(this.parent.index);
             await this.client.RENAME(this.label, newkey);
-            // Modify `this.label` to `newkey` for future use.
             this.label = newkey;
             this.parent.refresh();
             return true;
@@ -176,6 +184,20 @@ export default class KeyItem extends Element {
         if (res === 'Yes') {
             this.client.SELECT(this.parent.index);
             await this.client.ZREM(this.label, value);
+            this.parent.refresh();
+            return true;
+        }
+        return false;
+    }
+
+    async xdel(id: string): Promise<boolean> {
+        const res = await window.showInformationMessage(
+            'Do you really want to delete this value?',
+            'Yes', 'No'
+        );
+        if (res === 'Yes') {
+            this.client.SELECT(this.parent.index);
+            await this.client.XDEL(this.label, id);
             this.parent.refresh();
             return true;
         }
