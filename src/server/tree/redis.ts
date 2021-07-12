@@ -53,7 +53,7 @@ export default class RedisItem extends Element {
      * Connect before use
      */
     async connect(reconnection?: boolean): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return this.client ? undefined : new Promise((resolve, reject) => {
             this.client = new ClientV2(this.config) as ClientV2 & Client;
             this.client.options.reconnection = !!reconnection;
             this.client.options.logger = this.logger;

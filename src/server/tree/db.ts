@@ -20,7 +20,7 @@ export default class DBItem extends Element {
     }
 
     async getChildren(): Promise<Element[]> {
-        await this.client.SELECT(this.index);
+        this.client.SELECT(this.index);
         const keys = await this.client.SCAN(this.cursor, 'match', this.pattern, 'count', 1000);
         this.cursor = parseInt(keys[0]);
         return keys[1].map(key => new KeyItem(`${this.id}.${key}`, key, this.client, this));
@@ -41,7 +41,7 @@ export default class DBItem extends Element {
     }
 
     async beforeRefresh(): Promise<void> {
-        await this.client.SELECT(this.index);
+        this.client.SELECT(this.index);
         this.dbsize = await this.client.DBSIZE();
         if (this.pattern === '*') {
             this.label = `db${this.index} (${this.dbsize})`;
