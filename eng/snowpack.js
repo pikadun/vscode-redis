@@ -1,5 +1,5 @@
 /* eslint-disable */
-const preprocess = require('svelte-preprocess');
+const { typescript } = require('svelte-preprocess');
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
     exclude: ['**/*/tsconfig.json'],
@@ -10,11 +10,7 @@ module.exports = {
     plugins: [
         ['@snowpack/plugin-svelte',
             {
-                preprocess: preprocess({
-                    defaults: {
-                        script: 'typescript',
-                    },
-                })
+                preprocess: typescript()
             }
         ],
         [

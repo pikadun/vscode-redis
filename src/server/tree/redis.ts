@@ -15,6 +15,7 @@ export default class RedisItem extends Element {
     contextValue = TreeItemContextValue.REDIS;
     iconPath = join(__dirname, `../../../img/${this.contextValue}.png`);
     private client!: ClientV2 & Client;
+    private connected = false;
     private logger = (_err: Error, _reply: unknown, command: string, args?: string[]) => {
         const msg = `${this.label}> ${command.toUpperCase()} ${args?.join(' ')}`;
         logger.info(msg);
@@ -53,14 +54,20 @@ export default class RedisItem extends Element {
      * Connect before use
      */
     async connect(reconnection?: boolean): Promise<void> {
-        return this.client ? undefined : new Promise((resolve, reject) => {
+        if (this.client && this.connected) {
+            return;
+        }
+
+        return new Promise((resolve, reject) => {
             this.client = new ClientV2(this.config) as ClientV2 & Client;
             this.client.options.reconnection = !!reconnection;
             this.client.options.logger = this.logger;
             this.client.on('error', e => {
+                this.connected = false;
                 reject(e + '');
             });
             this.client.on('connect', () => {
+                this.connected = true;
                 resolve();
             });
         });
