@@ -3,5 +3,9 @@
 eng/
 src/
 
+**/*.js.map
+**/*.d.ts
+node_modules/**/*.md
+
 .gitignore
 package-lock.json

@@ -3,7 +3,7 @@
   "version": "1.4.0",
   "publisher": "Dunn",
   "engines": {
-    "vscode": "^1.55.0"
+    "vscode": "^1.58.1"
   },
   "license": "MIT",
   "main": "lib/server/index.js",
@@ -48,21 +48,21 @@
   "devDependencies": {
     "@snowpack/plugin-svelte": "^3.7.0",
     "@snowpack/plugin-typescript": "^1.2.1",
-    "@types/node": "^16.3.1",
-    "@types/vscode": "^1.55.0",
-    "@typescript-eslint/eslint-plugin": "^4.28.2",
-    "@typescript-eslint/parser": "^4.28.2",
-    "eslint": "^7.30.0",
+    "@types/node": "^16.4.3",
+    "@types/vscode": "^1.58.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "eslint": "^7.31.0",
     "husky": "^7.0.1",
-    "snowpack": "^3.4.0",
-    "svelte": "^3.38.3",
+    "snowpack": "^3.8.3",
+    "svelte": "^3.40.3",
     "svelte-preprocess": "^4.7.4",
     "ts-node": "^10.1.0",
     "typescript": "^4.2.4",
-    "vsce": "^1.95.1"
+    "vsce": "^1.96.1"
   },
   "dependencies": {
-    "@camaro/redis": "^2.3.0"
+    "@camaro/redis": "^2.4.0"
   },
   "activationEvents": [
     "onView:RedisExplorer"
