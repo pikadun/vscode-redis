@@ -30,12 +30,15 @@ export default class RedisItem extends Element {
     async getChildren(): Promise<Element[]> {
         await this.connect();
         this.client.options.reconnection = true;
-        const [keyspaceStr, info] = await Promise.all([
-            this.client.INFO('keyspace'),
-            this.client.CONFIG('get', 'databases')
-        ]);
 
+        const keyspaceStr = await this.client.INFO('keyspace');
         const keyspace = this.parseKeyspace(keyspaceStr);
+        let info = ['databases', Object.keys(keyspace).length];
+        try {
+            info = await this.client.CONFIG('get', 'databases');
+        } catch (e) {
+            // ignore
+        }
         const count = parseInt(info[1] as string);
         const result: DBItem[] = [];
         for (let i = 0; i < count; i++) {
